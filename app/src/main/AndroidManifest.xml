@@ -22,18 +22,27 @@
 
 
     <!-- ****************GoogleSamples**************** -->
-    <!--Timer-->
-    <activity android:name=".googlesamples.timer.SetTimerActivity">
+    <!--Topeka-->
+    <activity
+        android:name=".googlesamples.topeka.SignInActivity"
+        android:windowSoftInputMode="adjustPan">
       <intent-filter>
-        <action android:name="android.intent.action.SET_TIMER"/>
-
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
-    <service android:name=".googlesamples.timer.TimerNotificationService"/>
-
-    <!--Topeka-->
-
+    <activity android:name=".googlesamples.topeka.CategorySelectionActivity">
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".googlesamples.topeka.QuizActivity"
+        android:launchMode="singleTop"
+        android:windowSoftInputMode="adjustPan">
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
 
 
   </application>
