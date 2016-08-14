@@ -10,7 +10,12 @@ android {
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode rootProject.ext.versionCode
     versionName rootProject.ext.versionName
-    multiDexEnabled false
+//    multiDexEnabled false
+
+    jackOptions {
+      enabled true
+    }
+
   }
 
   buildTypes {
@@ -50,6 +55,18 @@ android {
     // Lint gives this warning but SDK 20 would be Android L Beta.
     disable 'OldTargetApi'
   }
+
+  sourceSets{
+    main{
+      res.srcDirs = [
+          'src/main/res/layouts/google/topeka',
+          'src/main/res/layouts/google',
+          'src/main/res/layouts/layout',
+          'src/main/res/layouts',
+          'src/main/res'
+      ]
+    }
+  }
 }
 
 dependencies {
@@ -64,3 +81,5 @@ dependencies {
   debugCompile rootProject.ext.debugDependencies.blockcanary
   releaseCompile rootProject.ext.debugDependencies.blockcanary
 }
+
+
