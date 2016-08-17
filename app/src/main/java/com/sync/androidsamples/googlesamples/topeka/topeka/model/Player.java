@@ -44,6 +44,7 @@ public class Player implements Parcelable{
     dest.writeString(mLastInitial);
     dest.writeInt(mAvatar.ordinal());
   }
+
   @SuppressWarnings("RedundantIfStatement")
   @Override
   public boolean equals(Object o) {
@@ -65,7 +66,6 @@ public class Player implements Parcelable{
     if (!mLastInitial.equals(player.mLastInitial)) {
       return false;
     }
-
     return true;
   }
 
