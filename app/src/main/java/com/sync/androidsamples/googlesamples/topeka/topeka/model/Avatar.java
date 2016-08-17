@@ -6,7 +6,7 @@ import com.sync.androidsamples.R;
 /**
  * Created by Administrator on 2016/8/16 0016.
  */
-public enum Avator {
+public enum Avatar {
 
   ONE(R.drawable.avator_1),
   TWO(R.drawable.avator_2),
@@ -30,7 +30,7 @@ public enum Avator {
 
   private final int mResId;
 
-  Avator(@DrawableRes final int resId){
+  Avatar(@DrawableRes final int resId){
     mResId = resId;
   }
 
