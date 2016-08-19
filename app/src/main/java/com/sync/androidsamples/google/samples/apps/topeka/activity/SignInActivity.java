@@ -1,4 +1,4 @@
-package com.sync.androidsamples.googlesamples.topeka.topeka.activity;
+package com.sync.androidsamples.google.samples.apps.topeka.activity;
 
 import android.app.Activity;
 import android.content.Intent;

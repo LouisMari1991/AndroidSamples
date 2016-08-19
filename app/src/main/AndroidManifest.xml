@@ -24,19 +24,19 @@
     <!-- ****************GoogleSamples**************** -->
     <!--Topeka-->
     <activity
-        android:name=".googlesamples.topeka.topeka.activity.SignInActivity"
+        android:name=".google.samples.apps.topeka.activity.SignInActivity"
         android:windowSoftInputMode="adjustPan">
       <intent-filter>
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
-    <activity android:name=".googlesamples.topeka.topeka.activity.CategorySelectionActivity">
+    <activity android:name=".google.samples.apps.topeka.activity.CategorySelectionActivity">
       <intent-filter>
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
     <activity
-        android:name=".googlesamples.topeka.topeka.activity.QuizActivity"
+        android:name=".google.samples.apps.topeka.activity.QuizActivity"
         android:launchMode="singleTop"
         android:windowSoftInputMode="adjustPan">
       <intent-filter>
