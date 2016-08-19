@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
+import com.sync.androidsamples.R;
 import com.sync.androidsamples.googlesamples.topeka.topeka.model.Avatar;
 import com.sync.androidsamples.googlesamples.topeka.topeka.model.Player;
 
@@ -48,9 +49,26 @@ public class SignInFragment extends Fragment {
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-
-    return super.onCreateView(inflater, container, savedInstanceState);
+    final View contentView = inflater.inflate(R.layout.fragment_sign_in, container, false);
+    contentView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+      @Override
+      public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6,
+          int i7) {
+        view.removeOnLayoutChangeListener(this);
+        //setU
+      }
+    });
+    return contentView;
   }
+
+  private void setUpGridView(View container){
+    mAvatarGrid = (GridView) container.findViewById(R.id.avatars);
+    //mAvatarGrid.seta
+  }
+
+
+
+
 }
 
 
