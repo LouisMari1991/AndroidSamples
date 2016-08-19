@@ -1,4 +1,4 @@
-package com.sync.androidsamples.googlesamples.topeka.topeka.model;
+package com.sync.androidsamples.google.samples.apps.topeka.model;
 
 import android.support.annotation.DrawableRes;
 import com.sync.androidsamples.R;

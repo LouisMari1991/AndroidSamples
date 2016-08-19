@@ -1,11 +1,11 @@
-package com.sync.androidsamples.googlesamples.topeka.topeka.adapter;
+package com.sync.androidsamples.google.samples.apps.topeka.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.sync.androidsamples.googlesamples.topeka.topeka.model.Avatar;
+import com.sync.androidsamples.google.samples.apps.topeka.model.Avatar;
 
 /**
  * Created by Administrator on 2016/8/18 0018.

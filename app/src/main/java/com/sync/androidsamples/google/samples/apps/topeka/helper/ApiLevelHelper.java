@@ -1,4 +1,4 @@
-package com.sync.androidsamples.googlesamples.topeka.topeka.helper;
+package com.sync.androidsamples.google.samples.apps.topeka.helper;
 
 import android.os.Build;
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+  <!--Maximum log count is set to 100, you can rewrite it in your app int.xml.-->
+  <integer name="block_canary_max_stored_count">100</integer>
+
+</resources>

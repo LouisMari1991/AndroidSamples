@@ -1,4 +1,4 @@
-package com.sync.androidsamples.googlesamples.topeka.topeka.widget.outlineprovider;
+package com.sync.androidsamples.google.samples.apps.topeka.widget.outlineprovider;
 
 import android.annotation.TargetApi;
 import android.graphics.Outline;

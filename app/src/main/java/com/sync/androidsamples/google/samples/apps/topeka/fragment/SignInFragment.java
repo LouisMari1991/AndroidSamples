@@ -1,4 +1,4 @@
-package com.sync.androidsamples.googlesamples.topeka.topeka.fragment;
+package com.sync.androidsamples.google.samples.apps.topeka.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
 import com.sync.androidsamples.R;
-import com.sync.androidsamples.googlesamples.topeka.topeka.model.Avatar;
-import com.sync.androidsamples.googlesamples.topeka.topeka.model.Player;
+import com.sync.androidsamples.google.samples.apps.topeka.model.Avatar;
+import com.sync.androidsamples.google.samples.apps.topeka.model.Player;
 
 /**
  * Created by Administrator on 2016/8/16 0016.

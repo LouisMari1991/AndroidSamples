@@ -4,6 +4,7 @@
     package="com.sync.androidsamples">
 
   <application
+      android:name=".SampleApplication"
       android:allowBackup="false"
       android:fullBackupContent="false"
       android:hardwareAccelerated="true"

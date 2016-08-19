@@ -1,4 +1,4 @@
-package com.sync.androidsamples.googlesamples.topeka.topeka.widget;
+package com.sync.androidsamples.google.samples.apps.topeka.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,8 +16,8 @@ import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import com.sync.androidsamples.R;
-import com.sync.androidsamples.googlesamples.topeka.topeka.helper.ApiLevelHelper;
-import com.sync.androidsamples.googlesamples.topeka.topeka.widget.outlineprovider.RoundOutlineProvider;
+import com.sync.androidsamples.google.samples.apps.topeka.helper.ApiLevelHelper;
+import com.sync.androidsamples.google.samples.apps.topeka.widget.outlineprovider.RoundOutlineProvider;
 
 /**
  * A simple view that wraps an avatar.

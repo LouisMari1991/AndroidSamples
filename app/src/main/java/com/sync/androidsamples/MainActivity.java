@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.sync.androidsamples.common.BaseActivity;
-import com.sync.androidsamples.googlesamples.topeka.topeka.activity.SignInActivity;
+import com.sync.androidsamples.google.samples.apps.topeka.activity.SignInActivity;
 
 public class MainActivity extends BaseActivity {
 
