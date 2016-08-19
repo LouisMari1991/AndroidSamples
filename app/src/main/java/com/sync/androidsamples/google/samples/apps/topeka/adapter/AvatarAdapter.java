@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import com.sync.androidsamples.R;
 import com.sync.androidsamples.google.samples.apps.topeka.model.Avatar;
+import com.sync.androidsamples.google.samples.apps.topeka.widget.AvatarView;
 
 /**
  * Created by Administrator on 2016/8/18 0018.
@@ -21,9 +23,11 @@ public class AvatarAdapter extends BaseAdapter {
     mLayoutInflater = LayoutInflater.from(context);
   }
 
-  private void setAvatar(){
-
+  private void setAvatar(AvatarView mIcon, Avatar avatar){
+    mIcon.setAvatar(avatar.getDrawableId());
+    mIcon.setContentDescription(avatar.getNameForAccessibility());
   }
+
 
   @Override public int getCount() {
     return mAvatars.length;
@@ -37,10 +41,11 @@ public class AvatarAdapter extends BaseAdapter {
     return position;
   }
 
-  @Override public View getView(int i, View convertView, ViewGroup parent) {
+  @Override public View getView(int position, View convertView, ViewGroup parent) {
     if (null == convertView) {
-
+      mLayoutInflater.inflate(R.layout.item_avatar, parent, false);
     }
+    setAvatar((AvatarView) convertView,mAvatars[position]);
     return convertView;
   }
 }

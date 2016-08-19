@@ -35,7 +35,7 @@ public enum Avatar {
   }
 
   @DrawableRes
-  public int getDrawable(){
+  public int getDrawableId(){
     return mResId;
   }
 

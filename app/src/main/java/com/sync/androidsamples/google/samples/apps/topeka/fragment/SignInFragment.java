@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import com.sync.androidsamples.R;
+import com.sync.androidsamples.google.samples.apps.topeka.adapter.AvatarAdapter;
 import com.sync.androidsamples.google.samples.apps.topeka.model.Avatar;
 import com.sync.androidsamples.google.samples.apps.topeka.model.Player;
 
@@ -63,10 +65,18 @@ public class SignInFragment extends Fragment {
 
   private void setUpGridView(View container){
     mAvatarGrid = (GridView) container.findViewById(R.id.avatars);
-    //mAvatarGrid.seta
+    mAvatarGrid.setAdapter(new AvatarAdapter(getActivity()));
+    mAvatarGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        mSelectedAvatarView = view;
+        mSelectAvator = Avatar.values()[position];
+        // showing the floating action button if input data is valid
+
+      }
+    });
   }
 
-
+  //private boolean isInput
 
 
 }
