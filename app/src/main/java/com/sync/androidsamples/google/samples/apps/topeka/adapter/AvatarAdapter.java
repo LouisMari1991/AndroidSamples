@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import com.sync.androidsamples.R;
-import com.sync.androidsamples.common.LogUtils;
 import com.sync.androidsamples.google.samples.apps.topeka.model.Avatar;
 import com.sync.androidsamples.google.samples.apps.topeka.widget.AvatarView;
 
