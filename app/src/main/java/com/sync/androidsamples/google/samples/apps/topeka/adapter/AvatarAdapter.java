@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import com.sync.androidsamples.R;
+import com.sync.androidsamples.common.LogUtils;
 import com.sync.androidsamples.google.samples.apps.topeka.model.Avatar;
 import com.sync.androidsamples.google.samples.apps.topeka.widget.AvatarView;
 
@@ -43,7 +44,7 @@ public class AvatarAdapter extends BaseAdapter {
 
   @Override public View getView(int position, View convertView, ViewGroup parent) {
     if (null == convertView) {
-      mLayoutInflater.inflate(R.layout.item_avatar, parent, false);
+      convertView =  mLayoutInflater.inflate(R.layout.item_avatar, parent, false);
     }
     setAvatar((AvatarView) convertView,mAvatars[position]);
     return convertView;

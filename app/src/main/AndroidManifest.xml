@@ -27,6 +27,7 @@
     <activity
         android:name=".google.samples.apps.topeka.activity.SignInActivity"
         android:windowSoftInputMode="adjustPan">
+
       <intent-filter>
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>

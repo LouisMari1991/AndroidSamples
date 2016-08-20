@@ -19,7 +19,7 @@ public enum Avatar {
   NINE(R.drawable.avator_9),
   TEN(R.drawable.avator_10),
   ELEVEN(R.drawable.avator_11),
-  TWELEVE(R.drawable.avator_12),
+  TWELVE(R.drawable.avator_12),
   THIRTEEN(R.drawable.avator_13),
   FOURTEEN(R.drawable.avator_14),
   FIFTEEN(R.drawable.avator_15),

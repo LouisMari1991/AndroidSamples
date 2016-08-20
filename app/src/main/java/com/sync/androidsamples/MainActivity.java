@@ -1,9 +1,9 @@
 package com.sync.androidsamples;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.sync.androidsamples.common.BaseActivity;
+import com.sync.androidsamples.common.LogUtils;
 import com.sync.androidsamples.google.samples.apps.topeka.activity.SignInActivity;
 
 public class MainActivity extends BaseActivity {
@@ -15,8 +15,17 @@ public class MainActivity extends BaseActivity {
   }
 
   public void AndroidSamples(View v){
-    Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-    startActivity(intent);
+    LogUtils.i("AndroidSamples clicked");
+    //Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+    //startActivity(intent);
+    SignInActivity.start(MainActivity.this, true);
+
+    //Avatar[] avatars = Avatar.values();
+    //LogUtils.i(avatars.length+"");
+    //for (Avatar avatar : avatars) {
+    //  LogUtils.i(avatar.getNameForAccessibility());
+    //}
+
   }
 
 

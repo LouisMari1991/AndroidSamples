@@ -2,7 +2,6 @@ package com.sync.androidsamples.google.samples.apps.topeka.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.sync.androidsamples.google.samples.apps.topeka.model.Avatar;
 
 /**
  * Created by Administrator on 2016/8/16 0016.
@@ -77,4 +76,17 @@ public class Player implements Parcelable{
     result = 31 * result + mAvatar.hashCode();
     return result;
   }
+
+  public String getFirstName() {
+    return mFirstName;
+  }
+
+  public String getLastInitial() {
+    return mLastInitial;
+  }
+
+  public Avatar getAvatar() {
+    return mAvatar;
+  }
+
 }
