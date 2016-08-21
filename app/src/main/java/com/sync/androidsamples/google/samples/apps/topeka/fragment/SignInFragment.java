@@ -159,6 +159,10 @@ public class SignInFragment extends Fragment {
     });
   }
 
+  /**
+   * 确定按钮点击时动画.
+   * 2016/8/21 0021 14:43
+   */
   private void removeDoneFab(@NonNull Runnable endAction) {
     ViewCompat.animate(mDoneFab)
         .scaleX(0)
