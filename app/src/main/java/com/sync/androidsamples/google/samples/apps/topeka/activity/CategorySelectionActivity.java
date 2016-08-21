@@ -99,7 +99,6 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
   private void signOut() {
     PreferencesHelper.signOut(this);
-
   }
 
   private String getDisplayName(Player player) {
