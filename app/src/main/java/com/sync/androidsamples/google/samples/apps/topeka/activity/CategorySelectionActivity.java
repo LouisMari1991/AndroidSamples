@@ -4,12 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
+import com.sync.androidsamples.R;
+import com.sync.androidsamples.google.samples.apps.topeka.fragment.CategorySelectionFragment;
+import com.sync.androidsamples.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.sync.androidsamples.google.samples.apps.topeka.model.Player;
+import com.sync.androidsamples.google.samples.apps.topeka.widget.AvatarView;
 
 /**
  * Created by YH on 2016/8/13.
@@ -35,8 +43,81 @@ public class CategorySelectionActivity extends AppCompatActivity {
   }
 
 
-  @Override public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-    super.onCreate(savedInstanceState, persistentState);
-    
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
+    if (player == null) {
+      player = PreferencesHelper.getPlayer(this);
+    } else {
+      PreferencesHelper.writeToPreferences(this, player);
+    }
+    setUpToolbar(player);
+    if (savedInstanceState == null) {
+      attachCategoryGridFragment();
+    } else {
+      setProgressBarVisibility(View.GONE);
+    }
+    supportPostponeEnterTransition();
   }
+
+  @Override protected void onResume() {
+    super.onResume();
+    TextView scoreView = (TextView) findViewById(R.id.score);
+    //final int
+  }
+
+  private void setUpToolbar(Player player) {
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_player);
+    setSupportActionBar(toolbar);
+    //noinspection ConstantConditions
+    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
+    avatarView.setAvatar(player.getAvatar().getDrawableId());
+    ((TextView)toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
+  }
+
+  private String getDisplayName(Player player) {
+    return getString(R.string.player_display_name, player.getFirstName(),
+            player.getLastInitial());
+  }
+
+  private void attachCategoryGridFragment() {
+    FragmentManager supportFragmentManager = getSupportFragmentManager();
+    Fragment fragment = supportFragmentManager.findFragmentById(R.id.category_container);
+    if (!(fragment instanceof CategorySelectionFragment)) {
+      fragment = CategorySelectionFragment.newInstance();
+    }
+    supportFragmentManager.beginTransaction()
+        .replace(R.id.category_container, fragment)
+        .commit();
+    setProgressBarVisibility(View.GONE);
+  }
+
+  private void setProgressBarVisibility(int visibility) {
+    findViewById(R.id.progress).setVisibility(visibility);
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

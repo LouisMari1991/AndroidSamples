@@ -34,6 +34,11 @@
     <item name="android:button">@null</item>
   </style>
 
+  <style name="Topeka.TextAppearance.Title.Inverse" parent="TextAppearance.AppCompat.Title">
+    <item name="android:textColor">@android:color/white</item>
+  </style>
+
+
   <style name="Topeka.TextAppearance.Title" parent="TextAppearance.AppCompat.Title">
     <item name="android:textColor">@color/topeka_primary</item>
   </style>
