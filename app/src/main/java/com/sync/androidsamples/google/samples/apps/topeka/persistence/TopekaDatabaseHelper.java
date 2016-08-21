@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.sync.androidsamples.R;
 import com.sync.androidsamples.common.LogUtils;
+import com.sync.androidsamples.google.samples.apps.topeka.model.JsonAttributes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,6 +52,20 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     /* no-op */
   }
 
+  public static int getScore(Context context) {
+    //final List<Ca>
+    return 0;
+  }
+
+  public static void reset(Context context) {
+    SQLiteDatabase writebleDatable = getWritableDatabase(context);
+
+  }
+
+  public static SQLiteDatabase getWritableDatabase(Context context) {
+    return getInstance(context).getWritableDatabase();
+  }
+
   private void preFillDatabase(SQLiteDatabase db) {
     try{
       db.beginTransaction();
@@ -71,7 +86,8 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     JSONObject category;
     for (int i = 0; i < jsonArray.length(); i++){
       category = jsonArray.getJSONObject(i);
-      //final String categoryid = category.getString(JSONA)
+      final String categoryid = category.getString(JsonAttributes.ID);
+
     }
 
   }
@@ -87,6 +103,13 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     }
     return categoriesJson.toString();
   }
+
+  private void fillCategory(SQLiteDatabase db, ContentValues values, JSONObject category,
+      String categoryid) throws JSONException{
+      values.clear();
+
+  }
+
 
 
 }

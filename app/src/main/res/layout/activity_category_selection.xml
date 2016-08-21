@@ -56,7 +56,7 @@
         tools:conetxt="activity.QuizSelectionActivity"
         tools:ignore="MergeRootFrame"
         >
-      
+
       <ProgressBar
           android:id="@+id/progress"
           android:layout_width="@dimen/size_fab"
@@ -64,8 +64,8 @@
           android:layout_gravity="center"
           android:indeterminateOnly="true"
           />
-      
-      
+
+
     </FrameLayout>
 
 
