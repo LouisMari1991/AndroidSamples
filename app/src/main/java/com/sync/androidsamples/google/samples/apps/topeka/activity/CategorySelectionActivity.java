@@ -39,7 +39,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
   public static void start(Context context, Player player) {
     Intent starter = getStartIntent(context, player);
-    context.startActivity(starter);
+    context.startActivity(starter);       
   }
 
   @NonNull static Intent getStartIntent(Context context, Player player) {
