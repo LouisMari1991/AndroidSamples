@@ -9,7 +9,7 @@ project.ext {
   applicationId = "com.sync.androidsamples"
   buildToolsVersion = "24.0.1"
   compileSdkVersion = 24
-  minSdkVersion = 21
+  minSdkVersion = 14
   targetSdkVersion = 24
   versionCode = 1
   versionName = "1.0.0"

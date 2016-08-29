@@ -25,7 +25,7 @@
         android:layout_height="40dp"
         android:layout_margin="16dp"
         android:layout_marginEnd="16dp"
-        android:ignore="UnusedAttribute"
+        tools:ignore="UnusedAttribute"
         android:transitionName="@string/transition_avatar"
         />
 

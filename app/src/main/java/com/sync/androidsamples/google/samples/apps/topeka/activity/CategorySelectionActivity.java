@@ -3,6 +3,7 @@ package com.sync.androidsamples.google.samples.apps.topeka.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -11,12 +12,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.sync.androidsamples.R;
 import com.sync.androidsamples.google.samples.apps.topeka.fragment.CategorySelectionFragment;
+import com.sync.androidsamples.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.sync.androidsamples.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.sync.androidsamples.google.samples.apps.topeka.model.Player;
 import com.sync.androidsamples.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
@@ -76,6 +79,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayShowTitleEnabled(false);
     final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
     avatarView.setAvatar(player.getAvatar().getDrawableId());
+    // noinspection PrivateResource
     ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
   }
 
@@ -99,6 +103,13 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
   private void signOut() {
     PreferencesHelper.signOut(this);
+    TopekaDatabaseHelper.reset(this);
+    if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+      getWindow().setExitTransition(
+          TransitionInflater.from(this).inflateTransition(R.transition.category_enter));
+    }
+    SignInActivity.start(this, false);
+    ActivityCompat.finishAfterTransition(this);
   }
 
   private String getDisplayName(Player player) {

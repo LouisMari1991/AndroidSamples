@@ -1,6 +1,12 @@
 package com.sync.androidsamples.google.samples.apps.topeka.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import com.sync.androidsamples.R;
 
 /**
  * Author：Administrator on 2016/8/20 0020 17:40
@@ -12,5 +18,9 @@ public class CategorySelectionFragment extends Fragment{
     return new CategorySelectionFragment();
   }
 
-
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.fragment_categories, container, false);
+  }
 }
