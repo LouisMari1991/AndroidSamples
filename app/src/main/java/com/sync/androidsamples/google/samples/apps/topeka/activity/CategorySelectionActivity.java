@@ -46,7 +46,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
     Intent starter = new Intent(context, CategorySelectionActivity.class);
     starter.putExtra(EXTRA_PLAYER, player);
     return starter;
-  }        
+  }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
