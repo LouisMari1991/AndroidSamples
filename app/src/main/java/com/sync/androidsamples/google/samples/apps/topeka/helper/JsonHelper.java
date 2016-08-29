@@ -13,7 +13,7 @@ public class JsonHelper {
 
   private static final String TAG = "JsonHelper";
 
-  private JsonHelper() {
+  private JsonHelper() {       
     // no instance
   }
 
