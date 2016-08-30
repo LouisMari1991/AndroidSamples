@@ -1,6 +1,5 @@
 package com.sync.androidsamples.google.samples.apps.topeka.model;
 
-import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -31,16 +30,16 @@ public class Category implements Parcelable{
   private static final int NO_SCORE = 0;
   private final String mName;
   private final String mId;
-  //private final Resources.Theme mTheme;
+  private final Theme mTheme;
   private final int[] mScores;
   private List<Quiz> mQuizzes;
   private boolean mSolved;
 
-  public Category(@NonNull String name, @NonNull String id, @NonNull Resources.Theme theme,
+  public Category(@NonNull String name, @NonNull String id, @NonNull Theme theme,
       @NonNull List<Quiz> quizzes, boolean solved) {
     mName = name;
     mId = id;
-    //mTheme = theme;
+    mTheme = theme;
     mQuizzes = quizzes;
     mScores = new int[quizzes.size()];
     mSolved = solved;
@@ -49,18 +48,28 @@ public class Category implements Parcelable{
   protected Category(Parcel in) {
     mName = in.readString();
     mId = in.readString();
+    mTheme = Theme.values()[in.readInt()];
     mQuizzes = new ArrayList<>();
-    //in.readTypedList(mQuizzes, );
+    in.readTypedList(mQuizzes, Quiz.CREATOR);
     mScores = in.createIntArray();
     mSolved = ParcelableHelper.readBoolean(in);
   }
 
-
+  @NonNull
+  public List<Quiz> getQuizzes() {
+    return mQuizzes;
+  }
 
   @Override public int describeContents() {
     return 0;
   }
 
-  @Override public void writeToParcel(Parcel parcel, int i) {
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(mName);
+    dest.writeString(mId);
+    dest.writeInt(mTheme.ordinal());
+    dest.writeTypedList(getQuizzes());
+    dest.writeIntArray(mScores);
+    ParcelableHelper.writeBoolean(dest, mSolved);
   }
 }
