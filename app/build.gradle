@@ -77,11 +77,6 @@ dependencies {
   compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportDesign
 
-  // external package
-  compile rootProject.ext.libRetrofit
-  compile rootProject.ext.libGlide
-
-
   debugCompile rootProject.ext.debugDependencies.leakCanary
   releaseCompile rootProject.ext.releaseDependencies.leakCanary
   debugCompile rootProject.ext.debugDependencies.blockcanary
