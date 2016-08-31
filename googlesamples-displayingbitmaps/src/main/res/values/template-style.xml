@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Activity themes -->
+    <style name="Theme.base" parent="android:Theme.Light"/>
+
+    <style name="Theme.Sample" parent="Theme.base"/>
+
+
+    <!-- Widget stying -->
+    <style name="Widget" />
+
+    <style name="Widget.SampleMessage">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+    </style>
+
+    <style name="Widget.SampleMessageTile">
+        <item name="android:background">@drawable/tile</item>
+    </style>
+
+
+</resources>
+
+

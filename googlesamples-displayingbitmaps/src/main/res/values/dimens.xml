@@ -1,0 +1,7 @@
+<resources>
+
+    <dimen name="image_thumbnail_size">100dip</dimen>
+    <dimen name="image_thumbnail_spacing">1dip</dimen>
+
+</resources>
+
