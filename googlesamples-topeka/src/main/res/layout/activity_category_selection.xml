@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/topeka_blank"
+    android:orientation="vertical"
+    android:transitionGroup="false"
+    tools:ignore="Overdraw,UnusedAttribute"
+    >
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar_player"
+      android:layout_width="match_parent"
+      android:layout_height="?android:attr/actionBarSize"
+      android:background="@color/topeka_primary"
+      android:elevation="4dp"
+      tools:ignore="UnusedAttribute"
+      style="@style/Topeka.TextAppearance.Title"
+      >
+
+    <com.sync.androidsamples.google.samples.apps.topeka.widget.AvatarView
+        android:id="@+id/avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        tools:ignore="UnusedAttribute"
+        android:transitionName="@string/transition_avatar"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        tools:ignore="PrivateResource"
+        style="@style/Topeka.TextAppearance.Title.Inverse"
+        />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:paddingEnd="@dimen/spacing_micro"
+        android:paddingStart="@dimen/spacing_micro"
+        tools:ignore="NewApi"
+        style="@style/Topeka.TextAppearance.Title.Inverse"
+        />
+
+    <FrameLayout
+        android:id="@+id/category_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:conetxt="activity.QuizSelectionActivity"
+        tools:ignore="MergeRootFrame"
+        >
+
+      <ProgressBar
+          android:id="@+id/progress"
+          android:layout_width="@dimen/size_fab"
+          android:layout_height="@dimen/size_fab"
+          android:layout_gravity="center"
+          android:indeterminateOnly="true"
+          />
+
+
+    </FrameLayout>
+
+
+  </android.support.v7.widget.Toolbar>
+
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

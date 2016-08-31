@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+  <!--Maximum log count is set to 100, you can rewrite it in your app int.xml.-->
+  <integer name="block_canary_max_stored_count">100</integer>
+
+  <!--Available in 1.4-SNAPSHOT.
+
+You can change the delay until a reference is considered a memory leak by providing R.integer.leak_canary_watch_delay_millis in your app:-->
+  <!--The default delay is 5 seconds.-->
+  <integer name="leak_canary_watch_delay_millis">4000</integer>
+
+
+</resources>
