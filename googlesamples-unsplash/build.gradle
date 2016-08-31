@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 
+
+
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
 
   defaultConfig {
     applicationId "com.googlesamples.unsplash"
-    minSdkVersion rootProject.ext.minSdkVersion
+    minSdkVersion 21
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode rootProject.ext.versionCode
     versionName rootProject.ext.versionName
@@ -57,8 +59,21 @@ android {
 
 }
 
+ext {
+  minSdkVersion = 21;
+}
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
-  compile 'com.android.support:appcompat-v7:24.1.1'
+  // android support
+  compile rootProject.ext.libSupportAppcompat
+  compile rootProject.ext.libSupportV4
+  compile rootProject.ext.libSupportDesign
+
+  debugCompile rootProject.ext.debugDependencies.leakCanary
+  releaseCompile rootProject.ext.releaseDependencies.leakCanary
+  debugCompile rootProject.ext.debugDependencies.blockcanary
+  releaseCompile rootProject.ext.debugDependencies.blockcanary
+
 }
