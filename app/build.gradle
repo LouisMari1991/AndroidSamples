@@ -72,9 +72,15 @@ android {
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
+  // android support
   compile rootProject.ext.libSupportAppcompat
   compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportDesign
+
+  // external package
+  compile rootProject.ext.libRetrofit
+  compile rootProject.ext.libGlide
+
 
   debugCompile rootProject.ext.debugDependencies.leakCanary
   releaseCompile rootProject.ext.releaseDependencies.leakCanary

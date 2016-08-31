@@ -2,7 +2,8 @@ def supportVersion = '24.1.1'
 
 def leakCanaryVersion = "1.4-beta2"
 def blockCanaryVersion = '1.1.4'
-
+def retrofitVersion = '2.1.0'
+def glideVersion = '3.7.0'
 
 project.ext {
 
@@ -26,6 +27,11 @@ project.ext {
   libSupportV4 = "com.android.support:support-v4:${supportVersion}"
 
 
+  /**
+   *  external package
+   */
+  libRetrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+  libGlide = "com.github.bumptech.glide:glide:${glideVersion}"
 
   /**
    * leakCanary:A memory leak detection library for Android and Java.
