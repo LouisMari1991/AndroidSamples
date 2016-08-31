@@ -17,7 +17,7 @@ public class MainActivity extends BaseActivity {
   public void AndroidSamples(View v){
     LogUtils.i("AndroidSamples clicked");
     //Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-    //startActivity(intent);
+    //startActivity(intent);    
     SignInActivity.start(MainActivity.this, true);
 
     //Avatar[] avatars = Avatar.values();
