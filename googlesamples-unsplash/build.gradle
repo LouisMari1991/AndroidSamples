@@ -1,10 +1,13 @@
 apply plugin: 'com.android.application'
 
-
-
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
+
+  dataBinding {
+    enabled = true
+  }
+
 
   defaultConfig {
     applicationId "com.googlesamples.unsplash"
@@ -13,11 +16,9 @@ android {
     versionCode rootProject.ext.versionCode
     versionName rootProject.ext.versionName
 
-    jackOptions {
-      enabled true
-    }
-
-
+//    jackOptions {
+//      enabled false
+//    }
   }
 
   buildTypes {
@@ -28,8 +29,8 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility rootProject.ext.javaVersion
-    targetCompatibility rootProject.ext.javaVersion
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
   }
 
   packagingOptions {
@@ -70,6 +71,12 @@ dependencies {
   compile rootProject.ext.libSupportAppcompat
   compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportDesign
+  compile rootProject.ext.libSupportRecyclerview
+  compile rootProject.ext.libSupportAnnotations
+
+  // external
+  compile rootProject.ext.libRetrofit
+  compile rootProject.ext.libGlide
 
   debugCompile rootProject.ext.debugDependencies.leakCanary
   releaseCompile rootProject.ext.releaseDependencies.leakCanary

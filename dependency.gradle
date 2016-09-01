@@ -26,6 +26,8 @@ project.ext {
   libSupportRecyclerview = "com.android.support:recyclerview-v7:${supportVersion}"
   libSupportV4 = "com.android.support:support-v4:${supportVersion}"
 
+  // 2016/09/01
+  libSupportAnnotations = "com.android.support:support-annotations:${supportVersion}"
 
   /**
    *  external package
