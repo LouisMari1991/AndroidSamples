@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
     postponeEnterTransition();
     // Listener to reset shared element exit transition callbacks.
+    // 监听 复位 分享 元素 推出 平移 回调
     getWindow().getSharedElementExitTransition().addListener(sharedExitListener);
 
     grid = (RecyclerView) findViewById(R.id.image_grid);
