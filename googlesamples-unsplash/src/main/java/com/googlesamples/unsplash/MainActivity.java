@@ -6,7 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Transition;
 import android.widget.ProgressBar;
-import com.googlesamples.unsplash.model.Photo;
+import com.googlesamples.unsplash.data.model.Photo;
 import com.googlesamples.unsplash.ui.TransitionCallback;
 import com.googlesamples.unsplash.ui.grid.GridMarginDecoration;
 import java.util.ArrayList;

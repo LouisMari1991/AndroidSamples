@@ -1,4 +1,4 @@
-package com.googlesamples.unsplash.model;
+package com.googlesamples.unsplash.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
