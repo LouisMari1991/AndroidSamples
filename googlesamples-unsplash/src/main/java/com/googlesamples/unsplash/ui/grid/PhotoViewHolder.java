@@ -24,7 +24,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
     private final PhotoItemBinding binding;
 
     public PhotoViewHolder(PhotoItemBinding itemBinding) {
-        super(null);
+        super(itemBinding.getRoot());
         binding = itemBinding;
     }
 
