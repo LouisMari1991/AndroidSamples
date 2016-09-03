@@ -1,6 +1,8 @@
 package com.googlesamples.topeka.helper;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
 import android.view.View;
@@ -52,6 +54,7 @@ public class TransitionHelper {
     return participants.toArray(new Pair[participants.size()]);
   }
 
+  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   private static void addNonNullViewToTransitionParticipants(View view, List<Pair> participants) {
     if (view == null) {
       return;
