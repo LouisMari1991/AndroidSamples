@@ -10,18 +10,20 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/googlesamples-displayingbitmaps" />
-            <option value="$PROJECT_DIR$/googlesamples-topeka" />
-            <option value="$PROJECT_DIR$/googlesamples-unsplash" />
+            <option value="$PROJECT_DIR$/googlesamples" />
+            <option value="$PROJECT_DIR$/googlesamples/displayingbitmaps" />
+            <option value="$PROJECT_DIR$/googlesamples/topeka" />
+            <option value="$PROJECT_DIR$/googlesamples/unsplash" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/googlesamples-displayingbitmaps" />
-            <option value="$PROJECT_DIR$/googlesamples-topeka" />
-            <option value="$PROJECT_DIR$/googlesamples-unsplash" />
+            <option value="$PROJECT_DIR$/googlesamples" />
+            <option value="$PROJECT_DIR$/googlesamples/displayingbitmaps" />
+            <option value="$PROJECT_DIR$/googlesamples/topeka" />
+            <option value="$PROJECT_DIR$/googlesamples/unsplash" />
           </set>
         </option>
       </GradleProjectSettings>

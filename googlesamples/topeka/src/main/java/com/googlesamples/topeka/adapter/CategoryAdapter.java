@@ -19,7 +19,8 @@ import com.googlesamples.topeka.R;
  */
 public class CategoryAdapter extends RecyclerView.Adapter {
 
-  public static final String DEAWABLE = "drawable";
+  public static final String DEAWABLE =
+      "build/intermediates/exploded-aar/com.android.support/design/24.1.1/res/drawable";
   private static final String ICON_CATEGORY = "icon_category_";
   private final Resources mResources;
   private final String mPackageName;

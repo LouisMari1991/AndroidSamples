@@ -1,2 +1,4 @@
-include ':app', ':googlesamples-unsplash', ':googlesamples-topeka',
-    ':googlesamples-displayingbitmaps'
+include ':app'
+include ':googlesamples:unsplash'
+include ':googlesamples:topeka'
+include ':googlesamples:displayingbitmaps'
