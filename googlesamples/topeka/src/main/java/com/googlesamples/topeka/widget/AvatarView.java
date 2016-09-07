@@ -81,6 +81,14 @@ public class AvatarView extends ImageView implements Checkable{
     }
   }
 
+  /**
+   * onLayout() 之后调用，在5.0以上系统会设置圆角Icon.
+   *
+   * @param w
+   * @param h
+   * @param oldw
+   * @param oldh
+   */
   @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
     super.onSizeChanged(w, h, oldw, oldh);
     if (ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {

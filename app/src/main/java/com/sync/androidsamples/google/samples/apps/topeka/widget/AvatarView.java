@@ -23,7 +23,7 @@ import com.sync.androidsamples.google.samples.apps.topeka.widget.outlineprovider
  * A simple view that wraps an avatar.
  * Created by Administrator on 2016/8/18 0018.
  */
-public class AvatarView extends ImageView implements Checkable{
+public class AvatarView extends ImageView implements Checkable {
 
   private boolean mChecked;
 
@@ -52,10 +52,10 @@ public class AvatarView extends ImageView implements Checkable{
     setChecked(!mChecked);
   }
 
-  @SuppressLint("NewApi")
-  public void setAvatar(@DrawableRes int resId) {
+  @SuppressLint("NewApi") public void setAvatar(@DrawableRes int resId) {
     if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
-      setClipToOutline(true);  //为了裁剪一个可绘制的视图形状，需要先设置一个outline然后调用View.setClipToOutline方法
+      // 为了裁剪一个可绘制的视图形状，需要先设置一个outline然后调用View.setClipToOutline方法
+      setClipToOutline(true);
       setImageResource(resId);
     } else {
       setAvatarPreLollipop(resId);
@@ -63,11 +63,10 @@ public class AvatarView extends ImageView implements Checkable{
   }
 
   private void setAvatarPreLollipop(@DrawableRes int redId) {
-    Drawable drawable = ResourcesCompat.getDrawable(getResources(), redId,
-        getContext().getTheme());
+    Drawable drawable = ResourcesCompat.getDrawable(getResources(), redId, getContext().getTheme());
     BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-    RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),
-        bitmapDrawable.getBitmap());
+    RoundedBitmapDrawable roundedBitmapDrawable =
+        RoundedBitmapDrawableFactory.create(getResources(), bitmapDrawable.getBitmap());
     roundedBitmapDrawable.setCircular(true);
     setImageDrawable(roundedBitmapDrawable);
   }
@@ -76,7 +75,7 @@ public class AvatarView extends ImageView implements Checkable{
     super.onDraw(canvas);
     if (mChecked) {
       Drawable border = ContextCompat.getDrawable(getContext(), R.drawable.selector_avatar);
-      border.setBounds(0,0,getWidth(),getHeight());
+      border.setBounds(0, 0, getWidth(), getHeight());
       border.draw(canvas);
     }
   }
