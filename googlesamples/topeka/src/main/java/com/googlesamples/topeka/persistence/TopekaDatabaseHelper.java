@@ -60,7 +60,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
   public static void reset(Context context) {
     SQLiteDatabase writebleDatable = getWritableDatabase(context);
     writebleDatable.delete(CategoryTable.NAME, null, null);
-    writebleDatable.delete(CategoryTable.NAME, null, null);
+    writebleDatable.delete(QuizTable.NAME, null, null);
     getInstance(context).preFillDatabase(writebleDatable);
   }
 
@@ -94,6 +94,12 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
   }
 
+  /**
+   *  Read categories.json properties file.
+   *
+   * @return properties file to String.
+   * @throws IOException
+   */
   private String readCategoriesFromResource() throws IOException {
     StringBuffer categoriesJson = new StringBuffer();
     InputStream rawCategories = mResources.openRawResource(R.raw.categories);
