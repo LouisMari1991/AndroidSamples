@@ -57,6 +57,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     return 0;
   }
 
+
   public static void reset(Context context) {
     SQLiteDatabase writebleDatable = getWritableDatabase(context);
     writebleDatable.delete(CategoryTable.NAME, null, null);
