@@ -13,6 +13,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.googlesamples.topeka.helper.PreferencesHelper;
 import com.googlesamples.topeka.helper.TransitionHelper;
 import com.googlesamples.topeka.model.Avatar;
 import com.googlesamples.topeka.model.Player;
+import com.googlesamples.topeka.widget.TransitionListenerAdapter;
 
 /**
  *
@@ -201,7 +203,7 @@ public class SignInFragment extends Fragment {
   private void performSignInWithTransition(View v) {
     final Activity activity = getActivity();
 
-    if (view == null || ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
+    if (v == null || ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
       // Don't run a transition if the passed view is null;
       CategorySelectionActivity.start(activity, mPlayer);
       activity.finish();
@@ -209,15 +211,20 @@ public class SignInFragment extends Fragment {
     }
 
     if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+      activity.getWindow().getSharedElementEnterTransition().addListener(
+          new TransitionListenerAdapter(){
+            @Override public void onTransitionEnd(Transition transition) {
+              activity.finish();
+            }
+          });
 
+      final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
+          new Pair<>(v, activity.getString(R.string.transition_avatar)));
+
+      @SuppressWarnings("unchecked") ActivityOptionsCompat activityOptions =
+          ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs);
+      CategorySelectionActivity.start(activity, mPlayer, activityOptions);
     }
-
-    final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
-        new Pair<>(v, activity.getString(R.string.transition_avatar)));
-
-    @SuppressWarnings("unchecked") ActivityOptionsCompat activityOptions =
-        ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs);
-    CategorySelectionActivity.start(activity, mPlayer, activityOptions);
   }
 
   private void initContents() {

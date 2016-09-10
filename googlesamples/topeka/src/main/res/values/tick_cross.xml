@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- geometry -->
+  <integer name="viewport_width">24</integer>
+  <integer name="viewport_height">24</integer>
+  <integer name="viewport_center_x">12</integer>
+  <integer name="viewport_center_y">12</integer>
+  <integer name="tick_cross_stroke_width">2</integer>
+  <string name="path_tick_line_1">M19.6,7 L10.4,16.2</string>
+  <string name="path_tick_line_2">M4.8,13.4 L9,17.6</string>
+  <string name="path_cross_line_1">M17.6,6.4 L6.4,17.6</string>
+  <string name="path_cross_line_2">M6.4,6.4 L17.6,17.6</string>
+
+  <!-- names -->
+  <string name="groupTickCross">groupTickCross</string>
+  <string name="line_1">line_1</string>
+  <string name="line_2">line_2</string>
+
+  <!-- drawing -->
+  <color name="tick_cross_stroke_color">@android:color/black</color>
+
+  <!-- timing-->
+  <integer name="tick_cross_duration">450</integer>
+
+</resources>

@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/category_item"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:foreground="@drawable/selector_subtle"
-    tools:ingore="UseCompoundDrawable"
-    >
-
-  <ImageView
-      android:id="@+id/category_icon"
+<layout>
+  <data>
+    <variable
+        name="category"
+        type="com.googlesamples.topeka.model.Category"
+        />
+  </data>
+  <FrameLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:id="@+id/category_item"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="@dimen/size_avatar_toolbar"
-      android:contentDescription="@string/category"
-      />
+      android:foreground="@drawable/selector_subtle"
+      tools:ingore="UseCompoundDrawable"
+      >
 
-  <TextView
-      android:id="@+id/category_title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:padding="@dimen/spacing_double"
-      android:textAppearance="@style/Topeka.TextAppearance.CategoryItem"
-      />
+    <ImageView
+        android:id="@+id/category_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_avatar_toolbar"
+        android:contentDescription="@string/category"
+        />
+
+    <!--android:textAppearance Android之系统自带的文字外观设置及实际显示效果图-->
+    <TextView
+        android:id="@+id/category_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="@{category.name}"
+        android:textAppearance="@style/Topeka.TextAppearance.CategoryItem"
+        android:transitionName="@{category.name}"
+        android:padding="@dimen/spacing_double"
+        tools:targetApi="lollipop"
+        />
 
 
-</FrameLayout>
+
+  </FrameLayout>
+</layout>

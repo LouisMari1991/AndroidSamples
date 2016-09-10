@@ -1,8 +1,10 @@
 package com.googlesamples.topeka.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,12 +20,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.googlesamples.topeka.R;
+import com.googlesamples.topeka.databinding.ActivityCategorySelectionBinding;
 import com.googlesamples.topeka.fragment.CategorySelectionFragment;
 import com.googlesamples.topeka.helper.ApiLevelHelper;
 import com.googlesamples.topeka.helper.PreferencesHelper;
 import com.googlesamples.topeka.model.Player;
 import com.googlesamples.topeka.persistence.TopekaDatabaseHelper;
-import com.googlesamples.topeka.widget.AvatarView;
 
 /**
  * Created by YH on 2016/8/13.
@@ -50,13 +52,18 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    ActivityCategorySelectionBinding binding = DataBindingUtil
+        .setContentView(this, R.layout.activity_category_selection);
     Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
-    if (player == null) {
-      player = PreferencesHelper.getPlayer(this);
-    } else {
-      PreferencesHelper.writeToPreferences(this, player);
+    if (!PreferencesHelper.isSignedIn(this)) {
+      if (player == null) {
+        player = PreferencesHelper.getPlayer(this);
+      } else {
+        PreferencesHelper.writeToPreferences(this, player);
+      }
     }
-    setUpToolbar(player);
+    binding.setPlayer(player);
+    setUpToolbar();
     if (savedInstanceState == null) {
       attachCategoryGridFragment();
     } else {
@@ -72,15 +79,15 @@ public class CategorySelectionActivity extends AppCompatActivity {
     scoreView.setText(getString(R.string.x_points, score));
   }
 
-  private void setUpToolbar(Player player) {
+  private void setUpToolbar() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_player);
     setSupportActionBar(toolbar);
     //noinspection ConstantConditions
     getSupportActionBar().setDisplayShowTitleEnabled(false);
-    final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
-    avatarView.setAvatar(player.getAvatar().getDrawableId());
+    //final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
+    //avatarView.setAvatar(player.getAvatar().getDrawableId());
     // noinspection PrivateResource
-    ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
+    //((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,6 +97,10 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
+    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.category_container);
+    if (fragment != null) {
+      fragment.onActivityResult(requestCode, resultCode, data);
+    }
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -101,6 +112,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
+  @SuppressLint("NewApi")
   private void signOut() {
     PreferencesHelper.signOut(this);
     TopekaDatabaseHelper.reset(this);
@@ -109,12 +121,13 @@ public class CategorySelectionActivity extends AppCompatActivity {
           TransitionInflater.from(this).inflateTransition(R.transition.category_enter));
     }
     SignInActivity.start(this, false);
-    ActivityCompat.finishAfterTransition(this);
+    finish();
+    //ActivityCompat.finishAfterTransition(this);
   }
 
-  private String getDisplayName(Player player) {
-    return getString(R.string.player_display_name, player.getFirstName(), player.getLastInitial());
-  }
+  //private String getDisplayName(Player player) {
+  //  return getString(R.string.player_display_name, player.getFirstName(), player.getLastInitial());
+  //}
 
   private void attachCategoryGridFragment() {
     FragmentManager supportFragmentManager = getSupportFragmentManager();

@@ -3,20 +3,26 @@ package com.googlesamples.topeka.persistence;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.googlesamples.topeka.R;
+import com.googlesamples.topeka.model.Category;
 import com.googlesamples.topeka.model.JsonAttributes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * Database for storing and retrieving info for category and quizzes
+ * 数据库存储和检索信息的类别和测验
+ *
  * Author：Administrator on 2016/8/21 0021 11:30
  * Contact：289168296@qq.com
  */
@@ -26,6 +32,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
   private static final String DB_NAME = "topeka";
   private static final String DB_SUFFIX = ".db";
   private static final int DB_VERSION = 1;
+  private static List<Category> mCategories;
   private static TopekaDatabaseHelper mInstance;
   private final Resources mResources;
 
@@ -41,6 +48,33 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     }
     return mInstance;
   }
+
+  /**
+   * Gets all categories their quizzes.
+   * 得到所有类别测验。
+   *
+   * @param context The context this is running in.
+   * @param fromDatabase <code>true</code> if a data refresh is needed, else <code>false</code>
+   * @return All categories stored in the database.
+   */
+  public static List<Category> getCategories(Context context, boolean fromDatabase) {
+    if (mCategories == null || fromDatabase) {
+      //mCategories =
+    }
+    return mCategories;
+  }
+
+  private static List<Category> loadCategories(Context context) {
+    //Cursor data = TopekaDatabaseHelper.get
+    return  null;
+  }
+
+
+  private static Cursor getCategoryCursor(Context context) {
+    //SQLiteDatabase readableDatabase = getR
+    return  null;
+  }
+
 
   @Override public void onCreate(SQLiteDatabase sqLiteDatabase) {
     sqLiteDatabase.execSQL(CategoryTable.CREATE);

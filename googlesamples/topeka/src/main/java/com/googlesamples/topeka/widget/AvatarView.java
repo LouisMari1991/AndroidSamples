@@ -2,6 +2,7 @@ package com.googlesamples.topeka.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,17 +27,28 @@ import com.googlesamples.topeka.widget.outlineprovider.RoundOutlineProvider;
 public class AvatarView extends ImageView implements Checkable{
 
   private boolean mChecked;
+  private static final int NOT_FOUND = 0;
 
   public AvatarView(Context context) {
     super(context);
   }
 
   public AvatarView(Context context, AttributeSet attrs) {
-    super(context, attrs);
+    super(context, attrs, 0);
   }
 
   public AvatarView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
+
+    TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarView, defStyleAttr, 0);
+    try {
+      final int avatarDrawableId = a.getResourceId(R.styleable.AvatarView_avatar, NOT_FOUND);
+      if (avatarDrawableId != NOT_FOUND) {
+        setAvatar(avatarDrawableId);
+      }
+    } finally {
+      a.recycle();
+    }
   }
 
   @Override public void setChecked(boolean b) {
@@ -63,9 +75,9 @@ public class AvatarView extends ImageView implements Checkable{
   }
 
   private void setAvatarPreLollipop(@DrawableRes int redId) {
-    Drawable drawable = ResourcesCompat.getDrawable(getResources(), redId,
-        getContext().getTheme());
+    Drawable drawable = ResourcesCompat.getDrawable(getResources(), redId, getContext().getTheme());
     BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+    @SuppressLint("ConstantConditions")
     RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),
         bitmapDrawable.getBitmap());
     roundedBitmapDrawable.setCircular(true);
@@ -74,6 +86,7 @@ public class AvatarView extends ImageView implements Checkable{
 
   @Override protected void onDraw(@NonNull Canvas canvas) {
     super.onDraw(canvas);
+    // 画选中的圆弧
     if (mChecked) {
       Drawable border = ContextCompat.getDrawable(getContext(), R.drawable.selector_avatar);
       border.setBounds(0,0,getWidth(),getHeight());
