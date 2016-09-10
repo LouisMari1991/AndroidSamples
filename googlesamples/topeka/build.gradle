@@ -57,17 +57,24 @@ android {
 
 }
 
+ext{
+  junitVersion = "4.12"
+}
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  testCompile 'junit:junit:4.12'
+  testCompile "junit:junit:${junitVersion}"
 
   // android support
   compile rootProject.ext.libSupportAppcompat
   compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportDesign
+  compile rootProject.ext.libSupportCardView
+
 
   debugCompile rootProject.ext.debugDependencies.leakCanary
   releaseCompile rootProject.ext.releaseDependencies.leakCanary
   debugCompile rootProject.ext.debugDependencies.blockcanary
   releaseCompile rootProject.ext.debugDependencies.blockcanary
+
 }

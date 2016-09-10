@@ -1,6 +1,7 @@
 package com.googlesamples.topeka.fragment;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,12 +22,16 @@ import android.widget.GridView;
 import com.googlesamples.topeka.R;
 import com.googlesamples.topeka.activity.CategorySelectionActivity;
 import com.googlesamples.topeka.adapter.AvatarAdapter;
+import com.googlesamples.topeka.helper.ApiLevelHelper;
 import com.googlesamples.topeka.helper.PreferencesHelper;
 import com.googlesamples.topeka.helper.TransitionHelper;
 import com.googlesamples.topeka.model.Avatar;
 import com.googlesamples.topeka.model.Player;
 
 /**
+ *
+ * Enable selection of an {@link Avatar} and use name.
+ *
  * Created by Administrator on 2016/8/16 0016.
  */
 public class SignInFragment extends Fragment {
@@ -196,6 +201,17 @@ public class SignInFragment extends Fragment {
   private void performSignInWithTransition(View v) {
     final Activity activity = getActivity();
 
+    if (view == null || ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
+      // Don't run a transition if the passed view is null;
+      CategorySelectionActivity.start(activity, mPlayer);
+      activity.finish();
+      return;
+    }
+
+    if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+
+    }
+
     final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
         new Pair<>(v, activity.getString(R.string.transition_avatar)));
 
@@ -245,28 +261,3 @@ public class SignInFragment extends Fragment {
     return mAvatarGrid.getWidth() / (avatarSize + avatarPadding);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

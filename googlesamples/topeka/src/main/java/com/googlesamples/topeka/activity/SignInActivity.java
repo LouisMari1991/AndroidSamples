@@ -23,7 +23,8 @@ public class SignInActivity extends AppCompatActivity {
     Intent starter = new Intent(activity, SignInActivity.class);
     starter.putExtra(EXTRA_EDIT, edit);
     // noinspection unchecked
-    ActivityCompat.startActivity(activity, starter,
+    ActivityCompat.startActivity(activity,
+        starter,
         ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle());
   }
 
@@ -36,10 +37,6 @@ public class SignInActivity extends AppCompatActivity {
           .replace(R.id.sign_in_container, SignInFragment.newInstance(edit))
           .commit();
     }
-  }
-
-  @Override public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-
   }
 
   @Override protected void onStop() {
