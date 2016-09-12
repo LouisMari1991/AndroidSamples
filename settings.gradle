@@ -1,4 +1,5 @@
-include ':app', ':logger'
+include ':app'
+include ':common:logger'
 include ':googlesamples:unsplash'
 include ':googlesamples:topeka'
 include ':googlesamples:CustomTranstition'

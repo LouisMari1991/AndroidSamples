@@ -9,24 +9,26 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/common/logger" />
             <option value="$PROJECT_DIR$/googlesamples" />
             <option value="$PROJECT_DIR$/googlesamples/CustomTranstition" />
             <option value="$PROJECT_DIR$/googlesamples/DisplayingBitmaps" />
             <option value="$PROJECT_DIR$/googlesamples/topeka" />
             <option value="$PROJECT_DIR$/googlesamples/unsplash" />
-            <option value="$PROJECT_DIR$/logger" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/common/logger" />
             <option value="$PROJECT_DIR$/googlesamples" />
             <option value="$PROJECT_DIR$/googlesamples/CustomTranstition" />
             <option value="$PROJECT_DIR$/googlesamples/DisplayingBitmaps" />
             <option value="$PROJECT_DIR$/googlesamples/topeka" />
             <option value="$PROJECT_DIR$/googlesamples/unsplash" />
-            <option value="$PROJECT_DIR$/logger" />
           </set>
         </option>
       </GradleProjectSettings>
