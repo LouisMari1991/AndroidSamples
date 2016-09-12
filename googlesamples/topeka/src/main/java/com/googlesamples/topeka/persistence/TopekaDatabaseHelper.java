@@ -71,7 +71,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
 
   private static Cursor getCategoryCursor(Context context) {
-    //SQLiteDatabase readableDatabase = getR
+    //SQLiteDatabase readableDatabase = getRadasd
     return  null;
   }
 
