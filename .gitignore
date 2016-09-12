@@ -33,3 +33,5 @@ libs/
 logger.iml
 proguard-rules.pro
 src/
+.idea/workspace.xml
+logger/
