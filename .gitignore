@@ -27,3 +27,9 @@
  +*.iml
  +credential.properties
  +/captures
+.gitignore
+build.gradle
+libs/
+logger.iml
+proguard-rules.pro
+src/
