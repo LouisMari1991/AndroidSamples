@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/googlesamples/DisplayingBitmaps" />
             <option value="$PROJECT_DIR$/googlesamples/topeka" />
             <option value="$PROJECT_DIR$/googlesamples/unsplash" />
+            <option value="$PROJECT_DIR$/logger" />
           </set>
         </option>
         <option name="myModules">
@@ -25,6 +26,7 @@
             <option value="$PROJECT_DIR$/googlesamples/DisplayingBitmaps" />
             <option value="$PROJECT_DIR$/googlesamples/topeka" />
             <option value="$PROJECT_DIR$/googlesamples/unsplash" />
+            <option value="$PROJECT_DIR$/logger" />
           </set>
         </option>
       </GradleProjectSettings>
