@@ -3,15 +3,16 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="D:\Android\Android Studio\gradle\gradle-2.10" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/googlesamples" />
             <option value="$PROJECT_DIR$/googlesamples/CustomTranstition" />
-            <option value="$PROJECT_DIR$/googlesamples/DisplayingBitmaps" />
+            <option value="$PROJECT_DIR$/googlesamples/displayingbitmaps" />
             <option value="$PROJECT_DIR$/googlesamples/topeka" />
             <option value="$PROJECT_DIR$/googlesamples/unsplash" />
           </set>
@@ -22,7 +23,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/googlesamples" />
             <option value="$PROJECT_DIR$/googlesamples/CustomTranstition" />
-            <option value="$PROJECT_DIR$/googlesamples/DisplayingBitmaps" />
+            <option value="$PROJECT_DIR$/googlesamples/displayingbitmaps" />
             <option value="$PROJECT_DIR$/googlesamples/topeka" />
             <option value="$PROJECT_DIR$/googlesamples/unsplash" />
           </set>
