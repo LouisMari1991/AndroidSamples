@@ -5,6 +5,10 @@ package android.common.logger;
  */
 public class Log {
 
+  private Log() {
+    // no instance
+  }
+
   public static final int NODE = -1;
   public static final int VERBOSE = android.util.Log.VERBOSE;
   public static final int DEBUG = android.util.Log.DEBUG;
