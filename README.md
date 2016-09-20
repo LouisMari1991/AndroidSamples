@@ -1,5 +1,4 @@
-# AndroidSamples
-AndroidSamples for sync
+# AndroidSamples for sync
 
 Android Trainning SampleDames.
 
