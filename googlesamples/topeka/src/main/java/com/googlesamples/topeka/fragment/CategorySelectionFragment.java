@@ -45,9 +45,9 @@ public class CategorySelectionFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
   }
 
-  private void setUpQuizGrid(final RecyclerView categorireView) {
+  private void setUpQuizGrid(final RecyclerView categoriesView) {
     final int spacing = getContext().getResources().getDimensionPixelSize(R.dimen.spacing_nano);
-    categorireView.addItemDecoration(new OffsetDecoration(spacing));
+    categoriesView.addItemDecoration(new OffsetDecoration(spacing));
     mAdapter = new CategoryAdapter(getActivity());
     mAdapter.setOnitemClicklistener(new CategoryAdapter.OnItemClickListener() {
       @Override public void onCLick(View view, int position) {
@@ -56,11 +56,11 @@ public class CategorySelectionFragment extends Fragment {
             mAdapter.getItem(position));
       }
     });
-    categorireView.setAdapter(mAdapter);
-    categorireView.getViewTreeObserver()
+    categoriesView.setAdapter(mAdapter);
+    categoriesView.getViewTreeObserver()
         .addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
           @Override public boolean onPreDraw() {
-            categorireView.getViewTreeObserver().removeOnPreDrawListener(this);
+            categoriesView.getViewTreeObserver().removeOnPreDrawListener(this);
             getActivity().supportStartPostponedEnterTransition();
             return true;
           }

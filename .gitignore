@@ -11,3 +11,5 @@ Gemfile.lock
 _site/
 libs/
 src/main/res/drawable/
+src/main/java/com/googlesamples/topeka/widget/fab/
+src/main/java/com/googlesamples/topeka/widget/quiz/
