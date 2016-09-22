@@ -2,6 +2,5 @@ include ':app'
 include ':common:logger'
 include ':googlesamples:unsplash'
 include ':googlesamples:topeka'
-include ':googlesamples:CustomTranstition'
 include ':googlesamples:DisplayingBitmaps'
 

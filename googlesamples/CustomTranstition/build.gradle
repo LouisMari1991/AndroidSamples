@@ -8,8 +8,8 @@ android {
     applicationId "com.googlesamples.customtransition"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode rootProject.ext.versionCode
-    versionName rootProject.ext.versionName
+    versionCode 1
+    versionName "1.0"
 
     jackOptions {
       enabled true

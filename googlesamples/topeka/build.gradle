@@ -13,8 +13,8 @@ android {
     applicationId "com.googlesamples.topeka"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode rootProject.ext.versionCode
-    versionName rootProject.ext.versionName
+    versionCode 2
+    versionName "2.0"
 
 //    jackOptions {
 //      enabled true
@@ -81,5 +81,7 @@ dependencies {
   releaseCompile rootProject.ext.releaseDependencies.leakCanary
   debugCompile rootProject.ext.debugDependencies.blockcanary
   releaseCompile rootProject.ext.debugDependencies.blockcanary
+
+  compile project(':common:logger')
 
 }

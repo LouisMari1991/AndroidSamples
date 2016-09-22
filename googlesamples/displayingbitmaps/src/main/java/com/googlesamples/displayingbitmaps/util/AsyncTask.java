@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by sync on 2016/5/21.
+ * @see android.os.AsyncTask
  */
 public class AsyncTask<Params, Progress, Result> {
     private static final String LOG_TAG = "AsyncTask";

@@ -3,7 +3,6 @@ package com.googlesamples.topeka.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.googlesamples.topeka.R;
 import com.googlesamples.topeka.fragment.SignInFragment;
 import com.googlesamples.topeka.helper.PreferencesHelper;
+import com.sync.logger.Logger;
 
 /**
  * Created by YH on 2016/8/13.
@@ -30,6 +30,7 @@ public class SignInActivity extends AppCompatActivity {
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Logger.i("onCreate");
     setContentView(R.layout.activity_sign_in);
     final boolean edit = isInEditMode();
     if (savedInstanceState == null) {
