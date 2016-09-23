@@ -3,4 +3,5 @@ include ':common:logger'
 include ':googlesamples:unsplash'
 include ':googlesamples:topeka'
 include ':googlesamples:DisplayingBitmaps'
+include ':googlesamples:CustomTranstition'
 
