@@ -6,10 +6,10 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import com.googlesamples.topeka.R;
 import com.googlesamples.topeka.model.Category;
 import com.googlesamples.topeka.model.JsonAttributes;
+import com.sync.logger.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,7 +59,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
    */
   public static List<Category> getCategories(Context context, boolean fromDatabase) {
     if (mCategories == null || fromDatabase) {
-      //mCategories =
+      mCategories = loadCategories(context);
     }
     return mCategories;
   }
@@ -93,10 +93,14 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
 
   public static void reset(Context context) {
-    SQLiteDatabase writebleDatable = getWritableDatabase(context);
-    writebleDatable.delete(CategoryTable.NAME, null, null);
-    writebleDatable.delete(QuizTable.NAME, null, null);
-    getInstance(context).preFillDatabase(writebleDatable);
+    SQLiteDatabase writableDatabase = getWritableDatabase(context);
+    writableDatabase.delete(CategoryTable.NAME, null, null);
+    writableDatabase.delete(QuizTable.NAME, null, null);
+    getInstance(context).preFillDatabase(writableDatabase);
+  }
+
+  private static SQLiteDatabase getReadableDatabase(Context context){
+    return getInstance(context).getReadableDatabase();
   }
 
   public static SQLiteDatabase getWritableDatabase(Context context) {
@@ -107,15 +111,17 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     try{
       db.beginTransaction();
       try{
-        db.setTransactionSuccessful();
         fillCategoriesAndQuizzes(db);
+        db.setTransactionSuccessful();
       } finally {
         db.endTransaction();
       }
     } catch (IOException | JSONException e){
-      Log.e(TAG, "preFillDatabase", e);
+      Logger.e("preFillDatabase", e);
     }
   }
+
+
 
   private void fillCategoriesAndQuizzes(SQLiteDatabase db) throws JSONException, IOException {
     ContentValues values = new ContentValues(); // reduce, reuse
