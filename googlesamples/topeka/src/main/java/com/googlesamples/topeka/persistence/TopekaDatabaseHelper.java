@@ -66,15 +66,13 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
   private static List<Category> loadCategories(Context context) {
     //Cursor data = TopekaDatabaseHelper.get
-    return  null;
+    return null;
   }
-
 
   private static Cursor getCategoryCursor(Context context) {
     //SQLiteDatabase readableDatabase = getRadasd
-    return  null;
+    return null;
   }
-
 
   @Override public void onCreate(SQLiteDatabase sqLiteDatabase) {
     sqLiteDatabase.execSQL(CategoryTable.CREATE);
@@ -91,7 +89,6 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     return 0;
   }
 
-
   public static void reset(Context context) {
     SQLiteDatabase writableDatabase = getWritableDatabase(context);
     writableDatabase.delete(CategoryTable.NAME, null, null);
@@ -99,7 +96,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     getInstance(context).preFillDatabase(writableDatabase);
   }
 
-  private static SQLiteDatabase getReadableDatabase(Context context){
+  private static SQLiteDatabase getReadableDatabase(Context context) {
     return getInstance(context).getReadableDatabase();
   }
 
@@ -108,35 +105,31 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
   }
 
   private void preFillDatabase(SQLiteDatabase db) {
-    try{
+    try {
       db.beginTransaction();
-      try{
+      try {
         fillCategoriesAndQuizzes(db);
         db.setTransactionSuccessful();
       } finally {
         db.endTransaction();
       }
-    } catch (IOException | JSONException e){
+    } catch (IOException | JSONException e) {
       Logger.e("preFillDatabase", e);
     }
   }
-
-
 
   private void fillCategoriesAndQuizzes(SQLiteDatabase db) throws JSONException, IOException {
     ContentValues values = new ContentValues(); // reduce, reuse
     JSONArray jsonArray = new JSONArray(readCategoriesFromResource());
     JSONObject category;
-    for (int i = 0; i < jsonArray.length(); i++){
+    for (int i = 0; i < jsonArray.length(); i++) {
       category = jsonArray.getJSONObject(i);
       final String categoryid = category.getString(JsonAttributes.ID);
-
     }
-
   }
 
   /**
-   *  Read categories.json properties file.
+   * Read categories.json properties file.
    *
    * @return properties file to String.
    * @throws IOException
@@ -154,13 +147,9 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
   }
 
   private void fillCategory(SQLiteDatabase db, ContentValues values, JSONObject category,
-      String categoryid) throws JSONException{
-      values.clear();
-
+      String categoryid) throws JSONException {
+    values.clear();
   }
-
-
-
 }
 
 
