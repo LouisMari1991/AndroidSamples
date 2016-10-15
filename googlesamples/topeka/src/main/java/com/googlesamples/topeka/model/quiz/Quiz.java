@@ -2,6 +2,10 @@ package com.googlesamples.topeka.model.quiz;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+import com.googlesamples.topeka.helper.ParcelableHelper;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * This abstract provider general structure for quizzes.
@@ -19,7 +23,7 @@ public abstract class Quiz<A> implements Parcelable {
     @Override
     public Quiz createFromParcel(Parcel in) {
       int oridinal = in.readInt();
-      QuizType type = QuizType.Values()[oridinal];
+      QuizType type = QuizType.values()[oridinal];
       try {
         Constructor<? extends Quiz> constructor = type.getType()
                 .getConstructor(Parcel.class);
@@ -92,7 +96,7 @@ public abstract class Quiz<A> implements Parcelable {
   }
 
   public boolean isAnswerCorrect(A answer) {
-    return mAnswer.equals(answer)
+    return mAnswer.equals(answer);
   }
 
   public boolean isSolved() {
