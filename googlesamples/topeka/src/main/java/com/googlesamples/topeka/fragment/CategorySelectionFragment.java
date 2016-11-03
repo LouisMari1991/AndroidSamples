@@ -49,7 +49,7 @@ public class CategorySelectionFragment extends Fragment {
     final int spacing = getContext().getResources().getDimensionPixelSize(R.dimen.spacing_nano);
     categoriesView.addItemDecoration(new OffsetDecoration(spacing));
     mAdapter = new CategoryAdapter(getActivity());
-    mAdapter.setOnitemClicklistener(new CategoryAdapter.OnItemClickListener() {
+    mAdapter.setOnItemClicklistener(new CategoryAdapter.OnItemClickListener() {
       @Override public void onCLick(View view, int position) {
         Activity activity = getActivity();
         startQuizActivityWithTransition(activity, view.findViewById(R.id.category_title),

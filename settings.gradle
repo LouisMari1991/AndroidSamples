@@ -1,7 +1,8 @@
 include ':app'
 include ':common:logger'
+include ':common:once'
 include ':googlesamples:unsplash'
 include ':googlesamples:topeka'
 include ':googlesamples:DisplayingBitmaps'
 include ':googlesamples:CustomTranstition'
-
+include ':blogersamples:inspectwechatfriend'

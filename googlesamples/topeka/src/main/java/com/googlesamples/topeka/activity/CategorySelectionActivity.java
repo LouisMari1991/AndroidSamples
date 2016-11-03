@@ -52,8 +52,8 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ActivityCategorySelectionBinding binding = DataBindingUtil
-        .setContentView(this, R.layout.activity_category_selection);
+    ActivityCategorySelectionBinding binding =
+        DataBindingUtil.setContentView(this, R.layout.activity_category_selection);
     Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
     if (!PreferencesHelper.isSignedIn(this)) {
       if (player == null) {
@@ -112,8 +112,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  @SuppressLint("NewApi")
-  private void signOut() {
+  @SuppressLint("NewApi") private void signOut() {
     PreferencesHelper.signOut(this);
     TopekaDatabaseHelper.reset(this);
     if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
