@@ -26,7 +26,7 @@ public class PersistedMap {
   private void waitForLoad() {
     if (preferenceLoader != null) return;
 
-    
+
 
   }
 }
