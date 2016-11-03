@@ -125,8 +125,6 @@ public class PerformClickUtils {
       }
       service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
     }
-
-
   }
 
 }

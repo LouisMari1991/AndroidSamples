@@ -5,7 +5,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="D:\Android\Android Studio\gradle\gradle-2.10" />
+        <option name="gradleHome" value="D:\software\AndroidDev\Android\Android Studio\gradle\gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -14,12 +14,12 @@
             <option value="$PROJECT_DIR$/blogersamples/inspectwechatfriend" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/common/logger" />
+            <option value="$PROJECT_DIR$/common/once" />
             <option value="$PROJECT_DIR$/googlesamples" />
             <option value="$PROJECT_DIR$/googlesamples/CustomTranstition" />
             <option value="$PROJECT_DIR$/googlesamples/DisplayingBitmaps" />
             <option value="$PROJECT_DIR$/googlesamples/topeka" />
             <option value="$PROJECT_DIR$/googlesamples/unsplash" />
-            <option value="$PROJECT_DIR$/inspectwechatfriend" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
