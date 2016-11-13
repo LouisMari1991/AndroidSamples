@@ -4,7 +4,7 @@ package com.sync.once;
  * Created by YH on 2016-11-03.
  */
 
-public class Amout {
+public class Amount {
 
   public static CountChecker exactly(final int numberOfTimes) {
     return new CountChecker() {
