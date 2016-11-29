@@ -32,3 +32,5 @@ build
 *~
 *.swp
 .DS_Store
+
+*.imi
