@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import com.googlesamples.unsplash.data.UnsplashService;
 import com.googlesamples.unsplash.data.model.Photo;
 import com.googlesamples.unsplash.databinding.PhotoItemBinding;
-import com.googlesamples.unsplash.ui.DetailShareElementEnterCallback;
+import com.googlesamples.unsplash.ui.DetailSharedElementEnterCallback;
 import com.googlesamples.unsplash.ui.TransitionCallback;
 import com.googlesamples.unsplash.ui.grid.GridMarginDecoration;
 import com.googlesamples.unsplash.ui.grid.OnItemSelectedListener;
@@ -149,7 +149,7 @@ public class MainActivity extends Activity {
       return;
     }
 
-    DetailShareElementEnterCallback callback = new DetailShareElementEnterCallback(getIntent());
+    DetailSharedElementEnterCallback callback = new DetailSharedElementEnterCallback(getIntent());
     //callback.setBin
 
   }

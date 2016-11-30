@@ -70,6 +70,7 @@ dependencies {
   // android support
   compile rootProject.ext.libSupportAppcompat
   compile rootProject.ext.libSupportDesign
+  compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportRecyclerview
   compile rootProject.ext.libSupportAnnotations
 
