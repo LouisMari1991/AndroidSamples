@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import com.googlesamples.unsplash.data.model.Photo;
 import com.googlesamples.unsplash.ui.DetailSharedElementEnterCallback;
+import com.googlesamples.unsplash.ui.pager.DetailViewPagerAdapter;
 import java.util.ArrayList;
 
 /**
@@ -61,7 +62,8 @@ public class DetailActivity extends Activity {
 
   private void setUpViewPager(ArrayList<Photo> photos) {
     viewPager = (ViewPager) findViewById(R.id.pager);
-    //viewPager.setAdapter(new DetailViewPagerAdapter(this,photos, sharedElementCallback));
+    viewPager.setAdapter(new DetailViewPagerAdapter(this,photos, sharedElementCallback));
+
   }
 
   @Override protected void onSaveInstanceState(Bundle outState) {
