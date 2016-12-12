@@ -29,24 +29,24 @@
         >
 
       <include
+          layout="@layout/sign_in_username"
           android:layout_width="match_parent"
           android:layout_height="0dp"
           android:layout_weight="1"
-         layout="@layout/sign_in_username"
           />
 
       <include
+          layout="@layout/sign_in_avatars"
           android:layout_width="match_parent"
           android:layout_height="0dp"
           android:layout_weight="2"
-          layout="@layout/sign_in_avatars"
           />
 
     </LinearLayout>
 
     <include
         layout="@layout/fab_done"
-        android:visibility="gone"
+        android:visibility="visible"
         />
 
   </FrameLayout>
