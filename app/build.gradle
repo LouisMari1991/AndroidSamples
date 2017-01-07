@@ -70,13 +70,12 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile fileTree(include: ['*.jar'], dir: 'libs')
   testCompile 'junit:junit:4.12'
   // android support
   compile rootProject.ext.libSupportAppcompat
   compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportDesign
-
   debugCompile rootProject.ext.debugDependencies.leakCanary
   releaseCompile rootProject.ext.releaseDependencies.leakCanary
   debugCompile rootProject.ext.debugDependencies.blockcanary

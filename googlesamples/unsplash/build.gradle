@@ -11,7 +11,7 @@ android {
 
   defaultConfig {
     applicationId "com.googlesamples.unsplash"
-    minSdkVersion rootProject.ext.minSdkVersion
+    minSdkVersion 21
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
@@ -69,8 +69,8 @@ dependencies {
   testCompile 'junit:junit:4.12'
   // android support
   compile rootProject.ext.libSupportAppcompat
-  compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportDesign
+  compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportRecyclerview
   compile rootProject.ext.libSupportAnnotations
 

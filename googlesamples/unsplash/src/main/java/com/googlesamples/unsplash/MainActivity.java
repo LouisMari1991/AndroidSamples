@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import com.googlesamples.unsplash.data.UnsplashService;
 import com.googlesamples.unsplash.data.model.Photo;
 import com.googlesamples.unsplash.databinding.PhotoItemBinding;
-import com.googlesamples.unsplash.ui.DetailShareElementEnterCallback;
+import com.googlesamples.unsplash.ui.DetailSharedElementEnterCallback;
 import com.googlesamples.unsplash.ui.TransitionCallback;
 import com.googlesamples.unsplash.ui.grid.GridMarginDecoration;
 import com.googlesamples.unsplash.ui.grid.OnItemSelectedListener;
@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
       unsplashApi.getFeed(new Callback<List<Photo>>() {
         @Override public void success(List<Photo> photos, Response response) {
           // the first items not interesting to us, get the last <n>
-          relevantPhotos = new ArrayList<Photo>(photos.subList(photos.size() - PHOTO_COUNT,
+          relevantPhotos = new ArrayList<>(photos.subList(photos.size() - PHOTO_COUNT,
               photos.size()));
           populateGrid();
         }
@@ -99,8 +99,7 @@ public class MainActivity extends Activity {
           return;
         }
         PhotoItemBinding binding = ((PhotoViewHolder) holder).getBinding();
-        final Intent intent =
-            getDetailActivityStartIntent(MainActivity.this, relevantPhotos, position, binding);
+        final Intent intent = getDetailActivityStartIntent(MainActivity.this, relevantPhotos, position, binding);
         final ActivityOptions activityOptions = getActivityOptions(binding);
         MainActivity.this.startActivityForResult(intent, IntentUtil.REQUEST_CODE,
             activityOptions.toBundle());
@@ -114,7 +113,14 @@ public class MainActivity extends Activity {
     super.onSaveInstanceState(outState);
   }
 
-  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  /**
+   * 当返回到activityA的时候，要去获取activityB返回的信息，
+   * 可以在onActivityReenter(int requestCode, Intent data)方法里面获取，
+   * 比如这里获取到返回的position信息
+   * @author YH
+   * @time 2016-11-29 11:47
+   */
+  @Override public void onActivityReenter(int resultCode, Intent data) {
     postponeEnterTransition();
     // Start the postponed transition when the recycler view is ready to be drawn.
     // 延时启动动画， 当Recycler view 已经当好了
@@ -131,7 +137,9 @@ public class MainActivity extends Activity {
       return;
     }
 
+    // 获取DetailActivity返回的RecyclerView的position
     final int selectedItem = data.getIntExtra(IntentUtil.SELECTED_ITEM_POSITION, 0);
+    // RecyclerView滑动到对应的position
     grid.scrollToPosition(selectedItem);
 
     PhotoViewHolder holder = (PhotoViewHolder) grid.findViewHolderForAdapterPosition(selectedItem);
@@ -141,8 +149,8 @@ public class MainActivity extends Activity {
       return;
     }
 
-    DetailShareElementEnterCallback callback = new DetailShareElementEnterCallback(getIntent());
-    //callback.set
+    DetailSharedElementEnterCallback callback = new DetailSharedElementEnterCallback(getIntent());
+    //callback.setBin
 
   }
 
