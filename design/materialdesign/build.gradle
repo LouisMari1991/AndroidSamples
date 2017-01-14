@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    applicationId "com.sync.materialdesign"
+    minSdkVersion rootProject.ext.targetSdkVersion
+    targetSdkVersion 25
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  packagingOptions {
+    exclude 'LICENSE.txt'
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/ASL2.0'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/notice.txt'
+    exclude 'META-INF/license.txt'
+    exclude 'META-INF/dependencies.txt'
+    exclude 'META-INF/LGPL2.1'
+    exclude 'META-INF/ASL2.0'
+  }
+
+  lintOptions {
+    abortOnError rootProject.ext.abortOnLintError
+    checkReleaseBuilds rootProject.ext.checkLintRelease
+    quiet true
+    ignoreWarnings true
+    // Some libraries have issues with this.
+    disable 'InvalidPackage'
+    // Lint gives this warning but SDK 20 would be Android L Beta.
+    disable 'OldTargetApi'
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  testCompile 'junit:junit:4.12'
+
+  /* Android Support */
+  compile rootProject.ext.libSupportAppcompat
+}

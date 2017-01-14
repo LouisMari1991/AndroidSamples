@@ -1,4 +1,4 @@
-def supportVersion = '25.0.1'
+def supportVersion = '25.1.0'
 
 def leakCanaryVersion = "1.4-beta2"
 def blockCanaryVersion = '1.1.4'
