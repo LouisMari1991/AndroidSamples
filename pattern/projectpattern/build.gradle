@@ -4,6 +4,10 @@ android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
 
+  dataBinding {
+    enabled = true;
+  }
+
   defaultConfig {
     applicationId "com.sync.projectpattern"
     minSdkVersion rootProject.ext.minSdkVersion
@@ -12,9 +16,11 @@ android {
     versionName "1.0"
   }
 
+
+
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled false // 需不需要利用下面的proguard文件来混淆代码
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
@@ -48,6 +54,8 @@ android {
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
+
+  compile project(':common:logger')
 
   /* android support */
   compile rootProject.ext.libSupportAppcompat
