@@ -39,16 +39,16 @@ android {
     exclude 'META-INF/ASL2.0'
   }
 
-  lintOptions {
-    abortOnError rootProject.ext.abortOnLintError
-    checkReleaseBuilds rootProject.ext.checkLintRelease
-    quiet true
-    ignoreWarnings true
-    // Some libraries have issues with this.
-    disable 'InvalidPackage'
-    // Lint gives this warning but SDK 20 would be Android L Beta.
-    disable 'OldTargetApi'
-  }
+//  lintOptions {
+//    abortOnError rootProject.ext.abortOnLintError
+//    checkReleaseBuilds rootProject.ext.checkLintRelease
+//    quiet true
+//    ignoreWarnings true
+//    // Some libraries have issues with this.
+//    disable 'InvalidPackage'
+//    // Lint gives this warning but SDK 20 would be Android L Beta.
+//    disable 'OldTargetApi'
+//  }
 }
 
 dependencies {

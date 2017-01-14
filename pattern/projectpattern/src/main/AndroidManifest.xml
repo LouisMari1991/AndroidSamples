@@ -17,6 +17,8 @@
     </activity>
     <activity android:name=".mvc.LoadDataActivity"/>
     <activity android:name=".mvp.UserLoginActivity"/>
+    <activity android:name=".mvpdatabinding.MvpDataBindingActivity"/>
+    <activity android:name=".mvvm.ChangeAgeActivity"/>
   </application>
 
 </manifest>
