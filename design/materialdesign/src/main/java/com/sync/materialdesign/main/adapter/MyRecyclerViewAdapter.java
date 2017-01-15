@@ -29,8 +29,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
 
   private OnItemClickListener mOnItemClickListener;
 
-  public void setOnItemClickListener(
-      MyRecyclerViewAdapter.OnItemClickListener listener) {
+  public void setOnItemClickListener(MyRecyclerViewAdapter.OnItemClickListener listener) {
     mOnItemClickListener = listener;
   }
 
@@ -57,6 +56,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
     return holder;
   }
 
+  /**
+   * 绑定ViewHolder,给item中的控件设置数据
+   * 2017/1/15 0015 16:05
+   */
   @Override public void onBindViewHolder(final MyRecyclerViewHolder holder, final int position) {
     if (mOnItemClickListener != null) {
       holder.itemView.setOnClickListener(new View.OnClickListener() {
