@@ -6,8 +6,8 @@ android {
 
   defaultConfig {
     applicationId "com.sync.materialdesign"
-    minSdkVersion rootProject.ext.targetSdkVersion
-    targetSdkVersion 25
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
   }
@@ -50,4 +50,9 @@ dependencies {
 
   /* Android Support */
   compile rootProject.ext.libSupportAppcompat
+  compile rootProject.ext.libSupportV4
+  compile rootProject.ext.libSupportDesign
+  compile rootProject.ext.libSupportCardView
+  compile rootProject.ext.libSupportRecyclerview
+  compile rootProject.ext.libGlide
 }
