@@ -1,24 +1,29 @@
 package com.sync.materialdesign;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.TableLayout;
+import android.view.MenuItem;
 import com.sync.materialdesign.main.MyFragment;
 import com.sync.materialdesign.main.adapter.MyViewPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
+
 public class MainActivity extends AppCompatActivity {
 
   private DrawerLayout mDrawerLayout;
   private Toolbar mToolbar;
-  private TableLayout mTabLayout;
+  private TabLayout mTabLayout;
   private ViewPager mViewPager;
   private NavigationView mNavigationView;
 
@@ -53,10 +58,33 @@ public class MainActivity extends AppCompatActivity {
     mViewPager.setOffscreenPageLimit(5);
     // 给ViewPager添加页面动态监听器（为了让Toolbar中的Title可以变化相应的Tab的标题）
     onViewPagerChange();
+    mTabLayout.setTabMode(MODE_SCROLLABLE);
+    mTabLayout.setupWithViewPager(mViewPager);
+  }
+
+  @Override public void onBackPressed() {
+    if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+      mDrawerLayout.closeDrawer(GravityCompat.START);
+    } else {
+      super.onBackPressed();
+    }
   }
 
   private void onViewPagerChange() {
+    mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+      }
+
+      @Override public void onPageSelected(int position) {
+
+      }
+
+      @Override public void onPageScrollStateChanged(int state) {
+
+      }
+    });
   }
 
   private void initData() {
@@ -72,13 +100,20 @@ public class MainActivity extends AppCompatActivity {
   private void initView() {
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     mToolbar = (Toolbar) findViewById(R.id.tool_bar);
-    mTabLayout = (TableLayout) findViewById(R.id.tab_layout);
+    mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
     mViewPager = (ViewPager) findViewById(R.id.view_pager);
     mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
   }
 
   private void onNavigationViewMenuItemSelected() {
+    mNavigationView.setNavigationItemSelectedListener(
+        new NavigationView.OnNavigationItemSelectedListener() {
+          @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+
+            }
+            return true;
+          }
+        });
   }
-
-
 }
