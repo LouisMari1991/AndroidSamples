@@ -16,10 +16,11 @@ public abstract class BaseActivity<SV extends ViewDataBinding> extends AppCompat
 
   protected SV bindingView;
 
-  private ActivityBaseBinding mBaseBinding;
+  //private ActivityBaseBinding mBaseBinding;
 
   @Override public void setContentView(@LayoutRes int layoutResID) {
     bindingView = DataBindingUtil.inflate(LayoutInflater.from(this), layoutResID, null, false);
+
   }
 
   protected <T extends View> T getView(@IdRes int id) {
