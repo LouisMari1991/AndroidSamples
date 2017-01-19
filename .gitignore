@@ -32,10 +32,9 @@ build
 *~
 *.swp
 .DS_Store
+*.log
 
 *.imi
 
 projectFilesBackup
-DebugTool/
-libs/
-src/main/res/drawable/
+
