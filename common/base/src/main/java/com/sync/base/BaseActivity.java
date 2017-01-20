@@ -7,6 +7,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import com.sync.base.databinding.ActivityBaseBinding;
 
 /**
  * Created by YH on 2017-01-19.
@@ -16,9 +17,10 @@ public abstract class BaseActivity<SV extends ViewDataBinding> extends AppCompat
 
   protected SV bindingView;
 
-  //private ActivityBaseBinding mBaseBinding;
+  private ActivityBaseBinding mBaseBinding;
 
   @Override public void setContentView(@LayoutRes int layoutResID) {
+    mBaseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base);
     bindingView = DataBindingUtil.inflate(LayoutInflater.from(this), layoutResID, null, false);
 
   }
