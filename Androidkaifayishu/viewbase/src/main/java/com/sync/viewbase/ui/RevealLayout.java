@@ -174,7 +174,7 @@ public class RevealLayout extends LinearLayout implements Runnable {
     public MotionEvent event;
 
     @Override public void run() {
-      if (mTouchTarget == null || mTouchTarget.isEnabled()) return;
+      if (mTouchTarget == null || !mTouchTarget.isEnabled()) return;
       if (isTouchPointInView(mTouchTarget, (int) event.getRawX(), (int) event.getRawY())) {
         mTouchTarget.performClick();
       }
