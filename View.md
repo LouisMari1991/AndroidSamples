@@ -50,4 +50,9 @@ y = top + translationY
 
  　上述三种情况是典型的时间序列，同时通过 MotionEvent 对象我们可以得到点击事件发生的x和y坐标。为此，系统系统了两组方法：getX/getY和getRawX和getRawY。它们的区别其实很简单，getX/getY返回的是相对于当前View左上角的x和y坐标，而getRawX和getRawY返回的是相对于手机屏幕左上角的x和y坐标。
 
+#####点击事件传递规则：
+　　所谓的点击事件的事件分发，其实就是对MotionEvent事件的分发过程，即当一个MotionEvent产生了以后，系统需要把这个事件传递给一个具体的View，而这个传递的过程就是分发的过程。点击事件的分发过程由三个很重要的方法来共同完成：`dispatchTouchEvent`,`onInterceptTouchEvent`和`onTouchEvent`
 
+>* `public boolean dispatchTouchEvent(MotionEvent event)`; 用来进行事件的分发。如果事件能够传递给当前View，那么此方法一定会被调用，返回结果受当前View的`onTouchEvent`和下级View的`dispatchTouchEvent`方法影响，表示是否消耗当前事件。
+>* `public boolean onInterceptTouchEvent(MotionEvent event)`; 在上述方法内部调用，用来判断是否拦截某个事件，如果当前View拦截了某个事件，那么在同一个事件序列中，此方法不会被再次调用，返回结果表示是否拦截当前事件。
+>* `public boolean onTouchEvent(MotionEvent event)` ; 在`dispatchTouchEvent`方法中调用，用来处理点击事件，返回结果标识是否消耗当前事件，如果不消耗，则在同一个事件序列中，当前view无法再次接收到事件。
