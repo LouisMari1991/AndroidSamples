@@ -9,6 +9,14 @@ Right = getRight();
 Top = getTop();
 Bottom = getBottom();
 ```
+ 　　
+　　从Android3.0开始，View增加几个额外的参数：x,y,translationX,translationY, 其中x和y是View左上角的坐标，而translationX和translationY是View左上角相对于父容器的偏移量。这几个参数也是相对于父容器的坐标，并且translationX和translationY的默认值是0，和View的四个基本位置参数一样，View也为它们提供了get/set方法，这几个参数的换算关系如下所示：
+```
+x = left + translationX
+y = top + translationY
+```
+
+　　需要注意的是，在View平移的过程中，`top`和`left`表示的是原始左上角的位置信息，其值并不会发生改变，此时发生该表的是`x`,`y`,`translationX`,`translationY`这四个参数
 
 ----------
 
