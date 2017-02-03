@@ -19,7 +19,21 @@ y = top + translationY
 　　需要注意的是，在View平移的过程中，`top`和`left`表示的是原始左上角的位置信息，其值并不会发生改变，此时发生改变的是`x`,`y`,`translationX`,`translationY`这四个参数
 
 ----------
+###View getWidth()和getMeasuredWidth()
 
+![这里写图片描述](http://s12.sinaimg.cn/middle/6e519585gbdc2eebf9fab&690)
+
+　　getMeasuredWidth()获取的是view原始的大小，也就是这个view在XML文件中配置或者是代码中设置的大小。getWidth（）获取的是这个view最终显示的大小，这个大小有可能等于原始的大小也有可能不等于原始大小。
+
+
+----------
+###View滑动的三种常用方式
+
+>* scrollTo/scrollBy:操作简单，适合对View内容的滑动；
+>* 动画：操作简单，主要适用于没有交互的View和实现复杂的动画效果；
+>* 改变布局参数：操作稍复杂，适用于没有交互的View。
+
+----------
 ####View事件分发机制
 
 #####MotionEvent:
@@ -35,3 +49,5 @@ y = top + translationY
    >* 点击屏幕滑一会再松开，事件顺序为 DOWN→MOVE→...→MOVE→UP
 
  　上述三种情况是典型的时间序列，同时通过 MotionEvent 对象我们可以得到点击事件发生的x和y坐标。为此，系统系统了两组方法：getX/getY和getRawX和getRawY。它们的区别其实很简单，getX/getY返回的是相对于当前View左上角的x和y坐标，而getRawX和getRawY返回的是相对于手机屏幕左上角的x和y坐标。
+
+
