@@ -16,7 +16,7 @@ x = left + translationX
 y = top + translationY
 ```
 
-　　需要注意的是，在View平移的过程中，`top`和`left`表示的是原始左上角的位置信息，其值并不会发生改变，此时发生该表的是`x`,`y`,`translationX`,`translationY`这四个参数
+需要注意的是，在View平移的过程中，`top`和`left`表示的是原始左上角的位置信息，其值并不会发生改变，此时发生改变的是`x`,`y`,`translationX`,`translationY`这四个参数
 
 ----------
 
