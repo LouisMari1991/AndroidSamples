@@ -56,3 +56,23 @@ y = top + translationY
 >* `public boolean dispatchTouchEvent(MotionEvent event)`; 用来进行事件的分发。如果事件能够传递给当前View，那么此方法一定会被调用，返回结果受当前View的`onTouchEvent`和下级View的`dispatchTouchEvent`方法影响，表示是否消耗当前事件。
 >* `public boolean onInterceptTouchEvent(MotionEvent event)`; 在上述方法内部调用，用来判断是否拦截某个事件，如果当前View拦截了某个事件，那么在同一个事件序列中，此方法不会被再次调用，返回结果表示是否拦截当前事件。
 >* `public boolean onTouchEvent(MotionEvent event)` ; 在`dispatchTouchEvent`方法中调用，用来处理点击事件，返回结果标识是否消耗当前事件，如果不消耗，则在同一个事件序列中，当前view无法再次接收到事件。
+
+它们之间的关系可以用如下伪代码表示：
+```
+public boolean dispatchTouchEvent(MotionEvent ev){
+	boolean consume = false;
+	if(onInterceptTouchEvent(ev){
+		consume = onTouchEvent(ev);
+	} else {
+		consume = clild.dispatchTouchEvent(ev);
+	}
+	return consume;
+}
+```
+
+当一个点击事件产生后，它的传递过程遵循如下顺序：Activity→Window→View。如果一个View的`onTouchEvent`返回false，那么它的父容器的`onTouchEvent`将会被调用，依次类推。如果所有的元素都不处理这个事件，那么这个事件将会最终传递给Activity处理，即Activity的`onTouchEvent`方法会被调用。
+
+View事件传递结论：
+
+1. 同一个事件序列是从手指接触屏幕那一刻起，到手指离开屏幕的那一刻结束，在这个过程中所产生的一系列事件，这个事件序列以`down`事件开始，中间含有数量不定的`move`事件，最终以`up`事件结束。
+2. 正常情况下，一个事件序列只能被一个View拦截且消耗。因为一旦一个元素拦截了此事件，那么同一个事件序列内的所有事件都会直接交给它处理，因此同一个事件序列中的事件不能分别由两个View同时处理，但是通过特殊手段可以做到，比如一个View将本该自己处理的事件通过`onTouchEvent`强行传递给其他View处理。
