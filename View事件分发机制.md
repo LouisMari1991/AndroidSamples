@@ -1,4 +1,18 @@
-###View事件分发机制
+####View位置参数
+ 　　View的位置主要是由它的四个顶点来决定，分别对应于View的四个属性：top,left,right,bottom, 其中top是左上角纵坐标，left是左上角横坐标，right是右下角横坐标，bottom是右下角总坐标。需要注意的是，这些坐标都是相对于View的父容器来说的，因此它是一种相对坐标。在Android中x轴和y轴的正方向分别为右和下。
+
+在View的源码中view的四个坐标对应于四个成员变量:mLeft,mRight,mTop,mBottom,获取方式如下：
+
+```
+Left = getLeft();
+Right = getRight();
+Top = getTop();
+Bottom = getBottom();
+```
+
+----------
+
+####View事件分发机制
 
 #####MotionEvent:
 　　在手指接触屏幕后所产生的一系列事件中，典型的事件类型有如下几种：
