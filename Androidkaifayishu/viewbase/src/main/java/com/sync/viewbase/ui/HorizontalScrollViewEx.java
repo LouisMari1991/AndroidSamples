@@ -134,16 +134,31 @@ public class HorizontalScrollViewEx extends ViewGroup {
       setMeasuredDimension(0, 0);
     } else if (heightSpecMode == MeasureSpec.AT_MOST) {
       final View childView = getChildAt(0);
-
+      measuredHeight = childView.getMeasuredHeight();
+      setMeasuredDimension(widthSpecSize, measuredHeight);
     } else if (widthSpecMode == MeasureSpec.AT_MOST) {
       final View childView = getChildAt(0);
+      measuredWidth = childView.getMeasuredWidth() * childCount;
+      setMeasuredDimension(measuredWidth, heightSpecSize);
     } else {
       final View childView = getChildAt(0);
+      measuredWidth = childView.getMeasuredWidth() * childCount;
+      measuredHeight = childView.getMeasuredHeight();
+      setMeasuredDimension(measuredWidth, measuredHeight);
     }
   }
 
   @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
-
+    int childLeft = 0;
+    final int childCount = getChildCount();
+    mChildrenSize = childCount;
+    for (int i = 0; i < childCount; i++) {
+      final View childView = getChildAt(i);
+      final int childWidth = childView.getMeasuredWidth();
+      mChildWidth = childWidth;
+      childView.layout(childLeft, 0, childLeft + childWidth, childView.getMeasuredHeight());
+      childLeft += childWidth;
+    }
   }
 
   private void smoothScrollBy(int dx, int dy) {

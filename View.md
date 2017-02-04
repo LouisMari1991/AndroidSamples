@@ -88,16 +88,21 @@ View事件传递结论：
 11. 事件传递的过程是由外向内的，即事件总是先传递给父元素，然后由父元素分发给子View，通过`requestDisallowInterceptTouchEvent`方法可以在子元素中干预父元素的事件分发过程，但是`ACTION_DOWN`事件除外。
 
 ----------
+###事件分发源码解析
+
+#####Activity对点击事件分发过程
 
 
+#####顶层View对点击事件分发过程
 
-st=>start: Start
-op=>operation: Your Operation
-sub=>subroutine: My Subroutine
-cond=>condition: Yes or No?
-io=>inputoutput: catch something...
-e=>end: End
 
-st->op->cond
-cond(yes)->io->e
-cond(no)->sub(right)->op
+#####View对点击事件处理
+
+
+----------
+###View的滑动冲突
+解决滑动冲突的两种方式
+
+#####内部拦截法
+
+#####外部拦截法
