@@ -58,6 +58,7 @@ y = top + translationY
 >* `public boolean onTouchEvent(MotionEvent event)` ; 在`dispatchTouchEvent`方法中调用，用来处理点击事件，返回结果标识是否消耗当前事件，如果不消耗，则在同一个事件序列中，当前view无法再次接收到事件。
 
 它们之间的关系可以用如下伪代码表示：
+
 ```
 public boolean dispatchTouchEvent(MotionEvent ev){
 	boolean consume = false;
@@ -80,8 +81,23 @@ View事件传递结论：
 4. 某个View一旦开始处理事件，那么它不消耗`ACTION_DOWN`事件(`onTouchEvent`返回了false),那么同一事件序列中的其他事件都不会再交给它来处理，并且事件将重新交给它的父元素去处理，即父元素的`onTouchEvent`会被调用。意思就是事件一旦交给一个View处理，那么它必须消耗掉，否则同一时间序列中剩下的事件就不会再交给它来处理了。
 5. 如果View不消耗除`ACTITON_DOWN`以外的其他事件，那么这个点击事件会消失，此时父元素的ouTouchEvent并不会被调用，并且当前View可以持续收到后续的事件，最终这些消失的点击事件会传给Activity处理。
 6. ViewGroup默认不拦截任何事件。Android源码中ViewGroup的`onInterceptEvent`方法默认返回false。
-7. View没有`onInterceptEvent`方法，一旦有点击事件传递给它，那么它的`onTouchEvent`方法就会被调用。
+7. View没有`onInterceptTouchEvent`方法，一旦有点击事件传递给它，那么它的`onTouchEvent`方法就会被调用。
 8. View的`onTouchEvent`默认都会消耗事件(返回true),除非它是不可点击的(`clickable`和`longClickble`同时为false)。View的`longClickble`属性默认都为false,`clickble`属性要分情况，不如Button的`clickble`属性默认为true,而TextView的``clickble`属性默认为false。
 9. View的`enable`属性不影响`onTouchEvent`的默认返回值，哪怕一个View是`disable`状态的，只要它的`clickble`或者`longClickble`有一个为true，那么它的`onTouchEvent`就返回true。
 10. `onClick`会发生的前提是当期View是可点击的，并且它收到了`down`和`up`的事件。
 11. 事件传递的过程是由外向内的，即事件总是先传递给父元素，然后由父元素分发给子View，通过`requestDisallowInterceptTouchEvent`方法可以在子元素中干预父元素的事件分发过程，但是`ACTION_DOWN`事件除外。
+
+----------
+
+
+
+st=>start: Start
+op=>operation: Your Operation
+sub=>subroutine: My Subroutine
+cond=>condition: Yes or No?
+io=>inputoutput: catch something...
+e=>end: End
+
+st->op->cond
+cond(yes)->io->e
+cond(no)->sub(right)->op
