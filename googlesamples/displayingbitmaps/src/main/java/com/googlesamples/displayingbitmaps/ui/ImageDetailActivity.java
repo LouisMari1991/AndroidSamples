@@ -17,58 +17,44 @@ import com.googlesamples.displayingbitmaps.util.Utils;
  */
 public class ImageDetailActivity extends FragmentActivity implements View.OnClickListener {
 
+  @Override public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+    if (BuildConfig.DEBUG) {
+      Utils.enableStrictMode();
+    }
+    super.onCreate(savedInstanceState, persistentState);
+    setContentView(R.layout.activity_main);
+    final DisplayMetrics displayMetrics = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+    final int height = displayMetrics.heightPixels;
+    final int width = displayMetrics.widthPixels;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        if (BuildConfig.DEBUG) {
-            Utils.enableStrictMode();
-        }
-        super.onCreate(savedInstanceState,
-            persistentState);
-        setContentView(R.layout.activity_main);
-        final DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager()
-            .getDefaultDisplay().getMetrics(displayMetrics);
-        final
-        int height = displayMetrics.heightPixels;
-        final int width = displayMetrics
-            .widthPixels;
+    //    final int longest = ()
+  }
 
-//    final int longest = ()
+  private class ImagePagerAdapter extends FragmentStatePagerAdapter {
+    private final int mSize;
+
+    public ImagePagerAdapter(FragmentManager fm, int size) {
+      super(fm);
+      this.mSize = size;
     }
 
-    private class ImagePagerAdapter extends FragmentStatePagerAdapter {
-        private
-        final int mSize;
-
-        public ImagePagerAdapter(FragmentManager fm, int size) {
-            super(fm);
-            this.mSize = size;
-        }
-
-
-        /**
-         * Return the Fragment associated with a specified position.
-         *
-         * @param position
-         */
-        @Override
-        public Fragment getItem(int position) {
-            return null;
-        }
-
-        /**
-         * Return the number of views available.
-         */
-        @Override
-        public int getCount() {
-            return mSize;
-        }
+    /**
+     * Return the Fragment associated with a specified position.
+     */
+    @Override public Fragment getItem(int position) {
+      return null;
     }
 
-
-    @Override
-    public void onClick(View v) {
-
+    /**
+     * Return the number of views available.
+     */
+    @Override public int getCount() {
+      return mSize;
     }
+  }
+
+  @Override public void onClick(View v) {
+
+  }
 }
