@@ -13,7 +13,7 @@ public class WatchingAccessibilityService extends AccessibilityService {
 
   @Override public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
     if (SPHelper.isShowWindow(this)) {
-      TaskWindow.show(this,
+      TasksWindow.show(this,
           accessibilityEvent.getPackageName() + "\n" + accessibilityEvent.getClassName());
     }
   }
@@ -28,7 +28,7 @@ public class WatchingAccessibilityService extends AccessibilityService {
 
   @Override public boolean onUnbind(Intent intent) {
     sInstance = null;
-    TaskWindow.dismiss(this);
+    TasksWindow.dismiss(this);
     //NotificationActionReceiver
     return super.onUnbind(intent);
   }

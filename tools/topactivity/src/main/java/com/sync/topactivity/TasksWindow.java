@@ -12,7 +12,7 @@ import android.widget.TextView;
  * Author：Administrator on 2017/2/5 0005 10:19
  * Contact：289168296@qq.com
  */
-public class TaskWindow {
+public class TasksWindow {
 
   private static WindowManager.LayoutParams sWindowPatams;
   private static WindowManager sWindowManager;
