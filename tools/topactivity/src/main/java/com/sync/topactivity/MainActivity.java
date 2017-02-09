@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity implements OnCheckedChangeLi
 
   @Override protected void onPause() {
     super.onPause();
-    if (SPHelper.isShowWindow(this) && !getResources().getBoolean(
-        R.bool.use_accessibility_service)) {
+    if (SPHelper.isShowWindow(this) && !getResources().getBoolean(R.bool.use_accessibility_service)) {
       NotificationActionReceiver.showNotification(this, false);
     }
   }
@@ -49,8 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnCheckedChangeLi
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP) @Override
   public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-    if (isChecked && compoundButton == mWindowSwitch && getResources().getBoolean(
-        R.bool.use_accessibility_service)) {
+    if (isChecked && compoundButton == mWindowSwitch && getResources().getBoolean(R.bool.use_accessibility_service)) {
       if (WatchingAccessibilityService.getInstance() == null) {
         new AlertDialog.Builder(this).setMessage(R.string.dialog_enable_accessibility_msg)
             .setPositiveButton(R.string.dialog_enable_accessibility_positive_btn,

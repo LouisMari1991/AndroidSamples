@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class NotificationActionReceiver extends BroadcastReceiver {
   public static final int NOTIFICATION_ID = 1;
-  public static final String ACTION_NOTIFICATION_RECEIVER = "";
+  public static final String ACTION_NOTIFICATION_RECEIVER = "com.sync.ACTION_NOTIFICATION_RECEIVER";
   public static final int ACTION_PAUSE = 0;
   public static final int ACTION_RESUME = 1;
   public static final int ACTION_STOP = 2;
@@ -32,8 +32,7 @@ public class NotificationActionReceiver extends BroadcastReceiver {
         if (!lollipop) {
           ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
           List<ActivityManager.RunningTaskInfo> rtis = am.getRunningTasks(1);
-          String act = rtis.get(0).topActivity.getPackageName() + "\n" + rtis.get(
-              0).topActivity.getClassName();
+          String act = rtis.get(0).topActivity.getPackageName() + "\n" + rtis.get(0).topActivity.getClassName();
           TasksWindow.show(context, act);
         } else {
           TasksWindow.show(context, null);
@@ -55,12 +54,31 @@ public class NotificationActionReceiver extends BroadcastReceiver {
     }
   }
 
-  public static void showNotification(Context context, boolean isPause) {
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-    
+  public static void showNotification(Context context, boolean isPaused) {
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(context).setContentTitle(
+        context.getString(R.string.is_running, context.getString(R.string.app_name)))
+        .setSmallIcon(R.drawable.ic_notification)
+        .setContentText(context.getString(R.string.touch_to_open))
+        .setColor(0xFFe215e0)
+        .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+        .setOngoing(!isPaused);
+    if (isPaused) {
+      builder.addAction(R.drawable.ic_noti_action_resume, context.getString(R.string.noti_action_resume),
+          getPendingIntent(context, ACTION_RESUME));
+    } else {
+      builder.addAction(R.drawable.ic_noti_action_pause, context.getString(R.string.noti_action_pause),
+          getPendingIntent(context, ACTION_PAUSE));
+    }
+
+    PendingIntent pIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
+    builder.addAction(R.drawable.ic_noti_action_stop, context.getString(R.string.noti_action_stop),
+        getPendingIntent(context, ACTION_STOP)).setContentIntent(pIntent);
+
+    NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    nm.notify(NOTIFICATION_ID, builder.build());
   }
 
-  public static PendingIntent getPendingInent(Context context, int command) {
+  private static PendingIntent getPendingIntent(Context context, int command) {
     Intent intent = new Intent(ACTION_NOTIFICATION_RECEIVER);
     intent.putExtra(EXTRA_NOTIFICATION_ACTION, command);
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, command, intent, 0);
@@ -68,8 +86,7 @@ public class NotificationActionReceiver extends BroadcastReceiver {
   }
 
   public static void cancelNotification(Context context) {
-    NotificationManager nm =
-        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     nm.cancel(NOTIFICATION_ID);
   }
 }

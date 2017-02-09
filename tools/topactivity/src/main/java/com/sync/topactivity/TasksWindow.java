@@ -19,10 +19,10 @@ public class TasksWindow {
   private static View sView;
 
   public static void init(final Context context) {
-    sWindowManager =
-        (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-    sWindowPatams = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
-        WindowManager.LayoutParams.WRAP_CONTENT, 2005, 0x18, PixelFormat.TRANSLUCENT);
+    sWindowManager = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+    sWindowPatams =
+        new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,
+            2005, 0x18, PixelFormat.TRANSLUCENT);
     sWindowPatams.gravity = Gravity.LEFT + Gravity.TOP;
     sView = LayoutInflater.from(context).inflate(R.layout.window_tasks, null);
   }
