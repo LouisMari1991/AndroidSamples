@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import com.sync.capturingphotos.databinding.ActivityMainBinding;
 import com.sync.logger.Logger;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
       }
     });
+    mBinding.thumbnail.setVisibility(View.GONE);
     mBinding.fullSize.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -91,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, REQ_GALLERY);
           }
-          galleryAddPic();
         }
       }
     });
@@ -123,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
     return image;
   }
 
-  private void galleryAddPic() {
+  private void galleryAddPic(String path) {
     Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-    File f = new File(mPublicPhotoPath);
+    File f = new File(path);
     Uri contentUri = Uri.fromFile(f);
     mediaScanIntent.setData(contentUri);
     sendBroadcast(mediaScanIntent);
@@ -180,6 +182,24 @@ public class MainActivity extends AppCompatActivity {
     canvas.restore();
 
     imageView.setImageBitmap(destBitmap);
+
+    // 首先保存图片
+    File file = new File(srcPath);
+    if (file.exists()) {
+      file.delete();
+    }
+    try {
+      FileOutputStream fos = new FileOutputStream(file);
+      destBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+      fos.flush();
+      fos.close();
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    galleryAddPic(srcPath);
+
   }
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -193,14 +213,10 @@ public class MainActivity extends AppCompatActivity {
         break;
       }
       case REQ_TAKE_PHOTO: {
-        //Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
-        //mBinding.imageView.setImageBitmap(imageBitmap);
         showImage(mBinding.imageView, mCurrentPhotoPath, mCurrentPhotoPath);
         break;
       }
       case REQ_GALLERY: {
-        //Bitmap imageBitmap = BitmapFactory.decodeFile(mPublicPhotoPath);
-        //mBinding.imageView.setImageBitmap(imageBitmap);
         showImage(mBinding.imageView, mPublicPhotoPath, mPublicPhotoPath);
         break;
       }
