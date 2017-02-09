@@ -53,8 +53,6 @@ dependencies {
 
   compile project(':common:logger')
 
-  compile 'com.android.support:appcompat-v7:25.1.0'
-
   /* android support */
   compile rootProject.ext.libSupportAppcompat
 

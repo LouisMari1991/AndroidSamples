@@ -78,5 +78,6 @@ public class MainActivity extends AppCompatActivity implements OnCheckedChangeLi
         TasksWindow.show(this, getPackageName() + "\n" + getClass().getName());
       }
     }
+
   }
 }
