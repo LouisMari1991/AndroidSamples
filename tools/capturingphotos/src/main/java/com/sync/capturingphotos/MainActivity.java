@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         }
       }
     });
-    mBinding.thumbnail.setVisibility(View.GONE);
     mBinding.fullSize.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
