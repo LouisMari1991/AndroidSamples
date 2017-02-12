@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewGroup;
 import android.widget.Scroller;
+import com.sync.logger.Logger;
 
 /**
  * Created by YH on 2017-02-04.
@@ -47,7 +48,20 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
   }
 
   @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-    return super.onInterceptTouchEvent(ev);
+    int x = (int) ev.getX();
+    int y = (int) ev.getY();
+    int action = ev.getAction();
+    if (action == MotionEvent.ACTION_DOWN) {
+      mLastX = x;
+      mLastY = y;
+      if (!mScroller.isFinished()) {
+        mScroller.abortAnimation();
+        return true;
+      }
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @Override public boolean onTouchEvent(MotionEvent event) {
@@ -59,7 +73,10 @@ public class HorizontalScrollViewEx2 extends ViewGroup {
   }
 
   @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
-
+    Logger.i(getWidth() + "");
+    int childLeft= 0;
+    final int childCount = getChildCount();
+    mChildrenSize = childCount;
   }
 
   private void smoothScrollBy(int dx, int dy) {
