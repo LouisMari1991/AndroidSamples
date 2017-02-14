@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f1"
+    android:orientation="vertical"
+    >
+
+  <FrameLayout
+      android:id="@+id/video_full_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone"
+      >
+
+    <WebView
+        android:id="@+id/webview_detail"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:background="#000"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/colorAccent"
+        >
+      <ProgressBar
+          android:id="@+id/progress_bar"
+          style="?android:attr/progressBarStyleHorizontal"
+          android:layout_width="match_parent"
+          android:layout_height="3dp"
+          android:progress="0"
+          android:visibility="gone"
+          android:progressDrawable="@drawable/process_bg"
+          android:layout_alignParentTop="true"
+          />
+      
+    </WebView>
+
+  </FrameLayout>
+
+</RelativeLayout>
