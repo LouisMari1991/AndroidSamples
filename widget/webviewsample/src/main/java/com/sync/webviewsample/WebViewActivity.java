@@ -9,6 +9,9 @@ import com.sync.webviewsample.config.IWebPageView;
 
 public class WebViewActivity extends AppCompatActivity implements IWebPageView {
 
+  public boolean mProgress90;
+  public boolean mPageFinish;
+
   @Override public void hideProgressBar() {
 
   }
