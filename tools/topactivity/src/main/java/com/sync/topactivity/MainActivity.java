@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnCheckedChangeLi
                 new DialogInterface.OnClickListener() {
                   @Override public void onClick(DialogInterface dialogInterface, int i) {
                     Intent intent = new Intent();
-                    intent.setAction("android.setting.ACCESSIBILITY_SETTINGS");
+                    intent.setAction("android.settings.ACCESSIBILITY_SETTINGS");
                     startActivity(intent);
                   }
                 })
