@@ -91,7 +91,32 @@ View事件传递结论：
 ###事件分发源码解析
 
 #####Activity对点击事件分发过程
+　　点击事件用 `MotionEvent` 来表示，但一个点击操作发生时，事件最先传递给当前Activity，由Activity的 `dispatchTouchEvent` 来进行事件派发，具体的工作是由Activity内部的Window来完成的。Window会将事件传递给`decor view`，`decor view`一般就是当前界面的底层容器(即 `setContent()` 所设置的 View 的父容器),通过 `Activity.getWindow.getDecorView()` 可以获得。
 
+源码： Activity#dispatchTouchEvent
+```
+
+public boolean dispatchTouchEvent(MotionEvent event){
+	if(event.getAction == MotionEvent.ACTION_DOWN){
+		onUserInteraction();
+	}
+	if(getWindow().superDispatchTouchEvent(event){
+		return true;
+	}
+	return onTouchEvent(event);
+}
+```
+　　首先事件开始交给Activity所附属的 Window 进行分发，如果返回 true ，整个事件循环就结束了，返回 false 意味者事件没人处理，所有 View 的 `onTouchEvent` 都返回了 false, 那么Activity 的 `onTouchEvent` 就会被调用。
+
+　　Window 是如何将事件传递给 ViewGroup 的： Window 是一个抽象类，window的 `superDispatchTouchEvent` 方法也是一个抽奖方法。 Winow 的唯一实现是 `PhoneWinw`，所以我们看 `PhoneWindow` 是如何处理点击事件的：
+
+源码：PhoneWindow#superDispatchTouchEvent<br>
+```
+@Override
+public boolean superDispatchKeyShortcutEvent(KeyEvent event) {
+        return mDecor.superDispatchKeyShortcutEvent(event);
+}
+```
 
 #####顶层View对点击事件分发过程
 
