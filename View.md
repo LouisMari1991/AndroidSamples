@@ -136,7 +136,14 @@ public final View getDecorView(){
 
 #####顶层View对点击事件分发过程
 　　点击事件达到顶层 View (一般是一个 ViewGroup)以后，会调用 ViewGroup 的 `dispatchTouchEvent` 方法，如果等级 ViewGroup 拦截事件即 `onInterceptTouchEvent` 返回 true,则事件由 ViewGroup 处理，这时如果 ViewGroup 的 `mOnTouchListenter` 被设置，则 `onTouch` 会被调用，否则 `onTcouchEvent` 会被调用。也就是说，如果都提供的话，`onTouch` 会屏蔽掉`onTouchEvent`。 在 `onTouchEvent` 中，如果设置了 `mOnCLickListener`，则 `onClick` 会被调用。 如果顶级 ViewGroup 不拦截事件，则事件会传递到它所在的点击事件链上的子 View，这时子 View 的 `dispatchTouchEvent` 会被调用。到此为止，事件已经从顶层 View 传递给了下一层 View， 接下来的传递过程和顶级 View 是一致的，如此循环，完成整个事件的分发。
- 　　首先看 ViewGroup 对点击事件的分发过程。
+ 　　首先看 ViewGroup 对点击事件的分发过程。其主要实现在 ViewGroup 的 `dispatchTouchEvent` 方法中，这个方法比较长，这里分段说明。先看下面一段，很显然，它描述的是当前 View 是否拦截点击事件的逻辑。<br/>
+```
+// Check for interception
+final boolean intercepted;
+if (actoinMasked == MotionEvent.ACTION_DOWN || mFirstTouchTarget != null) {
+	final boolean disallowIntercept = ();
+}
+```
 #####View对点击事件处理
 
 
