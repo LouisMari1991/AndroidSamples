@@ -117,10 +117,26 @@ public boolean superDispatchKeyShortcutEvent(KeyEvent event) {
         return mDecor.superDispatchKeyShortcutEvent(event);
 }
 ```
+　　到这里逻辑就很清晰了，PhoneWindow 将事件直接传递给了 DecorView。
+```
+private final class DecorView exrends FrameLayout implements RootViewSur-faceTaker
+
+// This is the top-level view of the window, containing the window decor.
+private DecorView mDecor;
+
+@Override
+public final View getDecorView(){
+	if (mDecor == null){
+		installDecor();
+	}
+	return mDecor;
+}
+```
+　　我们知道，通过 `((ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content)).getChilldAt(0)` 这种方式就可以获取 Activity 所设置的 View， 这个 `mDecor` 显然就是 `((ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content)).getChilldAt(0)` 返回的 View, 而我们通过 `setContentView` 设置的 View 就是它的一个子 View。 目前事件传递到了 DevorView 这里，由于 DecorView 继承自 FrameLayout 且是父 View， 所以最终事件会传递给 View。 从这里开始，事件已经传递到顶级 View le，即在 Activity 中通过 `setContentView` 所设置的 View，另外顶级 `View` 也叫根 View，顶级 View 一般来说都是 ViewGroup。
 
 #####顶层View对点击事件分发过程
-
-
+　　点击事件达到顶层 View (一般是一个 ViewGroup)以后，会调用 ViewGroup 的 `dispatchTouchEvent` 方法，如果等级 ViewGroup 拦截事件即 `onInterceptTouchEvent` 返回 true,则事件由 ViewGroup 处理，这时如果 ViewGroup 的 `mOnTouchListenter` 被设置，则 `onTouch` 会被调用，否则 `onTcouchEvent` 会被调用。也就是说，如果都提供的话，`onTouch` 会屏蔽掉`onTouchEvent`。 在 `onTouchEvent` 中，如果设置了 `mOnCLickListener`，则 `onClick` 会被调用。 如果顶级 ViewGroup 不拦截事件，则事件会传递到它所在的点击事件链上的子 View，这时子 View 的 `dispatchTouchEvent` 会被调用。到此为止，事件已经从顶层 View 传递给了下一层 View， 接下来的传递过程和顶级 View 是一致的，如此循环，完成整个事件的分发。
+ 　　首先看 ViewGroup 对点击事件的分发过程。
 #####View对点击事件处理
 
 
