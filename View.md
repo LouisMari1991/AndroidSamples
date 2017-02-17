@@ -141,9 +141,22 @@ public final View getDecorView(){
 // Check for interception
 final boolean intercepted;
 if (actoinMasked == MotionEvent.ACTION_DOWN || mFirstTouchTarget != null) {
-	final boolean disallowIntercept = ();
+	final boolean disallowIntercept = (mGroupFlags & FLAG_DISALLOW_INTERCEPT) != 0;
+	if (!disallowIntercept){
+		intercepted = onInterceptTouchEvent(ev);
+		ev.setAction(action); // restore action in case it was changed
+	} else {
+		intercepted = false;
+	}
+} else {
+	// There are no touch targets and this action is not a initial down
+	// so this view group continues to intercept touches.
+	intercepted = true;
 }
 ```
+　　从上面的代码可以看出，ViewGroup 在下面两种情况下会判断是否要拦截当前事件：<br/>
+　　事件类型为 `ACTION_DOWN` 或者 `mFirstTouchTarget != null `。 从后面的代码逻辑可以看出，当事件由 ViewGroup 的子元素成功处理时， `mFirstTouchTarget` 就会被赋值并指向子元素，换种方式说，当 ViewGroup 不拦截事件并将事件交由子元素处理时 `mFirstTouchTarget != null`。 反过来，一旦事件由当前 ViewGroup 拦截时， `mFirstTouchTarget != null` 就不成立。那么当 `ACTION_MOVE` 和 `ACTION_UP` 事件到来时，由于 `(actoinMasked == MotionEvent.ACTION_DOWN || mFirstTouchTarget != null)` 这个条件为 `false`，将导致 ViewGroup 的 `onInterceptTouchEvent` 不会再被调用，并且同一序列的其他事件都会默认交给它处理。
+
 #####View对点击事件处理
 
 
