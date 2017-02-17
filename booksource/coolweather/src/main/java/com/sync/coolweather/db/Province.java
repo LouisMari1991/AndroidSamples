@@ -7,7 +7,7 @@ import org.litepal.crud.DataSupport;
  * Contact：289168296@qq.com
  */
 public class Province extends DataSupport {
-
+  
   private int id;
   private String provinceName;
   private int provinceCode;
