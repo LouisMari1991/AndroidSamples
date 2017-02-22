@@ -5,13 +5,14 @@
   <data>
     <variable
         name="player"
-        type="com.googlesamples.topeka.model.Player"/>
+        type="com.googlesamples.topeka.model.Player"
+        />
   </data>
 
   <LinearLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:tools="http://schemas.android.com/tools"
       xmlns:app="http://schemas.android.com/apk/com.googlesamples.topeka.widget"
+      xmlns:tools="http://schemas.android.com/tools"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/topeka_blank"
@@ -46,8 +47,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_vertical|start"
-          tools:ignore="PrivateResource"
           android:text='@{player.firstName + " " + player.lastInitial}'
+          tools:ignore="PrivateResource"
           style="@style/Topeka.TextAppearance.Title.Inverse"
           />
 
@@ -63,22 +64,22 @@
           />
     </android.support.v7.widget.Toolbar>
 
-      <FrameLayout
-          android:id="@+id/category_container"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          tools:conetxt="activity.QuizSelectionActivity"
-          tools:ignore="MergeRootFrame"
-          >
+    <FrameLayout
+        android:id="@+id/category_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:conetxt="activity.QuizSelectionActivity"
+        tools:ignore="MergeRootFrame"
+        >
 
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="@dimen/size_fab"
-            android:layout_height="@dimen/size_fab"
-            android:layout_gravity="center"
-            android:indeterminateOnly="true"
-            />
-      </FrameLayout>
+      <ProgressBar
+          android:id="@+id/progress"
+          android:layout_width="@dimen/size_fab"
+          android:layout_height="@dimen/size_fab"
+          android:layout_gravity="center"
+          android:indeterminateOnly="true"
+          />
+    </FrameLayout>
 
 
   </LinearLayout>

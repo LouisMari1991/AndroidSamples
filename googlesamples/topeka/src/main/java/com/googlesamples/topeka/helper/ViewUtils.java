@@ -5,4 +5,11 @@ package com.googlesamples.topeka.helper;
  * Contact：289168296@qq.com
  */
 public class ViewUtils {
+
+  private ViewUtils() {
+    // no instance
+  }
+
+
+
 }

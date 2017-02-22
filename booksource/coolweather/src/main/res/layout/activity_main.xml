@@ -15,4 +15,14 @@
       android:layout_height="match_parent"
       />
 
+  <!-- Login progress -->
+  <ProgressBar
+      android:id="@+id/login_progress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
+      android:visibility="gone"
+      style="?android:attr/progressBarStyleLarge"
+      />
+
 </merge>
