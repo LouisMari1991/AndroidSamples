@@ -19,34 +19,30 @@ public abstract class Quiz<A> implements Parcelable {
 
   public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
 
-    @SuppressWarnings("TryWithIdenticalCatches")
-    @Override
-    public Quiz createFromParcel(Parcel in) {
+    @SuppressWarnings("TryWithIdenticalCatches") @Override public Quiz createFromParcel(Parcel in) {
       int oridinal = in.readInt();
       QuizType type = QuizType.values()[oridinal];
       try {
-        Constructor<? extends Quiz> constructor = type.getType()
-                .getConstructor(Parcel.class);
+        Constructor<? extends Quiz> constructor = type.getType().getConstructor(Parcel.class);
         return constructor.newInstance(in);
       } catch (InstantiationException e) {
         performLegacyCatch(e);
-      } catch (IllegalAccessException e){
+      } catch (IllegalAccessException e) {
         performLegacyCatch(e);
-      } catch (InvocationTargetException e){
+      } catch (InvocationTargetException e) {
         performLegacyCatch(e);
-      } catch (NoSuchMethodException e){
+      } catch (NoSuchMethodException e) {
         performLegacyCatch(e);
       }
       throw new UnsupportedOperationException("Could not create Quiz.");
     }
 
-    @Override
-    public Quiz[] newArray(int size) {
+    @Override public Quiz[] newArray(int size) {
       return new Quiz[size];
     }
   };
 
-  private static void performLegacyCatch(Exception e){
+  private static void performLegacyCatch(Exception e) {
     Log.e(TAG, "cteateFormParcel ", e);
   }
 
@@ -60,7 +56,7 @@ public abstract class Quiz<A> implements Parcelable {
    */
   private boolean mSolved;
 
-  protected Quiz(String question, A answer, boolean solved){
+  protected Quiz(String question, A answer, boolean solved) {
     mQuestion = question;
     mAnswer = answer;
     mQuizType = getType().getJsonName();
@@ -83,15 +79,15 @@ public abstract class Quiz<A> implements Parcelable {
    */
   public abstract String getStringAnswer();
 
-  public String getQuestion(){
+  public String getQuestion() {
     return mQuestion;
   }
 
-  public A getAnsWer(){
+  public A getAnsWer() {
     return mAnswer;
   }
 
-  protected void setAnswer(A answer){
+  protected void setAnswer(A answer) {
     mAnswer = answer;
   }
 
@@ -111,21 +107,17 @@ public abstract class Quiz<A> implements Parcelable {
     return getQuestion().hashCode();
   }
 
-  @Override
-  public int describeContents() {
+  @Override public int describeContents() {
     return 0;
   }
 
-  @Override
-  public void writeToParcel(Parcel dest, int i) {
+  @Override public void writeToParcel(Parcel dest, int i) {
     ParcelableHelper.writeEnumValue(dest, getType());
     dest.writeString(mQuestion);
     ParcelableHelper.writeBoolean(dest, mSolved);
   }
 
-  @SuppressWarnings("RedundantIfStatement")
-  @Override
-  public boolean equals(Object o) {
+  @SuppressWarnings("RedundantIfStatement") @Override public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -151,8 +143,7 @@ public abstract class Quiz<A> implements Parcelable {
     return true;
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     int result = mQuestion.hashCode();
     result = 31 * result + mAnswer.hashCode();
     result = 31 * result + mQuizType.hashCode();
@@ -160,9 +151,7 @@ public abstract class Quiz<A> implements Parcelable {
     return result;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return getType() + ": \"" + getQuestion() + "\"";
   }
-
 }

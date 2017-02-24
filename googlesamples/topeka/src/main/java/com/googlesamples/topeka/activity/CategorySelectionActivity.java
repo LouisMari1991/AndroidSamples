@@ -84,10 +84,6 @@ public class CategorySelectionActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
     //noinspection ConstantConditions
     getSupportActionBar().setDisplayShowTitleEnabled(false);
-    //final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
-    //avatarView.setAvatar(player.getAvatar().getDrawableId());
-    // noinspection PrivateResource
-    //((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,17 +112,11 @@ public class CategorySelectionActivity extends AppCompatActivity {
     PreferencesHelper.signOut(this);
     TopekaDatabaseHelper.reset(this);
     if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
-      getWindow().setExitTransition(
-          TransitionInflater.from(this).inflateTransition(R.transition.category_enter));
+      getWindow().setExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.category_enter));
     }
     SignInActivity.start(this, false);
     finish();
-    //ActivityCompat.finishAfterTransition(this);
   }
-
-  //private String getDisplayName(Player player) {
-  //  return getString(R.string.player_display_name, player.getFirstName(), player.getLastInitial());
-  //}
 
   private void attachCategoryGridFragment() {
     FragmentManager supportFragmentManager = getSupportFragmentManager();
