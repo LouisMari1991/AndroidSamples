@@ -1,11 +1,21 @@
 <resources>
 
+  <style name="Theme.ToolBarTitleAnimation" parent="Base.Theme.ToolbarTitleAnimation"/>
+
   <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+  <style name="Base.Theme.ToolbarTitleAnimation" parent="Theme.AppCompat.Light.NoActionBar">
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowBackground">@color/window_background</item>
   </style>
+
+  <style name="TitleTextApperance" parent="@android:style/TextAppearance.Medium">
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textSize">20sp</item>
+  </style>
+
+  <string name="action_menu_overflow_description">More options</string>
 
 </resources>
