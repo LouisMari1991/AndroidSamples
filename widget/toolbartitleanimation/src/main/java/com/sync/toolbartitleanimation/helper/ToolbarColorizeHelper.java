@@ -7,7 +7,10 @@ import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
+import com.sync.toolbartitleanimation.R;
 
 /**
  * Author：Administrator on 2017/3/2 0002 23:09
@@ -53,6 +56,13 @@ public class ToolbarColorizeHelper {
   }
 
   private static void setOverflowButtonColor(final Activity activity, final PorterDuffColorFilter colorFilter) {
+    final String overflowDescription = activity.getString(R.string.abc_action_menu_overflow_description);
+    final ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+    final ViewTreeObserver viewTreeObserver = decorView.getViewTreeObserver();
+    viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+      @Override public void onGlobalLayout() {
 
+      }
+    });
   }
 }
