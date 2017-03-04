@@ -32,6 +32,7 @@ project.ext {
   libSupportRecyclerview = "com.android.support:recyclerview-v7:${supportVersion}"
   libSupportV4 = "com.android.support:support-v4:${supportVersion}"
   libSupportAnnotations = "com.android.support:support-annotations:${supportVersion}"
+  libConstraintLayout = "com.android.support.constraint:constraint-layout:${supportVersion}"
 
   /**
    *  external package
@@ -48,6 +49,7 @@ project.ext {
   libRetrofit = "com.jakewharton.retrofit:retrofit1-okhttp3-client:1.1.0"
   libBottomNavigation = "com.aurelhubert:ahbottomnavigation:1.3.3"
   libProgressbar = "me.zhanghai.android.materialprogressbar:library:1.3.0"
+  libPhotoView = "com.github.chrisbanes:PhotoView:1.3.1"
 
   /**
    * leakCanary:A memory leak detection library for Android and Java.
