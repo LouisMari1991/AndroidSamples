@@ -1,16 +1,16 @@
 apply plugin: 'com.android.library'
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.2"
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
 
   dataBinding {
     enabled = true
   }
 
   defaultConfig {
-    minSdkVersion 14
-    targetSdkVersion 25
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
 
@@ -29,7 +29,12 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
+
+  testCompile "junit:junit:${rootProject.ext.junitVersion}"
+
   compile rootProject.ext.libSupportAppcompat
-  compile rootProject.ext.libSupportRecyclerview
-  testCompile 'junit:junit:4.12'
+  compile rootProject.ext.libSupportV4
+  compile rootProject.ext.libSupportAnnotations
+  compile rootProject.ext.libSupportDesign
+  compile rootProject.ext.libRxAndroid
 }
