@@ -22,7 +22,9 @@
 
     <activity
         android:name=".detail.BookDetailActivity"
-        android:theme="@style/AppTheme.NoActionBar" />
+        android:theme="@style/AppTheme.NoActionBar"/>
+
+    <activity android:name=".activity.ScrollingActivity"/>
 
   </application>
 

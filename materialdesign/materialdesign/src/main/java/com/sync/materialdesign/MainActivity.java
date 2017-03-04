@@ -1,5 +1,6 @@
 package com.sync.materialdesign;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import com.sync.materialdesign.activity.ScrollingActivity;
 import com.sync.materialdesign.main.MyFragment;
 import com.sync.materialdesign.main.adapter.MyViewPagerAdapter;
 import java.util.ArrayList;
@@ -72,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void onViewPagerChange() {
     mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-      @Override
-      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+      @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
       }
 
@@ -106,14 +107,17 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void onNavigationViewMenuItemSelected() {
-    mNavigationView.setNavigationItemSelectedListener(
-        new NavigationView.OnNavigationItemSelectedListener() {
-          @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-
-            }
-            return true;
+    mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+      @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+          case R.id.nav_gallery: {
+            Intent intent = new Intent(MainActivity.this, ScrollingActivity.class);
+            startActivity(intent);
+            break;
           }
-        });
+        }
+        return true;
+      }
+    });
   }
 }
