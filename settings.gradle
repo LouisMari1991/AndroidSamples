@@ -1,6 +1,7 @@
 include ':common:logger'
 include ':common:base'
 include ':common:once'
+include ':common:xrecyclerview'
 include ':googlesamples:unsplash'
 include ':googlesamples:topeka'
 include ':googlesamples:DisplayingBitmaps'
