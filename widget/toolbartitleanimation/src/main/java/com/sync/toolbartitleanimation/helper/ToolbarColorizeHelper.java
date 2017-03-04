@@ -3,6 +3,7 @@ package com.sync.toolbartitleanimation.helper;
 import android.app.Activity;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.os.Build;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,10 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import com.sync.toolbartitleanimation.R;
+import java.util.ArrayList;
+
+//import android.support.v7.internal.view.menu.ActionMenuItemView;
+//import android.support.v7.internal.widget.TintImageView;
 
 /**
  * Author：Administrator on 2017/3/2 0002 23:09
@@ -52,6 +57,10 @@ public class ToolbarColorizeHelper {
           }
         }
       }
+
+      toolbarView.setTitleTextColor(toolbarIconsColor);
+      toolbarView.setSubtitleTextColor(toolbarIconsColor);
+      setOverflowButtonColor(activity, colorFilter);
     }
   }
 
@@ -61,8 +70,23 @@ public class ToolbarColorizeHelper {
     final ViewTreeObserver viewTreeObserver = decorView.getViewTreeObserver();
     viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
       @Override public void onGlobalLayout() {
-
+        final ArrayList<View> outView = new ArrayList<>();
+        decorView.findViewsWithText(outView, overflowDescription, View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION);
+        if (outView.isEmpty()) {
+          return;
+        }
+        //TintImageView overflow = (TintImageView) outView.get(0);
+        //overflow.setColorFilter(colorFilter);
+        removeOnGlobalLayoutListener(decorView, this);
       }
     });
+  }
+
+  private static void removeOnGlobalLayoutListener(View v, ViewTreeObserver.OnGlobalLayoutListener listener) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+      v.getViewTreeObserver().removeGlobalOnLayoutListener(listener);
+    } else {
+      v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
+    }
   }
 }
