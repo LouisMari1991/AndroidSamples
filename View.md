@@ -157,6 +157,20 @@ if (actoinMasked == MotionEvent.ACTION_DOWN || mFirstTouchTarget != null) {
 　　从上面的代码可以看出，ViewGroup 在下面两种情况下会判断是否要拦截当前事件：<br/>
 　　事件类型为 `ACTION_DOWN` 或者 `mFirstTouchTarget != null `。 从后面的代码逻辑可以看出，当事件由 ViewGroup 的子元素成功处理时， `mFirstTouchTarget` 就会被赋值并指向子元素，换种方式说，当 ViewGroup 不拦截事件并将事件交由子元素处理时 `mFirstTouchTarget != null`。 反过来，一旦事件由当前 ViewGroup 拦截时， `mFirstTouchTarget != null` 就不成立。那么当 `ACTION_MOVE` 和 `ACTION_UP` 事件到来时，由于 `(actoinMasked == MotionEvent.ACTION_DOWN || mFirstTouchTarget != null)` 这个条件为 `false`，将导致 ViewGroup 的 `onInterceptTouchEvent` 不会再被调用，并且同一序列的其他事件都会默认交给它处理。
 
+ 　　当然，这里有一种特殊情况,那就是 `FLAG_DISALLOW_INTERCEPT` 标记位，这个标记位是通过 `requestDisallowInterceptTouchEvent` 方法来设置的，一般用于子 View 中。 `FLAG_DISALLOW_INTERCEPT` 一旦设置后， ViewGroup 将无法拦截除了 `ACTION_DOWN` 以外的其他点击事件。这是因为 ViewGroup 在分发事件时，如果是 `ACTION_DOWN` 就会重置 `FLAG_DISALLOW_INTERCEPT` 这个标记位，将导致 View 中设置的这个标记位无效。因此,当面对 `ACTION_DOWN` 事件时， ViewGroup 总会调用自己的 `onInterceptTouchEvent` 方法来询问自己是否要拦截时间，这一点从源码中也可以看出来。<br/>
+　　在下面的代码中， ViewGroup 会在 `ACTION_DOWN` 事件到来时重置状态的操作，而在 `resetTouchState` 方法会对 `FLAG_DISALLOW_INTERCEPT` 进行重置，因此子 View 调用 `request-DisallowInterceptTouchEvent` 方法并不能影响 ViewGroup 对 `ACTON_DOWN` 事件的处理。
+```
+// Handle an initial down.
+if (actionMasked == MotionEvent.ACTION_DOWN) {
+	// Throw away all previous state when starting a new touch gesture.
+	// The framework may have deopped the up or cancel event for the preious gesture.
+	// due to an app switch, ANR, or some state other state change.
+	cancelAndClearTouchTargets(ev);
+	restTouchState();
+}
+``` 
+　　从上面的源码分析，我们可以得出结论，当 ViewGroup 决定拦截事件后，那么后续的点击事件将会默认交给它处理
+
 #####View对点击事件处理
 
 
