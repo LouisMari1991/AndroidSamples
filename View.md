@@ -169,7 +169,77 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 	restTouchState();
 }
 ``` 
-　　从上面的源码分析，我们可以得出结论，当 ViewGroup 决定拦截事件后，那么后续的点击事件将会默认交给它处理
+　　从上面的源码分析，我们可以得出结论:当 ViewGroup 决定拦截事件后，那么后续的点击事件将会默认交给它处理并且不会调用它的 `onInterceptTouchEvent` 方法，这证实了 View 事件传递第三条结论。
+
+　　总结起来有两点:<br/>
+　　1. `onInterceptTouchEvent` 不是每次事件都会被调用的，如果我们小想要提前处理所有的点击事件，要选择 `dispatchTouchEvent` 。
+　　　　2. `FLAG_DISALLOW_INTERCEPT` 标记位可以用来处理滑动冲突。
+
+　　接着再看当 `ViewGroup` 不拦截事件的时候，事件会向下分发交由它的子 View 进行处理，源码如下：<br/>
+
+
+```
+	final View[] children = mChildren;
+	for (int i = childrenCount -1; i >= 0; i--) {
+		final int childIndex = customOrder ? getChildDrawingOrder(childrenCount, i) : i;
+		final View child = (preorderedList == null) ? children[childIndex] : preorderedList.get(childIndex);
+		if (!canViewReceivePointerEvents(child) || !isTransformedTouchPointInView(x, y, child, null)){
+		continue;
+	}
+
+	newTouchTarget = getTouchTarget(child);
+	if (newTouchTarget != null) {
+		// Child is already reveiving touch within its bounds.
+		// Give it the new pointer in addition to the ones it is handling. new TouchTarget.pointerIdBit != idBitsToAssign;
+		break;
+	}
+
+	resetCancelNextUpFlag(child);
+	if (dispatchTransformedTouchEvent(ev, false, child, idBitsToassign)) {
+		// Child wants to receive touch within its bounds.
+		mLastTouchDownTime = ev.getDownTime();
+		if (preorderedList != null) {
+			// childIndex points into presorted list, find original index
+			for (int j = 0; j < childrenCount; j++) {
+				if (children[childIndex] == mChildren[j] {
+					mLastTouchDownIndex = j;
+					break;
+				}
+			}
+		} else {
+			mLastTouchDownIndex = childIndex;
+		}
+		mLastTouchDownX = ev.getX();
+		mLastTouchDownY = ev.getY();
+		newTouchTarget = addTouchTarget(child, idBitsToAssign);
+		alreadyDispatchedToNewTouchTarget = true;
+		break;	
+	}
+}
+```
+
+ 　　上面这段代码逻辑也很清晰，首先遍历 `ViewGroup` 的所有子元素，然后判断子元素是否能够接受到点击事件。是否能够接收点击事件主要由两点来衡量：子元素是否在播放动画和点击事件的坐标是否落在子元素的区域内。 如果某个子元素满足这两个条件，那么事件就会传递给它处理。可以看到，`dispatchTransformedTouchEvent` 实际上调用的是子元素的 `dispatchTouchEvent` 方法，在它的内部有如下一段内容，而在上面的代码中 child 传递的不是 `null`，因此他会直接调用子元素的 `dispatchTouchEvent` 方法，这样事件就交由给子元素处理了，从而完成一轮事件分发。
+
+
+```
+
+	if (child == null) {
+		handled = super.dispatchTouchEvent(event);
+	} else {
+		handled = child.dispatchTouchEvent(event);
+	}
+```
+<br/>　　如果子元素的 `dispatchTouchevent` 返回 `true` ，这时我们暂时不用考虑事件在子元素内部是怎么分发的，那么 `mFirstTouchEvent` 就会被赋值同时跳出 `for` 循环，如下所示:
+
+```
+
+	newTouchTarget = addTouchTargt(child, idBitsToAssign);
+	alreadyDispatchToNewTouchTarget = true;
+	break;
+
+```
+<br/>　　这几行代码完成了 `mFirstTouchTarget` 的复制并终止对子元素的遍历。如果子元素的 `dispatchTouchEvent` 返回 `false` ， `ViewGroup` 就会把事件分发给下一个子元素(如果还有下一个子元素的话)。
+
 
 #####View对点击事件处理
 
