@@ -238,10 +238,35 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 	break;
 
 ```
-<br/>　　这几行代码完成了 `mFirstTouchTarget` 的复制并终止对子元素的遍历。如果子元素的 `dispatchTouchEvent` 返回 `false` ， `ViewGroup` 就会把事件分发给下一个子元素(如果还有下一个子元素的话)。
+<br/>　　这几行代码完成了 `mFirstTouchTarget` 的复制并终止对子元素的遍历。如果子元素的 `dispatchTouchEvent` 返回 `false` ， `ViewGroup` 就会把事件分发给下一个子元素(如果还有下一个子元素的话)。<br/>
 
+　　其实 `mFirstTouchTarget` 真正的赋值过程是在 `addTouchTarget` 内部完成的，从下面的 `addTouchTarget` 方法的内部结构可以看出， `mFirstTouchTarget` 其实是一种单链表结构。 `mFirstTouchTarget` 是否被赋值，将直接影响到 ViewGroup 对事件的拦截策略，如果 `mFirstTarget` 为 `null` , 那么 ViewGroup 就默认拦截接下来统一序列中所有的点击事件。
 
-#####View对点击事件处理
+```
+
+	private TouchTarget addTouchTarget(View child, int pointerIdBits) {
+		TouchTarget target = TouchTarget.obtain(child, pointerIdBits);
+		target.next = mFirstaTouchTarget;
+		return target;
+	}
+
+```
+
+　　如果子便利所有的子元素后事件没有被合适地处理，这里包含两种情况：第一种是 ViewGroup 没有子元素；第二种是子元素处理了点击事件，但是在 `dispatchTouchEvent` 中返回了 `false`, 这一般是因为子元素在 `onTouchEvent` 中返回了 `false` 。 在这两种情况下， ViewGroup 会自己处理点击事件， 这里就证实了 View 事件传递第四条结论。　代码如下所示：
+		
+```
+
+	// Dispatch to touch targets.
+	if (mFirstTouchTarget == null) {
+		// No touch targets so treat this as an ordinary view.
+		handled = dispatchTransformedTouchEvent(ev, canceled, null, TouchTarget.ALL_POINTER_IDS);
+	}
+
+```
+
+　　注意上面这段代码，这里的第三个参数 child 为 `null`, 从前面的分析可以知道，它会调用 `super.dispatchTouchEvent(event)` ， 很显然，这里就转到了 `View` 的 `dispatchTouchEvent` 方法，即点击事件开始交由 `View` 来处理。
+
+#####View对点击事件处理过程
 
 
 ----------
