@@ -267,9 +267,42 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 　　注意上面这段代码，这里的第三个参数 child 为 `null`, 从前面的分析可以知道，它会调用 `super.dispatchTouchEvent(event)` ， 很显然，这里就转到了 `View` 的 `dispatchTouchEvent` 方法，即点击事件开始交由 `View` 来处理。
 
 #####View对点击事件处理过程
+ 
+　　View对点击事件的出处理过程稍微简单一些，注意这里的 View 不包含 ViewGroup 。 先看它的 `dispatchTouchEvent` 方法， 如下所示。
+
+```
+
+	public boolean dispatchTouchEvent(MotionEvent event) {
+		boolean result = false;
+		···
+
+		if (onFilterTouchEventForSecurity(event)) {
+			// noinspection SimplifiableIfStatement
+			ListenerInfo li = mListenerInfo;
+			if (li != null && li.mOnTouchListener != null
+				&& (mViewFlags & ENABLED_MASK) == ENABLED
+				&& li.mOnTouchListener.onTouch(this, event)) {
+				result = true;	
+			}
+		
+			if (!result && onTouchEvent(event)) {
+				result = true;
+			}
+		}
+		···
+
+		return result;
+	}
 
 
-----------
+```
+
+　　View 对点击事件的处理过程就比较简单了，因为 View 是一个单独的元素，它没有子元素因此无法向下传递事件，所以它只能自己处理事件。从上面源码可以看出 View 对点击事件的处理过程， 首先会判断有没有设置 `OnTouchListener` , 如果 `OnTouchEvent` 中的 `onTouch` 方法返回 `true` ， 那么 `onTouchEvent` 就不会被调用，可见 `OntouchListener` 的优先级高于 `onTouchEvent` ， 这样做的好处是方便外界处理点击事件。
+
+　　接着再分析 `onTouchEvent` 的实现。	　　
+
+
+
 ###View的滑动冲突
 解决滑动冲突的两种方式
 
