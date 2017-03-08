@@ -18,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.sync.base.helper.PerfectClickListener;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
-import www.yihuacomputer.base.helper.PerfectClickListener;
 
 /**
  * Created by YH on 2017-01-13.
