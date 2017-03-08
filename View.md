@@ -299,9 +299,32 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 　　View 对点击事件的处理过程就比较简单了，因为 View 是一个单独的元素，它没有子元素因此无法向下传递事件，所以它只能自己处理事件。从上面源码可以看出 View 对点击事件的处理过程， 首先会判断有没有设置 `OnTouchListener` , 如果 `OnTouchEvent` 中的 `onTouch` 方法返回 `true` ， 那么 `onTouchEvent` 就不会被调用，可见 `OntouchListener` 的优先级高于 `onTouchEvent` ， 这样做的好处是方便外界处理点击事件。
 
-　　接着再分析 `onTouchEvent` 的实现。	　　
+　　接着再分析 `onTouchEvent` 的实现。先看当 View 处于不可用状态下点击事件的处理过程。如下所示。很显然，不可用状态下的 View 照样会消耗点击事件，尽管它看起来不可用。
 
+```
+		
+	if((viewFlags & ENABLED_MASK) == DISABLED) {
+		if (event.getAction() == MotionEvent.ACTION_UP && (mPrivateFlags & PFLAG_PRESSED) != 0) {
+			setPressed(flags);
+		}
+	}
+	// A disabled view that is clickable still consumes the touch 
+	// events, it just doesn't respond to them.
+	return (((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) == LONG_CLICKABLE));
 
+```	　　
+
+　　接着，如果 View 设置有代理，那么还会执行 `TouchDelegate` 的 `onTouchEvet` 方法， 这个 `onTouchEvent` 的工作机制看起来和 `OnTouchListener` 类似，这里不深入研究了。
+
+```
+	
+	if (mTouchDelegate != null) {
+		if (mTouchDelegate.onTouchEvent(event)){
+			return true;
+		}
+	}
+
+```
 
 ###View的滑动冲突
 解决滑动冲突的两种方式
