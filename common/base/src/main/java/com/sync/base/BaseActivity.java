@@ -20,11 +20,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.sync.base.databinding.ActivityBaseBinding;
+import com.sync.base.helper.PerfectClickListener;
+import com.sync.base.helper.StatusBarHelper;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
-import www.yihuacomputer.base.databinding.ActivityBaseBinding;
-import www.yihuacomputer.base.helper.PerfectClickListener;
-import www.yihuacomputer.base.helper.StatusBarHelper;
 
 /**
  * Created by YH on 2017-01-13.
