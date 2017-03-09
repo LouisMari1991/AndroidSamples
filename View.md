@@ -326,7 +326,10 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 ```
 
+
 　　下面再看一下 `onTouchEvent` 中对点击事件的具体处理，如下所示：
+
+
 ```
 
 	if ((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) == LONG_CHICKABLE)) {
@@ -360,7 +363,9 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 ```
 
+
 　　从上面的代码来看，只要 View 的 `CLICKABLE` 和 `LONG_CLICKABLE` 有一个为 `true` ，那么它就会消耗这个事件, 即 `onTouchEvent` 返回 `true`, 不管它是不是 `DISABLE` 状态。这证实了 View 事件传递第八条和第九条结论。 然后就是当 `ACTION_UP` 事件发生时，会触发 `performClick` 方法， 如果 View 设置了 `OnClickListener`, 那么方法内部会调用它的 `onClick` 方法，如下所示。
+
 
 ```
 
@@ -380,7 +385,9 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 ```
 
+
 　　View 的 `LONG_CLICKABLE` 属性默认为 `false`, 而 `CLICKABLE` 属性是否为 `false` 和具体的 `View` 有关， 确切来说是可点击的 View 其 `CLICKABLE` 为 `true` ， 不可点击的 View 其 `CLICKABLE` 为 `false` ， 比如 Button 是可以点击的， TextView 是不可以点击的。 通过 `setClickable` 和 `setLongClickble` 可以分别改变 View 的 `CLICKABLE` 和 `LONG_CLICKABLE` 属性。另外，`setOnCLickListener` 会自动将 View 的 `CLICKABLE` 设为 `true`， `setOnLongClickListener` 则会自动将 View 的 `LONG_CHICKABLE` 设为 `true`，这一点可以从源码看出来，如下所示：
+
 
 ```
 
@@ -397,10 +404,12 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 		}
 		getListenerInfo.mOnLongClickListener = l;
 	}
-
+	
 ```
 
+
 　　到这里，点击事件的分发机制的源码实现已经分析完了。
+
 
 
 ###View的滑动冲突
