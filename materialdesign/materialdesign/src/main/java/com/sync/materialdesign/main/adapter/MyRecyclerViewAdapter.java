@@ -70,6 +70,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
           book.setAuthor_intro("作者简介");
           book.setCatalog("目录");
           Intent intent = new Intent(mContext, BookDetailActivity.class);
+          intent.putExtra("book", book);
           ActivityOptionsCompat options =
               ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
                   holder.mImageView, mContext.getString(R.string.transition_book_img));
