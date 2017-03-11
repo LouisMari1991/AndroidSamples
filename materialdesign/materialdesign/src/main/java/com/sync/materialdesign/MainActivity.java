@@ -2,6 +2,7 @@ package com.sync.materialdesign;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,8 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import com.sync.materialdesign.activity.ScrollingActivity;
+import com.sync.materialdesign.list.ItemListActivity;
 import com.sync.materialdesign.main.MyFragment;
 import com.sync.materialdesign.main.adapter.MyViewPagerAdapter;
 import java.util.ArrayList;
@@ -72,6 +75,25 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main, menu);
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
+    int id = item.getItemId();
+
+    //noinspection SimplifiableIfStatement
+    if (id == R.id.action_settings) {
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
+  }
+
   private void onViewPagerChange() {
     mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -79,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
       }
 
       @Override public void onPageSelected(int position) {
-
+        mToolbar.setTitle(mTitles[position]);
       }
 
       @Override public void onPageScrollStateChanged(int state) {
@@ -115,7 +137,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             break;
           }
+          case R.id.nav_slideshow: {
+            new Handler().postDelayed(new Runnable() {
+              @Override public void run() {
+                startActivity(new Intent(MainActivity.this, ItemListActivity.class));
+              }
+            }, 100);
+            break;
+          }
         }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);// “right” -- end  "left" -- start
         return true;
       }
     });

@@ -24,7 +24,24 @@
         android:name=".detail.BookDetailActivity"
         android:theme="@style/AppTheme.NoActionBar"/>
 
-    <activity android:name=".activity.ScrollingActivity"/>
+    <activity
+        android:name=".activity.ScrollingActivity"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".list.ItemListActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".list.ItemDetailActivity"
+        android:label="@string/title_item_detail"
+        android:parentActivityName=".list.ItemDetailActivity"
+        android:theme="@style/AppTheme.NoActionBar">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".list.ItemListActivity" />
+    </activity>
+
+
 
   </application>
 
