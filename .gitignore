@@ -49,3 +49,5 @@ projectFilesBackup
 /.gradle/2.14.1/taskArtifacts/
 /.gradle/2.14.1/tasks/
 /common/common.iml
+libs/
+src/main/res/drawable/
