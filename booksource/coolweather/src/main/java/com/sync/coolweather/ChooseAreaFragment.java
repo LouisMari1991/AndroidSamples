@@ -19,6 +19,7 @@ import com.sync.coolweather.db.County;
 import com.sync.coolweather.db.Province;
 import com.sync.coolweather.util.HttpUtil;
 import com.sync.coolweather.util.Utility;
+import com.sync.logger.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,9 @@ public class ChooseAreaFragment extends Fragment {
             getActivity().finish();
           } else if (getActivity() instanceof WeatherActivity) {
             WeatherActivity activity = (WeatherActivity) getActivity();
-
+            activity.drawerLayout.closeDrawers();
+            activity.swipeRefresh.setRefreshing(true);
+            activity.requestWeather(weatherId);
           }
         }
       }
@@ -149,14 +152,17 @@ public class ChooseAreaFragment extends Fragment {
       int provinceCode = selectedProvince.getProvinceCode();
       int cityCode = selectedCity.getCityCode();
       String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityCode;
+      Logger.i(address);
       queryFromServer(address, "county");
     }
   }
 
   private void queryFromServer(String address, final String type) {
     showProgressDialog();
+    Logger.i("queryFromServer");
     HttpUtil.sendOkHttpRequest(address, new Callback() {
       @Override public void onFailure(Call call, IOException e) {
+        Logger.i(e.getMessage());
         getActivity().runOnUiThread(new Runnable() {
           @Override public void run() {
             closeProgressDialog();
@@ -166,7 +172,8 @@ public class ChooseAreaFragment extends Fragment {
       }
 
       @Override public void onResponse(Call call, Response response) throws IOException {
-        String responseText = response.body().toString();
+        String responseText = response.body().string();
+        Logger.i(responseText);
         boolean result = false;
         if ("province".equals(type)) {
           result = Utility.handleProvinceResponse(responseText);
@@ -175,6 +182,7 @@ public class ChooseAreaFragment extends Fragment {
         } else if ("county".equals(type)) {
           result = Utility.handleCountyResponse(responseText, selectedCity.getId());
         }
+        Logger.i(result + " ," + type);
         if (result) {
           getActivity().runOnUiThread(new Runnable() {
             @Override public void run() {

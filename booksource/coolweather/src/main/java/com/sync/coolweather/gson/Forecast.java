@@ -20,6 +20,9 @@ public class Forecast {
   }
 
   public class More {
-    public String info;
+    @SerializedName("txt_d")
+    public String infoD;
+    @SerializedName("txt_n")
+    public String infoN;
   }
 }

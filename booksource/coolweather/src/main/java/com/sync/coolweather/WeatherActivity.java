@@ -25,6 +25,7 @@ import com.sync.coolweather.gson.Weather;
 import com.sync.coolweather.service.AutoUpdateService;
 import com.sync.coolweather.util.HttpUtil;
 import com.sync.coolweather.util.Utility;
+import com.sync.logger.Logger;
 import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -83,6 +84,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     String weatherString = prefs.getString("weather", null);
+    Logger.i(weatherString);
     if (weatherString != null) {
       // 有缓存时直接解析天气数据
       Weather weather = Utility.handleWeatherResponse(weatherString);
@@ -114,7 +116,6 @@ public class WeatherActivity extends AppCompatActivity {
 
   /**
    * 根据城市请求天气信息
-   * @param weatherId
    */
   public void requestWeather(final String weatherId) {
     String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=bc0418b57b2d4918819d3974ac1285d9";
@@ -126,6 +127,7 @@ public class WeatherActivity extends AppCompatActivity {
 
       @Override public void onResponse(Call call, Response response) throws IOException {
         final String responseText = response.body().string();
+        Logger.i(responseText);
         final Weather weather = Utility.handleWeatherResponse(responseText);
         runOnUiThread(new Runnable() {
           @Override public void run() {
@@ -135,6 +137,7 @@ public class WeatherActivity extends AppCompatActivity {
               editor.putString("weather", responseText);
               editor.apply();
               mWeatherId = weather.basic.weatherId;
+              showWeatherInfo(weather);
             } else {
               Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
             }
@@ -184,7 +187,7 @@ public class WeatherActivity extends AppCompatActivity {
       TextView maxText = (TextView) view.findViewById(R.id.max_text);
       TextView minText = (TextView) view.findViewById(R.id.min_text);
       dateText.setText(forecast.date);
-      infoText.setText(forecast.more.info);
+      infoText.setText(forecast.more.infoD+"~"+forecast.more.infoN);
       maxText.setText(forecast.temperature.max);
       minText.setText(forecast.temperature.min);
       forecastLayout.addView(view);

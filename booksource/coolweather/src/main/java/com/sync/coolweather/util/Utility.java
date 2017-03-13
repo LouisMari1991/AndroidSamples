@@ -6,6 +6,7 @@ import com.sync.coolweather.db.City;
 import com.sync.coolweather.db.County;
 import com.sync.coolweather.db.Province;
 import com.sync.coolweather.gson.Weather;
+import com.sync.logger.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 public class Utility {
 
   public static boolean handleProvinceResponse(String response) {
+    Logger.i(response);
     if (!TextUtils.isEmpty(response)) {
       try {
         JSONArray allProvinces = new JSONArray(response);
@@ -56,6 +58,7 @@ public class Utility {
   }
 
   public static boolean handleCountyResponse(String response, int cityId) {
+    Logger.i(response);
     if (!TextUtils.isEmpty(response)) {
       try {
         JSONArray allCounties = new JSONArray(response);
@@ -67,6 +70,7 @@ public class Utility {
           county.setCityId(cityId);
           county.save();
         }
+        return true;
       } catch (JSONException e) {
         e.printStackTrace();
       }
@@ -83,7 +87,6 @@ public class Utility {
     } catch (JSONException e) {
       e.printStackTrace();
     }
-
     return null;
   }
 }

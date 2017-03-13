@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -29,8 +30,8 @@ public class TestActivity extends AppCompatActivity
 
   private int mCount;
 
-  @Override public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-    super.onCreate(savedInstanceState, persistentState);
+  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
     mBinding = DataBindingUtil.setContentView(this, R.layout.activity_test);
   }
 
@@ -38,7 +39,10 @@ public class TestActivity extends AppCompatActivity
     @Override public void handleMessage(Message msg) {
       switch (msg.what) {
         case MESSAGE_SCROLL_TO: {
+          mCount++;
+          if (mCount <= FRAME_COUNT) {
 
+          }
         }
       }
     }

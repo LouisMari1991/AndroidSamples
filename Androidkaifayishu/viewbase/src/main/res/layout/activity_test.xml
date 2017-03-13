@@ -3,8 +3,36 @@
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:background="#FFF"
       android:orientation="vertical"
+      android:padding="10dp"
       >
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="#FF0000"
+        android:text="MoveButton"
+        />
+
+    <com.sync.viewbase.ui.TestButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="我可以滑动"
+        android:textColor="@android:color/white"
+        />
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="A"
+        />
+
 
   </LinearLayout>
 </layout>
