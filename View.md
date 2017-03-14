@@ -222,7 +222,6 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 
 ```
-
 	if (child == null) {
 		handled = super.dispatchTouchEvent(event);
 	} else {
@@ -232,36 +231,30 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 <br/>　　如果子元素的 `dispatchTouchevent` 返回 `true` ，这时我们暂时不用考虑事件在子元素内部是怎么分发的，那么 `mFirstTouchEvent` 就会被赋值同时跳出 `for` 循环，如下所示:
 
 ```
-
 	newTouchTarget = addTouchTargt(child, idBitsToAssign);
 	alreadyDispatchToNewTouchTarget = true;
 	break;
-
 ```
 <br/>　　这几行代码完成了 `mFirstTouchTarget` 的复制并终止对子元素的遍历。如果子元素的 `dispatchTouchEvent` 返回 `false` ， `ViewGroup` 就会把事件分发给下一个子元素(如果还有下一个子元素的话)。<br/>
 
 　　其实 `mFirstTouchTarget` 真正的赋值过程是在 `addTouchTarget` 内部完成的，从下面的 `addTouchTarget` 方法的内部结构可以看出， `mFirstTouchTarget` 其实是一种单链表结构。 `mFirstTouchTarget` 是否被赋值，将直接影响到 ViewGroup 对事件的拦截策略，如果 `mFirstTarget` 为 `null` , 那么 ViewGroup 就默认拦截接下来统一序列中所有的点击事件。
 
 ```
-
 	private TouchTarget addTouchTarget(View child, int pointerIdBits) {
 		TouchTarget target = TouchTarget.obtain(child, pointerIdBits);
 		target.next = mFirstaTouchTarget;
 		return target;
 	}
-
 ```
 
 　　如果子便利所有的子元素后事件没有被合适地处理，这里包含两种情况：第一种是 ViewGroup 没有子元素；第二种是子元素处理了点击事件，但是在 `dispatchTouchEvent` 中返回了 `false`, 这一般是因为子元素在 `onTouchEvent` 中返回了 `false` 。 在这两种情况下， ViewGroup 会自己处理点击事件， 这里就证实了 View 事件传递第四条结论。　代码如下所示：
 		
 ```
-
 	// Dispatch to touch targets.
 	if (mFirstTouchTarget == null) {
 		// No touch targets so treat this as an ordinary view.
 		handled = dispatchTransformedTouchEvent(ev, canceled, null, TouchTarget.ALL_POINTER_IDS);
 	}
-
 ```
 
 　　注意上面这段代码，这里的第三个参数 child 为 `null`, 从前面的分析可以知道，它会调用 `super.dispatchTouchEvent(event)` ， 很显然，这里就转到了 `View` 的 `dispatchTouchEvent` 方法，即点击事件开始交由 `View` 来处理。
@@ -271,7 +264,6 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 　　View对点击事件的出处理过程稍微简单一些，注意这里的 View 不包含 ViewGroup 。 先看它的 `dispatchTouchEvent` 方法， 如下所示。
 
 ```
-
 	public boolean dispatchTouchEvent(MotionEvent event) {
 		boolean result = false;
 		···
@@ -293,16 +285,13 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 		return result;
 	}
-
-
 ```
 
 　　View 对点击事件的处理过程就比较简单了，因为 View 是一个单独的元素，它没有子元素因此无法向下传递事件，所以它只能自己处理事件。从上面源码可以看出 View 对点击事件的处理过程， 首先会判断有没有设置 `OnTouchListener` , 如果 `OnTouchEvent` 中的 `onTouch` 方法返回 `true` ， 那么 `onTouchEvent` 就不会被调用，可见 `OntouchListener` 的优先级高于 `onTouchEvent` ， 这样做的好处是方便外界处理点击事件。
 
 　　接着再分析 `onTouchEvent` 的实现。先看当 View 处于不可用状态下点击事件的处理过程。如下所示。很显然，不可用状态下的 View 照样会消耗点击事件，尽管它看起来不可用。
 
-```
-		
+```	
 	if((viewFlags & ENABLED_MASK) == DISABLED) {
 		if (event.getAction() == MotionEvent.ACTION_UP && (mPrivateFlags & PFLAG_PRESSED) != 0) {
 			setPressed(flags);
@@ -311,19 +300,16 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 	// A disabled view that is clickable still consumes the touch 
 	// events, it just doesn't respond to them.
 	return (((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) == LONG_CLICKABLE));
-
 ```	　　
 
 　　接着，如果 View 设置有代理，那么还会执行 `TouchDelegate` 的 `onTouchEvet` 方法， 这个 `onTouchEvent` 的工作机制看起来和 `OnTouchListener` 类似，这里不深入研究了。
 
 ```
-	
 	if (mTouchDelegate != null) {
 		if (mTouchDelegate.onTouchEvent(event)){
 			return true;
 		}
 	}
-
 ```
 
 
@@ -331,7 +317,6 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 
 ```
-
 	if ((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) == LONG_CHICKABLE)) {
 		swich (event.getAction()) {
 			case MotionEvent.ACTION_UP:
@@ -358,9 +343,6 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 		...
 		return true;	
 	}
-	
-
-
 ```
 
 
@@ -368,7 +350,6 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 
 ```
-
 	public boolean performClick() {
 		final boolean result;
 		final ListenerInfo li = mListenerInfo;
@@ -382,7 +363,6 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 		sendAccessibilutyEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
 		return result;
 	}
-
 ```
 
 
@@ -390,7 +370,6 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 
 ```
-
 	public void setOnclickListener(OnClickListener l) {
 		if (!isClickable()) {
 			setClickable(true);		
@@ -404,7 +383,6 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 		}
 		getListenerInfo.mOnLongClickListener = l;
 	}
-	
 ```
 
 
@@ -418,8 +396,8 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 #####外部拦截法
 　　所谓外部拦截法就是指点击事件都先经过父容器拦截处理，如果父容器需要此事件就拦截，如果不需要此事件就不拦截，这样就可以解决滑动冲突的问题，这种方法比较符合点击事件的分发机制。外部拦截需要重写父容器的 `onInterceptTouchEvent` 方法，在内部做相应的拦截即可,这种方法的伪代码如下所示。
 
+
 ```
-	
 	public boolean onInterceptTouchEvent(MotionEvent event) {
 		boolean intercepted false;
 		int x = (int) event.getX();
@@ -445,8 +423,8 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 		mLastYintercepy = y;
 		return intercepted;
 	}	
-
 ```
+
 
 　　上述代码是外部拦截法的经典逻辑，针对不同的滑动冲突，只需要修改父容器需要当前点击事件这个条件即可，其他均不需要并且也不能修改。这里对上述代码再描述一下，在 `onInterceptTouchEvent` 方法中，首先是 `ACTION_DOWN` 这个事件，父容器必须返回 `false`, 即不拦截 `ACTION_DOWN` 事件，这是因为一旦父容器拦截了 `ACTION_DOWN`， 那么后续的 `ACTION_MOVE` 和 `ACTION_UP` 事件都会交由父容器处理，这个时候事件就没法再传递给子元素了; 其次是 `ACTION_MOVE` 事件，这个事件可以根据需求要来决定是否拦截，如果父容器需要拦截就返回 `true` ，否则返回 `false` ;最后是 ACTION_UP 事件， 这里必须要返回 `false` ，因为 `ACTION_UP` 事件本身没有太多意义。
 
