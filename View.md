@@ -416,6 +416,38 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 解决滑动冲突的两种方式
 
 #####外部拦截法
-　　所谓外部拦截法就是指点击事件都先经过父容器拦截处理，如果父容器需要此事件就拦截，如果不需要此事件就不拦截，这样就可以解决滑动冲突的问题，这种方法比较符合点击事件的分发机制。外部拦截需要重写父容器的 `onInterceptTouchEvent` 方法，在内部做相应的拦截即可。
+　　所谓外部拦截法就是指点击事件都先经过父容器拦截处理，如果父容器需要此事件就拦截，如果不需要此事件就不拦截，这样就可以解决滑动冲突的问题，这种方法比较符合点击事件的分发机制。外部拦截需要重写父容器的 `onInterceptTouchEvent` 方法，在内部做相应的拦截即可,这种方法的伪代码如下所示。
 
-#####内部拦截法
+```
+	
+	public boolean onInterceptTouchEvent(MotionEvent event) {
+		boolean intercepted false;
+		int x = (int) event.getX();
+		int y = (int) event.getY();
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN: {
+				intercepted = false;
+				break;
+			}
+			case MotionEvent.ACTION_MOVE: {
+				if (父容器需要当前点击事件) {
+					intercepted = true;
+				} else {
+					intercepted = false;
+				}
+				break;
+			}
+			case MotionEvent.ACTION_UP: {
+				intercepted = false;
+			}
+		}
+		mLastXIntercept = x;
+		mLastYintercepy = y;
+		return intercepted;
+	}	
+
+```
+
+　　上述代码是外部拦截法的经典逻辑，针对不同的滑动冲突，只需要修改父容器需要当前点击事件这个条件即可，其他均不需要并且也不能修改。这里对上述代码再描述一下，在 `onInterceptTouchEvent` 方法中，首先是 `ACTION_DOWN` 这个事件，父容器必须返回 `false`, 即不拦截 `ACTION_DOWN` 事件，这是因为一旦父容器拦截了 `ACTION_DOWN`， 那么后续的 `ACTION_MOVE` 和 `ACTION_UP` 事件都会交由父容器处理，这个时候事件就没法再传递给子元素了; 其次是 `ACTION_MOVE` 事件，这个事件可以根据需求要来决定是否拦截，如果父容器需要拦截就返回 `true` ，否则返回 `false` ;最后是 ACTION_UP 事件， 这里必须要返回 `false` ，因为 `ACTION_UP` 事件本身没有太多意义。
+
+　　考虑一种情况，假设事件交由子元素处理，如果父元素在 `ACTION_UP` 时返回了 `true` ，就会导致子元素无法接收到 `ACTION_UP` 事件，这个时候子元素中的 `onClick` 事件就无法出发，但是父容器比较特殊，一旦它开始拦截任何一个事件，那么后续的事件都会交给它来处理，而 `ACTION_UP` 作为最后一个事件也必定可以传递给父容器，即使父容器的 `onInterceptTouchEvent` 方法在 `ACTION_UP` 时返回了 `false`。  
