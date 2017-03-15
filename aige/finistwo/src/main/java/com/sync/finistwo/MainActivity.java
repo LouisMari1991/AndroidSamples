@@ -12,6 +12,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     setContentView(R.layout.activity_main);
     findViewById(R.id.btn_cus).setOnClickListener(this);
     findViewById(R.id.btn_poter).setOnClickListener(this);
+    findViewById(R.id.btn_dis).setOnClickListener(this);
+    findViewById(R.id.btn_screen).setOnClickListener(this);
+    findViewById(R.id.btn_eraser).setOnClickListener(this);
   }
 
   @Override public void onClick(View v) {
@@ -22,6 +25,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       }
       case R.id.btn_poter: {
         startActivity(new Intent(MainActivity.this, PorterDuffActivity.class));
+        break;
+      }
+      case R.id.btn_dis: {
+        startActivity(new Intent(MainActivity.this, DisActivity.class));
+        break;
+      }
+      case R.id.btn_screen: {
+        startActivity(new Intent(MainActivity.this, ScreenActivity.class));
+        break;
+      }
+      case R.id.btn_eraser: {
+        startActivity(new Intent(MainActivity.this, EraserActivity.class));
         break;
       }
     }

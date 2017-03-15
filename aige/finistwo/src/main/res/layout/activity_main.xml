@@ -32,4 +32,36 @@
       />
 
 
+  <Button
+      android:id="@+id/btn_dis"
+      android:layout_width="368dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:padding="10dp"
+      android:text="DisInView"
+      tools:layout_editor_absoluteX="8dp"
+      tools:layout_editor_absoluteY="0dp"
+      />
+
+  <Button
+      android:id="@+id/btn_screen"
+      android:layout_width="368dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:padding="10dp"
+      android:text="ScreentView"
+      tools:layout_editor_absoluteX="8dp"
+      tools:layout_editor_absoluteY="0dp"
+      />
+  <Button
+      android:id="@+id/btn_eraser"
+      android:layout_width="368dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:padding="10dp"
+      android:text="EraserView"
+      tools:layout_editor_absoluteX="8dp"
+      tools:layout_editor_absoluteY="0dp"
+      />
+
 </LinearLayout>

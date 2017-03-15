@@ -25,6 +25,15 @@
     <activity
         android:name=".PorterDuffActivity"
         android:screenOrientation="portrait"/>
+    <activity
+        android:name=".DisActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".ScreenActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".EraserActivity"
+        android:screenOrientation="portrait"/>
   </application>
 
 </manifest>
