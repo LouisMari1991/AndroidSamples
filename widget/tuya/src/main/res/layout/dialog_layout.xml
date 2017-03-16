@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@null"
+    android:orientation="vertical"
+    >
+  <RelativeLayout
+      android:layout_width="fill_parent"
+      android:layout_height="40.0dip"
+      android:background="@color/black"
+      >
+    <ImageView
+        android:id="@+id/menu_iv"
+        android:layout_width="30.0dip"
+        android:layout_height="20.0dip"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10.0dip"
+        android:scaleType="fitXY"
+        android:src="@drawable/main_iv_bg"
+        />
+  </RelativeLayout>
+  <ListView
+      android:id="@+id/menu_lv"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@null"
+      />
+</LinearLayout>
