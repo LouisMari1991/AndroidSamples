@@ -34,6 +34,25 @@ public class DrawingView extends View {
     init(context);
   }
 
+  public void setPaintColor(int color) {
+    mPaint.setColor(color);
+  }
+
+
+  public void setPaintWidth(int width) {
+    mPaint.setStrokeWidth((float) width);
+  }
+
+  public void clearCanvas() {
+    mBitmap = Bitmap.createBitmap(screenWidth, screenHeight, Bitmap.Config.ARGB_8888);
+    mChacheCanvas.setBitmap(mBitmap);
+    invalidate();
+  }
+
+  public Bitmap getBitmap() {
+    return mBitmap;
+  }
+
   private void init(Context context) {
     screenWidth = context.getResources().getDisplayMetrics().widthPixels;
     screenHeight = context.getResources().getDisplayMetrics().heightPixels;
@@ -79,7 +98,6 @@ public class DrawingView extends View {
     invalidate();
     return true;
   }
-
 
   @Override protected void onDraw(Canvas canvas) {
     Logger.i("onDraw : " + canvas);

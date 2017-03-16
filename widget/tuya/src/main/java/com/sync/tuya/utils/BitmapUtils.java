@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
  * Created by YH on 2017-03-16.
  */
 
-public class BitmapUstils {
+public class BitmapUtils {
   public static final boolean saveBitmap(String name, Bitmap bmp) {
     File file = new File(Environment.getExternalStorageDirectory() + "/" + name + ".png");
     try {
