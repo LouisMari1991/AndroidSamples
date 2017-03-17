@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">ToolbarTitleAnimation</string>
+  <string name="title_activity_pager">PagerActivity</string>
+  <string name="action_settings">Settings</string>
 </resources>
