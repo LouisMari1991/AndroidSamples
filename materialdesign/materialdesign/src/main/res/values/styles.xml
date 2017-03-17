@@ -8,11 +8,17 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
-  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
   <style name="AppTheme" parent="MyThemeBlue"></style>
+
+
+  <!--修改toolbar弹出菜单的位置-->
+  <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+    <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+  </style>
 
 
   <!-- 蓝色为主色调 -->
@@ -32,7 +38,6 @@
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
-
 
 
 </resources>

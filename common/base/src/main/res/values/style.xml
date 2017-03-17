@@ -9,6 +9,11 @@
     <item name="subtitleTextAppearance">@style/Toolbar.SubTitle</item>
     <item name="android:windowNoTitle">true</item>
     <!--<item name="android:textSize">18sp</item> &lt;!&ndash;  搞掂字体大小&ndash;&gt;-->
+
+    <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item> <!--新增一个item，用于控制menu-->
+
+    <!-- 控制toolbar菜单按钮的style，也可以通过代码控制 -->
+    <!-- <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>-->
   </style>
 
   <!--titlebar 标题-->
@@ -30,5 +35,18 @@
   <style name="MVMS.TextAppearance.Title.Inverse" parent="MVMS.TextAppearance.Title">
     <item name="android:textColor">@android:color/white</item>
   </style>
+
+  <!--修改toolbar弹出菜单的位置-->
+  <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+    <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+  </style>
+
+  <!--修改toolbar菜单按钮的style-->
+  <style name="OverflowButtonStyle" parent="@android:style/Widget.ActionButton.Overflow">
+    <!--<item name="android:src">@drawable/ico_fail</item>-->
+  </style>-->
+
+  <!-- 也可以通过代码设置toolbar菜单按钮的style -->
+  <!--mToolbar.setOverflowIcon(BaseUtils.getResImg(com.wyyy.corelibrary.R.drawable.ico_success));  -->
 
 </resources>
