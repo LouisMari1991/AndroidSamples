@@ -18,7 +18,7 @@ public class ContentFragment extends Fragment {
 
   private String mTitle;
 
-  private static ContentFragment newInstance(String title) {
+  public static ContentFragment newInstance(String title) {
     ContentFragment fragment = new ContentFragment();
     Bundle b = new Bundle();
     b.putString(TITLE, title);
