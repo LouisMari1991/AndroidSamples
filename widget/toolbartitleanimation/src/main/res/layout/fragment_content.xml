@@ -7,11 +7,20 @@
     >
 
   <TextView
+      android:id="@+id/title_text"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:id="@+id/title_text"
+      android:layout_gravity="center_horizontal|top"
+      android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+      android:textColor="@color/white"
       android:textSize="32sp"
-      android:layout_marginTop=""
+      android:textStyle="bold"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="5dp"
+      android:background="@drawable/toolbar_dropshadow"
       />
 
 </FrameLayout>
