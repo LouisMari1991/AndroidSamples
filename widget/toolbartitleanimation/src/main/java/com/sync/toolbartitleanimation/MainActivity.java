@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextSwitcher;
@@ -85,11 +86,14 @@ public class MainActivity extends AppCompatActivity {
 
           // Set TextSwitcher animation based on swipe direction
           if (position >= prevPosition) {
-
+            mSwitcher.setInAnimation(IN_SWIPE_FORWARD);
+            mSwitcher.setOutAnimation(OUT_SWIPE_FORWARD);
           } else {
-
+            mSwitcher.setInAnimation(IN_SWIPE_BACKWARD);
+            mSwitcher.setOutAnimation(OUT_SWIPE_BACKWARD);
           }
           mSwitcher.setText(adapter.getPageTitle(position));
+          setBackgroundColor(position, prevPosition);
 
           // Store current position in SharedPreferences
           sharedPrefs.edit().putInt("position", position).apply();
@@ -107,6 +111,33 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(view, "I love this!", Snackbar.LENGTH_LONG).setAction("Dismiss", null).show();
       }
     });
+  }
+
+  /**
+   * Use this method to chande the background color
+   */
+  public void setBackgroundColor(int i, int j) {
+
+    //Demo background colors
+    ArrayList<Colors> COLORS = new ArrayList<>();
+    COLORS.add(new Colors(R.color.md_blue_500, R.color.md_blue_900));
+    COLORS.add(new Colors(R.color.md_purple_500, R.color.md_purple_900));
+    COLORS.add(new Colors(R.color.md_deep_purple_500, R.color.md_deep_purple_900));
+    COLORS.add(new Colors(R.color.md_indigo_500, R.color.md_indigo_900));
+    COLORS.add(new Colors(R.color.md_light_blue_500, R.color.md_light_blue_900));
+    COLORS.add(new Colors(R.color.md_cyan_500, R.color.md_cyan_900));
+
+    // Just change the background color
+    mToolbar.setBackgroundColor(getResources().getColor(COLORS.get(i).getPrimaryLight()));
+
+    /**
+     *Change StatusBarColor in Lollipop and above
+     */
+    if (android.os.Build.VERSION.SDK_INT >= 21) {
+      Window window = getWindow();
+      window.addFlags(0x80000000);
+      window.setStatusBarColor(getResources().getColor(COLORS.get(i).getPrimaryDark()));
+    }
   }
 
   private Adapter setupViewPager(ViewPager viewPager) {

@@ -8,6 +8,14 @@ public class Colors {
   private int primaryDark;
   private int primaryLight;
 
+  public Colors() {
+  }
+
+  public Colors(int primaryLight, int primaryDark) {
+    this.primaryLight = primaryLight;
+    this.primaryDark = primaryDark;
+  }
+
   public int getPrimaryDark() {
     return primaryDark;
   }
