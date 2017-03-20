@@ -8,6 +8,11 @@ Created by sync on 2016/08/13/17:40.
 
 <br/>
 
+AndroidStudio代码格式化:  https://github.com/MariShunxiang/AndroidSamples/blob/master/codestyle/SquareAndroid.xml
+
+<br/>
+
+Markdown:
 
 [View.md](https://github.com/MariShunxiang/AndroidSamples/blob/master/View.md)
 
@@ -16,5 +21,3 @@ Created by sync on 2016/08/13/17:40.
 [AndroidStudio快捷键.md](https://github.com/MariShunxiang/AndroidSamples/blob/master/AndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE.md)
 
 [Google开源工程笔记.md](https://github.com/MariShunxiang/AndroidSamples/blob/master/googlesamples/NOTES.md)
-
-
