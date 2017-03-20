@@ -60,5 +60,126 @@ public static int getSize(int measureSpec) {
 　　`SpecMode` 有三类，每一类都表示特殊的含义，如下所示：
 
 >* UNSPECIFIED : 父容器不对 `View` 有任何限制，要多大给多大，这种情况一般用于系统内部，表示一种测量状态。
->* EXACLY : 父容器已经检测出 `View` 所需要的精确大小，这个时候 `View` 的最终大小就是 `SpecSize` 所指定的值，它对应于 `LayoutParams` 中的 `match_parent` 和 具体的数值这两种模式。
+>* EXACTLY : 父容器已经检测出 `View` 所需要的精确大小，这个时候 `View` 的最终大小就是 `SpecSize` 所指定的值，它对应于 `LayoutParams` 中的 `match_parent` 和 具体的数值这两种模式。
 >* AT_MOST : 父容器指定了一个可用大小即 `SpecSize` , `View` 的大小不能大于这个值，具体是什么值要看不同 `View` 的具体实现，它对应于 `LayoutParams` 中的 `warp_content` 。
+
+<br/>
+
+####MeasureSpec 和 LayoutParams 的对应关系
+
+　　上面提到，系统内部是通过 `MesureSpec` 来进行 `View` 的测量，但是正常情况下，我们使用 `View` 指定 `MesureSpec` ，尽管如此，但是我们可以给 `View` 设置 `LayoutParams` 。 在 `View` 测量的时候，系统会将 `LayoutParams` 在父容器的约束下转换成对应的 `MeasureSpec` , 然后再根据这个 `MeasureSpec` 来确定 `View` 测量后的宽/高。需要注意的是， `MeasureSpec` 不是唯一由 `LayoutParams` 决定的，`LayoutParams` 需要和父容器一起才能决定 `View` 的 `MeasureSpec` , 从而进一步决定 `View` 的宽/高。 另外，对于顶级 `View`(即 `DecorView`) 和普通 `View` 来说， `MeasureSpec` 的转换过程略有不同。对于 `DecorView` ， 其 `MeasureSpec` 由窗口尺寸和其自身的 `LayoutParams` 来共同确定；对于普通 `View` ，其 `MeasureSpec` 由父容器的 `MeasureSpec` 和自身的 `LayoutParams` 来共同决定， `MeasureSpec` 一旦确定后， `onMesure` 中就可以确定 `View` 的测量宽/高。
+
+　　对于 `DecorView` 来说，在 `ViewRootImpl` 中的 `measureHierarchy` 方法中有如下一段代码，它展示了 `DecorView` 的 `MeasureSpec` 的创建过程，其中 `desiredWindowWidth` 和 `desiredWindowHeight` 是屏幕的尺寸：
+```
+childWidthMeasureSpec = getRootMeasureSpec(desiredWindowWidtd, lp.width);
+childHeightMeasureSpec = getRootMeasureSpec(desiredWindowHeight, lp.height);
+```
+接着再看下 `getRootMeasureSpec` 方法的实现：
+```
+private static int getRootMeasureSpec(int windowSize, int rootDimension){
+  int measureSpec;
+  switch (rootDimension) {
+    case ViewGroup.LayoutParams.MATCH_PARENT:
+    // Window can't resize. Force root view to be windowSize.
+    measureSpec = MeasureSpec.makeMeasureSpec(windowSize, MeasureSpec.EXACTLY);
+    break;
+    case ViewGroup.LayoutParams.WRAP_CONTENT:
+    // Window can resize. Set max size for root view.
+    measureSpec = MeasureSpec.makeMeasureSpec(windowSize, MeasureSpec.AT_MOST);
+    break;
+    default:
+    // Window wants to be an exact size. Force root view to be that size.
+    measureSpec = MeasureSpec.makeMeasureSpec(rootDimension, MeasureSpec.EXACTLY);
+    break;
+  }
+  return measureSpec;
+}
+```
+　　通过上述代码， `DecorView` 的 `MeasureSpec` 产生过程就很明确了，具体来说遵守如下规则，根据它的 `LayoutParams` 中的宽/高的参数来划分。
+
+>* LayoutParams.MATCH_PARENT : 精确模式，大小就是窗口的大小；
+>* LayoutParams.WRAP_CONTENT : 最大模式，大小不定，但是不能超过窗口的大小；
+>* 固定大小 (比如 100dp) : 精确模式，大小为 `LayoutParams` 指定的大小。
+
+　　对于普通 `View` 来说，这里是指定我们布局中的 `View` , `View` 的 `measure` 过程由 `ViewGroup` 传递而来，先看一下 `ViewGroup` 的 `mesureChildWidthMargins` 方法 :
+
+```
+protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUesd){
+  final MarginLayoutParams = lp = (MarginLayoutParams) child.getLayoutParams();
+
+  final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec, mPaddingLeft + mPaddindRight + lp.leftMargin + lp.rightMargin + widthUsed, lp.width);
+  final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec, mPaddingTop + mPaddingBottom + lp.topMargin + lp.bottomMargin + heightUesd, lp.height);
+  child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+}
+```
+　　上述方法会对子元素进行 `measure` ，在调用子元素的 `mesure` 方法之前会先通过 `getChildMeasureSpec` 方法来得到子元素的 `MeasureSpec` 。从代码来看，很显然，子元素的 `MeasureSpec` 的创建与父容器的 `MeasureSpec` 和子元素本身的 `LayoutParams` 有关， 此外还和 `View` 的 `margin` 及 `padding` 有关，具体情况可以看一下 ViewGroup 的 `getChildMeasureSpec` 方法，如下所示：
+```
+public static int getChildMeasureSpec(int spec, int padding, int childDimension) {
+  int specMode = MeasureSpec.getMode(spec);
+  int specSize = MeasureSpec.getSize(spec);
+
+  int size = Math.max(0, specSize - padding);
+
+  int resultSize = 0;
+  int resultMode = 0;
+
+  switch (specMode) {
+    // Parent has imposed an exact size on us
+    case MeasureSpec.EXACTLY:
+      if (childDimension >= 0) {
+        resultSize = childDimension;
+        resultMode = MeasureSpec.EXACTLY;
+      } else if (childDimension == LayoutParams.MATCH_PARENT) {
+        // Child wants to be our size. So be it.
+        resultSize = size;
+        resultMode = MeasureSpec.EXACTLY;
+      } else if (childDimension == LayoutParams.WRAP_CONTENT) {
+        // Child wants to determine its own size. It can't be bigger than us.
+        resultSize = size;
+        resultMode = MeasureSpec.AT_MOST;
+      }
+      break;
+
+    // Parent has imposed a maximum size on us  
+    case MeasureSpec.AT_MOST:
+      if (childDimension >= 0) {
+        // Child wants a specific size... so be it
+        resultSize = childDimension;
+        resultMode = MeasureSpec.EXACTLY;
+      } else if (childDimension == LayoutParams.MATCH_PARENT) {
+        // Child wants to be our size, but our size is not fixed.
+        // Constarin child to not be bigger than us.
+        resultSize = size;
+        resultMode = MeasureSpec.AT_MOST;
+      } else if (childDimension == LayoutParams.WRAP_CONTENT) {
+        // Child wants to determine its own size. It can't be bigger than us.
+        resultSize = size;
+        resultMode = MeasureSpec.AT_MOST;
+      }
+      break;
+
+      // Parent asked to se how big we want to be
+      case MeasureSpec.UNSPECIFIED:
+      if (childDimension >= 0) {
+        // Child wants a specific size.. let him have it
+        resultSize = childDimension;
+        resultMode = MeasureSpec.EXACTLY;
+      } else if (childDimension == LayoutParams.MATCH_PARENT) {
+        // Child wants to be our size... find out how big it should be
+        resultSize = 0;
+        resultMode = MeasureSpec.UNSPECIFIED;
+      } else if (childDimension == LayoutParams.WRAP_CONTENT) {
+        // Child wants to determine its own size... find out how big it should be
+        resultSize = 0;
+        resultMode = MesureSpec.UNSPECIFIED;
+      }
+      break;
+  }
+  return MeasureSpec.makeMeasureSpec(resultSize, resultMode);
+}
+```
+　　上述方法不难理解，它的主要作用是根据父容器的 `MeasureSpec` 同时结合 `View` 本身的 `LayoutParams` 来确定子元素的 `MeasureSpec` , 参数中的 `padding` 是指父容器中已占用的空间大小，因此子元素可用的大小为父容器的尺寸减去 `padding` , 具体代码如下所示：
+```
+int specSize = MeasureSpec.getSize(spec);
+int size = Math.max(0, specSize - padding);
+```
