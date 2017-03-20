@@ -52,14 +52,21 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
   }
 
   private void handleTypeArray(Context context, AttributeSet attrs) {
+    if (attrs == null) {
+      return;
+    }
+
     TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleIndicator);
     mIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_width, -1);
-    mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_width, -1);
-    mIndicatorMargin = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_width, -1);
-    mAnimatorResId = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_width, -1);
-    mAnimatorReverseResId = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_width, -1);
-    mIndicatorBackgroundResId = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_width, -1);
-    mIndicatorUnselectedBackgroundResId = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_width, -1);
+    mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_height, -1);
+    mIndicatorMargin = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_margin, -1);
+
+    mAnimatorResId = typedArray.getResourceId(R.styleable.CircleIndicator_ci_animator, R.animator.scale_with_alpha);
+    mAnimatorReverseResId = typedArray.getResourceId(R.styleable.CircleIndicator_ci_animator_reverse, 0);
+    mIndicatorBackgroundResId =
+        typedArray.getResourceId(R.styleable.CircleIndicator_ci_drawable, R.drawable.white_radius);
+    mIndicatorUnselectedBackgroundResId =
+        typedArray.getResourceId(R.styleable.CircleIndicator_ci_drawable_unselected, mIndicatorBackgroundResId);
     typedArray.recycle();
   }
 
@@ -90,7 +97,7 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
 
     mAnimatorResId = (mAnimatorResId == 0) ? R.animator.scale_with_alpha : mAnimatorResId;
     mAnimationOut = AnimatorInflater.loadAnimator(context, mAnimatorResId);
-    if (mAnimatorResId == 0) {
+    if (mAnimatorReverseResId == 0) {
       mAnimationIn = AnimatorInflater.loadAnimator(context, mAnimatorResId);
       mAnimationIn.setInterpolator(new ReverseInterpolator());
     } else {
