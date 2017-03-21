@@ -6,18 +6,21 @@ Created by sync on 2016/08/13/17:40.
 
 记录我的Android学习之路。
 
-<br/>
+---
 
-AndroidStudio代码格式化:  https://github.com/MariShunxiang/AndroidSamples/blob/master/codestyle/SquareAndroid.xml
+*AndroidStudio代码格式化*:  https://github.com/MariShunxiang/AndroidSamples/blob/master/codestyle/SquareAndroid.xml
 
-<br/>
 
-Markdown:
+---
 
-[View.md](https://github.com/MariShunxiang/AndroidSamples/blob/master/View.md)
+*Markdown*:
 
-[ViewWork.md](https://github.com/MariShunxiang/AndroidSamples/blob/master/ViewWork.md)
+[View事件分发流程和源码解析](https://github.com/MariShunxiang/AndroidSamples/blob/master/Event.md)
 
-[AndroidStudio快捷键.md](https://github.com/MariShunxiang/AndroidSamples/blob/master/AndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE.md)
+[View测量](https://github.com/MariShunxiang/AndroidSamples/blob/master/MeasureSpec.md)
+
+[View工作流程(测量，布局，绘制)](https://github.com/MariShunxiang/AndroidSamples/blob/master/ViewWork.md)
+
+[AndroidStudio快捷键](https://github.com/MariShunxiang/AndroidSamples/blob/master/AndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE.md)
 
 [Google开源工程笔记.md](https://github.com/MariShunxiang/AndroidSamples/blob/master/googlesamples/NOTES.md)

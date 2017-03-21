@@ -1,185 +1,69 @@
-####ViewRoot和DecorView
+### View 的工作流程
+　　View 的工作流程只要是指 `measure` `layout` `draw` 三大流程，即测量、布局和绘制。其中 `measure` 确定 View 的测量宽/高， `layout` 确定 View 的最终宽/高和四个顶点的位置，而 `draw` 则将 View 绘制到屏幕上。
 
-　　ViewRoot 对应于 ViewRootImpl 类，它是连接 `WindowManager` 和 `DecorView` 的纽带， `View` 的三大流程均是通过 ViewRoot来完成的。 在 `ActivityThread` 中来完成的。 在 `ActivityThread` 中， 当 `Activity` 对象被创建完毕后，会将 `DecorView` 添加到 `Window` 中，同时会创建 `ViewRootImpl` 对象，并将 `ViewRootImpl` 对象和 `DecorView` 建立关联，这个过程可参看如下源码。
+#### mesure 过程
 
+　　`measure` 过程要分情况来看，如果只是一个原始的 View ，那么通过 `measure` 方法就完成了其测量过程，如果是一个 `ViewGroup` ，除了完成自己的测量过程外，还会遍历去调用所有子 View 的 `measure` 方法，各个子元素再递归去执行这个流程，下面针对这两种情况分别讨论。
 
+##### 1. View 的 `measure` 过程
+　　View 的 `measure` 过程由其 `measure` 方法来完成，`measure` 方法是一个 `final` 类型方法，这意味着子类不能重写此方法，在 View 的 `measure` 方法中会去调用 View 的 `onMesure` 方法，因此只需要看 `onMesure` 的实现即可， View 的 `onMesure` 方法如下所示:
 ```
-root = new ViewRootImpl(view.getContext(), display);
-root.setView(view, wparams, panelParentView);
-```
-
-　　View 的绘制流程是从 `ViewRoot` 的 `performTraversals` 方法开始的，它经过 `mesure` 、 `layout` 、 `draw` 三个过程才能最终将一个 View 绘制出来， 其中 `mesure` 用来测量 View 的宽和高， `layout` 用来确定 View 在父容器中放置的位置，而 `draw` 则负责将 View 绘制的屏幕上。针对 `performTraversals` 的大致流程如下图。
-
-<img src="https://github.com/MariShunxiang/GitTrainning/blob/master/viewwork/viewwork1.png?raw=true" width="50%" height="50%" />
-
-　　`performTraversals` 会依次调用 `performMesure`、`performLayout` 和 `performDraw` 三个方法，这三个方法分别完成顶级 View 的 `mesure`、`layout`、和 `draw` 这三大流程，其中在 `performMeasure` 中会调用 `measure` 方法， 在 `measure` 方法中又会调用 `onMeasure` 方法，在 `onMesure` 方法中则会对所有的子元素进行 `measure` 过程，这个时候 `measure` 流程就从父容器传递到子元素中了，这样就完成了一次 `measure` 过程。 接着子元素会重复父容器的 `measure` 过程，如此反复就完成了整个 View 树的遍历。 同理， `performLayout` 和 `performDraw` 的传递流程和 `performMeasure` 是类似的，唯一不同的是， `performDraw` 的传递过程是在 `draw` 方法中通过 `dispatchDraw` 来实现的，不过这并没有本质区别。
-
-　　`measure` 过程决定了 View 的宽/高, `Measure` 完成以后，可以通过 `getMeasuredWidth` 和 `getMeasuredHeight` 方法来获取到 View 测量后的宽/高，在几乎所有的情况下它都等同于 View 最终的宽/高，但是特殊情况除外。 `Layout` 过程决定了 View 的四个顶点的坐标和实际的 View 的宽/高，完成以后，可以通过 `getTop`、 `getBottom` 、 `getLeft` 和 `getRight` 来拿到 View 四个顶点的位置，并可以通过 `getWidth` 和 `getHeight` 方法来拿到 View 最终宽/高。 `Draw` 过程决定了 View 的显示，只有 `draw` 方法完成以后 View 的内容才能呈现在屏幕上。
-
-　　`DecorView` 作为顶级 View, 一般情况下它内部会包含一个竖直方向的 `LinearLayout`, 在这个 `LinearLayout` 里面有上下两个部分，上面是标题栏，下面是内容栏。在 `Activity` 中我们通过 `setContentView` 所设置的布局文件其实就是被加载到内容栏之中的，而内容栏的 `id` 是 `content`, 因此可以理解为 `Activity` 指定布局的方法不再 `setView` 而叫 `setContentView` ， 因为我们的布局的确是加到了 `id` 为 `content` 的 `FrameLayout` 中。如何得到 `content` 呢？ 可以这样： `ViewGroup content = findViewById(R.android.id.content)` 。如何得到我们设置的 `View` 呢？ 可以这样： `content.getChilldAt(0)` 。 同时，通过源码我们可以知道， `DecorView` 其实是一个 `FrameLayout` ， `View` 层的事件都先经过 `DecorView` , 然后才传递给我们的 `View` 。
-
-<img src="https://raw.githubusercontent.com/MariShunxiang/GitTrainning/master/viewwork/viewwork2.bmp" width="30%" height="30%" />
-
-<br/>
-
-###理解 MeasureSpec
-----------
-
-　　为了更好地理解 `View` 的测量过程，我们还需要理解 `MeasureSpec`,通过源码可以发现， `MeasureSpec` 参与了 `View` 的 `mesure` 过程, `MeasureSpec` 很大程度上决定了一个 `View` 的尺寸规格，之所以这么说是因为这个过程还受父容器的影响，因为父容器影响 `View` 的 `MeasureSpec` 的创建过程。 在测量过程中，系统将 `View` 的 `LayoutParams` 根据父容器所施加的规则转换成对应的 `MeasureSpec` ，然后再根据这个　`MeasureSpec` 来测量 `View` 的宽/高。
-
-####MeasureSpec
-
-　　`MeasureSpec` 代表一个32位的 int 值，高2位代表 `SpecMode`, 低30位代表 `SpecSize` , `SpecMode` 是指测量模式， 而 `SpecSize` 是指某种测量模式下的规格大小。 下面先看一下 `MeasureSpec` 内部的一些常量的定义，通过下面的代码，应该不难理解 `MeasureSpec` 的工作原理：
-
-```
-private static final int MODE_SHIFT = 30;
-private static final int MODE_MASK = 0x3 << MODE_SHIFT;
-public static final int UNSPECIFIED = 0 << MODE_SHIFT;
-public static final int EXACTLY = 1 << MODE_SHIFT;
-public static final int AT_MOST = 2 << MODE_SHIFT;
-
-public static int makeMeasureSpec(int size, int mode) {
-  if (sUserBrokenMakeMeasureSpec) {
-    return size + mode;
-  } else {
-    return (size & ~MODE_MASK) | (mode & MODE_MASK);
-  }
-}
-
-public static int getMode(int measureSpec) {
-  return (measureSpec & MODE_MASK);
-}
-
-public static int getSize(int measureSpec) {
-  return (measureSpec & ~MODE_MASK);
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+  setMesuredDimension(getDefaultSize(getSuggestedMininumWidth(), widthMeasureSpec),
+   getDefaultSize(getSuggestedMininumHeight(), heightMeasureSpec));
 }
 ```
-
-　　`measureSpec` 通过将 `SpecMode` 和 `SpecSize` 打包成一个 int 值来避免过的的内存分配，为了方便操作，其提供了打包和解包的方法。 `SpecMode` 和 `SpecSize` 也是一个 int 值，一组 `SpecMode` 和 `SpecSize` 可以打包为一个 `MeasureSpec` , 而一个 `MeasureSpec` 可以通过解包的形式来得出其原始的 `SpecMode` 和 `SpecSize` , 需要注意的是这里提到的 `MeasureSpec` 是指 `MeasureSpec` 所代表的 int 值，而非 `MeasureSpec` 本身。
-
-　　`SpecMode` 有三类，每一类都表示特殊的含义，如下所示：
-
->* UNSPECIFIED : 父容器不对 `View` 有任何限制，要多大给多大，这种情况一般用于系统内部，表示一种测量状态。
->* EXACTLY : 父容器已经检测出 `View` 所需要的精确大小，这个时候 `View` 的最终大小就是 `SpecSize` 所指定的值，它对应于 `LayoutParams` 中的 `match_parent` 和 具体的数值这两种模式。
->* AT_MOST : 父容器指定了一个可用大小即 `SpecSize` , `View` 的大小不能大于这个值，具体是什么值要看不同 `View` 的具体实现，它对应于 `LayoutParams` 中的 `warp_content` 。
-
-<br/>
-
-####MeasureSpec 和 LayoutParams 的对应关系
-
-　　上面提到，系统内部是通过 `MesureSpec` 来进行 `View` 的测量，但是正常情况下，我们使用 `View` 指定 `MesureSpec` ，尽管如此，但是我们可以给 `View` 设置 `LayoutParams` 。 在 `View` 测量的时候，系统会将 `LayoutParams` 在父容器的约束下转换成对应的 `MeasureSpec` , 然后再根据这个 `MeasureSpec` 来确定 `View` 测量后的宽/高。需要注意的是， `MeasureSpec` 不是唯一由 `LayoutParams` 决定的，`LayoutParams` 需要和父容器一起才能决定 `View` 的 `MeasureSpec` , 从而进一步决定 `View` 的宽/高。 另外，对于顶级 `View`(即 `DecorView`) 和普通 `View` 来说， `MeasureSpec` 的转换过程略有不同。对于 `DecorView` ， 其 `MeasureSpec` 由窗口尺寸和其自身的 `LayoutParams` 来共同确定；对于普通 `View` ，其 `MeasureSpec` 由父容器的 `MeasureSpec` 和自身的 `LayoutParams` 来共同决定， `MeasureSpec` 一旦确定后， `onMesure` 中就可以确定 `View` 的测量宽/高。
-
-　　对于 `DecorView` 来说，在 `ViewRootImpl` 中的 `measureHierarchy` 方法中有如下一段代码，它展示了 `DecorView` 的 `MeasureSpec` 的创建过程，其中 `desiredWindowWidth` 和 `desiredWindowHeight` 是屏幕的尺寸：
+　　上述代码很简洁，但是简洁并不代表简单， `setMesuredDimension` 方法会设置 View 宽/高的测量值，因此我们只需要看 `getDefaultSize` 这个方法即可:
 ```
-childWidthMeasureSpec = getRootMeasureSpec(desiredWindowWidtd, lp.width);
-childHeightMeasureSpec = getRootMeasureSpec(desiredWindowHeight, lp.height);
-```
-接着再看下 `getRootMeasureSpec` 方法的实现：
-```
-private static int getRootMeasureSpec(int windowSize, int rootDimension){
-  int measureSpec;
-  switch (rootDimension) {
-    case ViewGroup.LayoutParams.MATCH_PARENT:
-    // Window can't resize. Force root view to be windowSize.
-    measureSpec = MeasureSpec.makeMeasureSpec(windowSize, MeasureSpec.EXACTLY);
-    break;
-    case ViewGroup.LayoutParams.WRAP_CONTENT:
-    // Window can resize. Set max size for root view.
-    measureSpec = MeasureSpec.makeMeasureSpec(windowSize, MeasureSpec.AT_MOST);
-    break;
-    default:
-    // Window wants to be an exact size. Force root view to be that size.
-    measureSpec = MeasureSpec.makeMeasureSpec(rootDimension, MeasureSpec.EXACTLY);
-    break;
-  }
-  return measureSpec;
-}
-```
-　　通过上述代码， `DecorView` 的 `MeasureSpec` 产生过程就很明确了，具体来说遵守如下规则，根据它的 `LayoutParams` 中的宽/高的参数来划分。
-
->* LayoutParams.MATCH_PARENT : 精确模式，大小就是窗口的大小；
->* LayoutParams.WRAP_CONTENT : 最大模式，大小不定，但是不能超过窗口的大小；
->* 固定大小 (比如 100dp) : 精确模式，大小为 `LayoutParams` 指定的大小。
-
-　　对于普通 `View` 来说，这里是指定我们布局中的 `View` , `View` 的 `measure` 过程由 `ViewGroup` 传递而来，先看一下 `ViewGroup` 的 `mesureChildWidthMargins` 方法 :
-
-```
-protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUesd){
-  final MarginLayoutParams = lp = (MarginLayoutParams) child.getLayoutParams();
-
-  final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec, mPaddingLeft + mPaddindRight + lp.leftMargin + lp.rightMargin + widthUsed, lp.width);
-  final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec, mPaddingTop + mPaddingBottom + lp.topMargin + lp.bottomMargin + heightUesd, lp.height);
-  child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
-}
-```
-　　上述方法会对子元素进行 `measure` ，在调用子元素的 `mesure` 方法之前会先通过 `getChildMeasureSpec` 方法来得到子元素的 `MeasureSpec` 。从代码来看，很显然，子元素的 `MeasureSpec` 的创建与父容器的 `MeasureSpec` 和子元素本身的 `LayoutParams` 有关， 此外还和 `View` 的 `margin` 及 `padding` 有关，具体情况可以看一下 ViewGroup 的 `getChildMeasureSpec` 方法，如下所示：
-```
-public static int getChildMeasureSpec(int spec, int padding, int childDimension) {
-  int specMode = MeasureSpec.getMode(spec);
-  int specSize = MeasureSpec.getSize(spec);
-
-  int size = Math.max(0, specSize - padding);
-
-  int resultSize = 0;
-  int resultMode = 0;
+public static final getDefaultSize(int size, int measureSpec) {
+  int result = size;
+  int specMode = MeasureSpec.getMode(measureSpec);
+  int specSize = MeasureSpec.getSize(measureSpec);
 
   switch (specMode) {
-    // Parent has imposed an exact size on us
+    case MeasureSpec.UNSPECIFIED:
+      result = size;
+      break;
     case MeasureSpec.EXACTLY:
-      if (childDimension >= 0) {
-        resultSize = childDimension;
-        resultMode = MeasureSpec.EXACTLY;
-      } else if (childDimension == LayoutParams.MATCH_PARENT) {
-        // Child wants to be our size. So be it.
-        resultSize = size;
-        resultMode = MeasureSpec.EXACTLY;
-      } else if (childDimension == LayoutParams.WRAP_CONTENT) {
-        // Child wants to determine its own size. It can't be bigger than us.
-        resultSize = size;
-        resultMode = MeasureSpec.AT_MOST;
-      }
-      break;
-
-    // Parent has imposed a maximum size on us  
     case MeasureSpec.AT_MOST:
-      if (childDimension >= 0) {
-        // Child wants a specific size... so be it
-        resultSize = childDimension;
-        resultMode = MeasureSpec.EXACTLY;
-      } else if (childDimension == LayoutParams.MATCH_PARENT) {
-        // Child wants to be our size, but our size is not fixed.
-        // Constarin child to not be bigger than us.
-        resultSize = size;
-        resultMode = MeasureSpec.AT_MOST;
-      } else if (childDimension == LayoutParams.WRAP_CONTENT) {
-        // Child wants to determine its own size. It can't be bigger than us.
-        resultSize = size;
-        resultMode = MeasureSpec.AT_MOST;
-      }
-      break;
-
-      // Parent asked to se how big we want to be
-      case MeasureSpec.UNSPECIFIED:
-      if (childDimension >= 0) {
-        // Child wants a specific size.. let him have it
-        resultSize = childDimension;
-        resultMode = MeasureSpec.EXACTLY;
-      } else if (childDimension == LayoutParams.MATCH_PARENT) {
-        // Child wants to be our size... find out how big it should be
-        resultSize = 0;
-        resultMode = MeasureSpec.UNSPECIFIED;
-      } else if (childDimension == LayoutParams.WRAP_CONTENT) {
-        // Child wants to determine its own size... find out how big it should be
-        resultSize = 0;
-        resultMode = MesureSpec.UNSPECIFIED;
-      }
+      result = specSize;
       break;
   }
-  return MeasureSpec.makeMeasureSpec(resultSize, resultMode);
+  return result;
 }
 ```
-　　上述方法不难理解，它的主要作用是根据父容器的 `MeasureSpec` 同时结合 `View` 本身的 `LayoutParams` 来确定子元素的 `MeasureSpec` , 参数中的 `padding` 是指父容器中已占用的空间大小，因此子元素可用的大小为父容器的尺寸减去 `padding` , 具体代码如下所示：
+　　可以看出 `getDefaultSize` 这个方法的逻辑很简单，对于我们来说，我们只需要看 `AT_MOST` 和 `EXACTLY` 这两种情况。简单的理解，其实 `getDefaultSize` 返回的大小就是 `measureSpec` 中的 `specSize` ,而这个 `specSize` 就是 View 测量后的大小，这里多次提到测量后的大小，是因为 View 最终的大小是在 `layout` 阶段确定的，所以这里必须要加以区分，但是几乎所有情况下 View 的测量大小和最终大小是相等的。
+
+　　至于 `UNSPECIFIED` 这种情况，一般用于系统内部的测量过程，在这种情况下， View 的大小为 `getDefaultSize` 的第一个参数 size ，即宽/高分别为 `getSuggestedMininumHeight` 和 `getSuggestedMininumWidth` 这两个方法的返回值。看一下它们的源码：
 ```
-int specSize = MeasureSpec.getSize(spec);
-int size = Math.max(0, specSize - padding);
+protected int getSuggestedMininumWidth() {
+  return (mBackground == null) ? mMinWidth : max(mMinWidth, mBackground.getMinimumWidth());
+}
+
+protected int getSuggestedMininumHeight() {
+  return (mBackground == null) ? mMinHeight : max(mMinHeight, mBackground.getMinimumHeight());
+}
 ```
+　　这里只分析 `getSuggestedMininumWidth` 的实现， `getSuggestedMininumHeight` 和它的实现原理是一样的。 从 `getSuggestedMininumWidth` 的代码可以看出，如果 View 没有设置背景，那么 View 的宽度为 `mMinWidth` ,而 `mMinWidth` 对应于 `android:minWidth` 这个属性所指定的值，因此 View 的宽度即为 `android:minWidth` 属性所指定的值。这个属性如果不指定，那么 `mMinWidth` 的默认为 0， 如果 `View` 指定了背景， 则返回 `android:minWidth` 和 背景的最小宽度这两者中的最大值， `getSuggestedMininumWidth` 和 `getSuggestedMininumHeight` 的返回值就是 View 在 `UNSPECIFIED` 情况下的测量宽/高。
+
+ 　　从 `getDefaultSize` 方法实现来看， View 的宽/高由 `specSize` 来决定，所以我们可以得出如下结论：直接继承 View 的自定义控件需要重写 `onMesure` 方法并设置 `wrap_conent` 时的自身大小，否则在布局中使用 `wrap_conent` 就相当于使用 `match_parent` 。 因为根据 图4-1 和上述代码可知，如果 View 在布局中使用 `wrap_conent` ，那么它的 `specMode` 是 `AT_MOST` 模式，这种模式下，它的宽/高等于 `specSize` , 查看 图4-1 可知，这种情况下 `specSize` 是 `parentSize` ,而 `parentSize` 是父容器中目前可以使用的大小，也就是父容器当前剩余的空间大小。很显然， View 的宽/高就等于父容器当前剩余的空间大小，这种效果和在布局中使用 `match_parent` 完全一致。如何解决这个问题呢？也很简单，代码如下所示：
+ ```
+ protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+   super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+   int widthSpecMoe = MeasureSpec.getMode(widthMeasureSpec);
+   int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
+   int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+   int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
+
+   if (widthSpecMoe == MeasureSpec.AT_MOST && heightSpecMode == MeasureSpec.AT_MOST) {
+     setMesuredDimension(mWidth, mHeight);
+   } else if (widthSpecMoe == MeasureSpec.AT_MOST) {
+     setMesuredDimension(mWidth, heightSpecSize);
+   } else if (heightSpecMode == MeasureSpec.AT_MOST) {
+     setMesuredDimension(widthSpecSize, mHeight);
+   }
+ }
+ ```
+　　上述代码中，我们只需要给 View 一个指定一个默认的内部宽/高(mWidth和mHeight)，并在 `wrap_conent` 时设置此宽/高即可。如果查看 `TextView`、 `ImageView` 等的源码就可以知道，针对 `wrap_conent` 情形，它们的 `onMesure` 方法均做了特殊处理。
+
+##### 2. ViewGroup 的 `measure` 过程
