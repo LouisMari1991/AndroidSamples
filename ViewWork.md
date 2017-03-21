@@ -44,7 +44,16 @@ protected int getSuggestedMininumHeight() {
   return (mBackground == null) ? mMinHeight : max(mMinHeight, mBackground.getMinimumHeight());
 }
 ```
-　　这里只分析 `getSuggestedMininumWidth` 的实现， `getSuggestedMininumHeight` 和它的实现原理是一样的。 从 `getSuggestedMininumWidth` 的代码可以看出，如果 View 没有设置背景，那么 View 的宽度为 `mMinWidth` ,而 `mMinWidth` 对应于 `android:minWidth` 这个属性所指定的值，因此 View 的宽度即为 `android:minWidth` 属性所指定的值。这个属性如果不指定，那么 `mMinWidth` 的默认为 0， 如果 `View` 指定了背景， 则返回 `android:minWidth` 和 背景的最小宽度这两者中的最大值， `getSuggestedMininumWidth` 和 `getSuggestedMininumHeight` 的返回值就是 View 在 `UNSPECIFIED` 情况下的测量宽/高。
+　　这里只分析 `getSuggestedMininumWidth` 的实现， `getSuggestedMininumHeight` 和它的实现原理是一样的。 从 `getSuggestedMininumWidth` 的代码可以看出，如果 View 没有设置背景，那么 View 的宽度为 `mMinWidth` ,而 `mMinWidth` 对应于 `android:minWidth` 这个属性所指定的值，因此 View 的宽度即为 `android:minWidth` 属性所指定的值。这个属性如果不指定，那么 `mMinWidth` 的默认为 0，如果 `View` 指定了背景， 则 View 的宽度为 `max(mMinWidth, mBackground.getMinimumWidth())` 。 `mMinWidth` 的含义我们已经知道了，那么 `mBackground.getMinimumWidth()` 是什么呢？ 我们看一下 `Drawable` 的 `getMinimumWidth` 方法，如下所示：
+```
+public int getMinimumWidth() {
+  final int intrinsicWidth = getIntrinsicWidth();
+  return intrinsicWidth > 0 ? intrinsicWidth : 0;
+}
+```
+　　可以看出， `getMinimumWidth` 返回的就是 `Drawable` 的原始宽度，前提是这个`Drawable` 有原始宽度，否则就返回0。 那么 `Drawable` 在什么情况下有原始宽度呢？ 这里先举个例子说明一下， `ShapeDrawable` 无原始宽/高，而 `BitmapDrawablr` 有原始宽高（图片的尺寸）。
+
+　　这里再总结一下， `getSuggestedMininumWidth` 的逻辑；如果 View 没有设置背景，那么返回 `android:minWidth` 这个属性所指定的值，这个值可以为0； 如果 View 设置了背景，则返回 `android:minWidth` 和背景的最小宽度这两者中的最大值，`getSuggestedMininumWidth` 和 `getSuggestedMininumHeight` 的返回值就是 View 在 `UNSPECIFIED` 情况下的测量宽/高。
 
  　　从 `getDefaultSize` 方法实现来看， View 的宽/高由 `specSize` 来决定，所以我们可以得出如下结论：直接继承 View 的自定义控件需要重写 `onMesure` 方法并设置 `wrap_conent` 时的自身大小，否则在布局中使用 `wrap_conent` 就相当于使用 `match_parent` 。 因为根据 图4-1 和上述代码可知，如果 View 在布局中使用 `wrap_conent` ，那么它的 `specMode` 是 `AT_MOST` 模式，这种模式下，它的宽/高等于 `specSize` , 查看 图4-1 可知，这种情况下 `specSize` 是 `parentSize` ,而 `parentSize` 是父容器中目前可以使用的大小，也就是父容器当前剩余的空间大小。很显然， View 的宽/高就等于父容器当前剩余的空间大小，这种效果和在布局中使用 `match_parent` 完全一致。如何解决这个问题呢？也很简单，代码如下所示：
  ```
@@ -67,3 +76,44 @@ protected int getSuggestedMininumHeight() {
 　　上述代码中，我们只需要给 View 一个指定一个默认的内部宽/高(mWidth和mHeight)，并在 `wrap_conent` 时设置此宽/高即可。如果查看 `TextView`、 `ImageView` 等的源码就可以知道，针对 `wrap_conent` 情形，它们的 `onMesure` 方法均做了特殊处理。
 
 ##### 2. ViewGroup 的 `measure` 过程
+
+　　对于 ViewGroup 来说，除了完成自己的 `mesure` 过程以外，还会遍历去调用所有子元素的 `measure` 方法，各个子元素再递归去执行这个过程，和 View 不同的是， ViewGroup 是一个抽象类，因此它没有重写 View `onMeasure` 方法，但是它提供了一个叫 `measureChildren` 的方法，如下所示：
+```
+protected void measureChildren(int widthMeasureSpec, int heightMeasureSpec) {
+  final int size = mChildrenCount;
+  final View[] children = mChildren;
+  for (int i = 0; i < size; i ++) {
+    final View child = children[i];
+    if ((child.mViewFlags & VISIBILITY) != GONE) {
+      measureChildren(child, widthMeasureSpec, heightMeasureSpec);
+    }
+  }
+}
+```
+　　从上述代码来看， ViewGroup 在 `mesure` 时，会对每一个子元素进行 `mesure` ， `measureChild` 这个方法的实现也很好理解，如下所示：
+```
+protected void measureChild(View child, int parentWidthMeasureSpec, int  parentHeightMeasureSpec) {
+  final LayoutParams lp = child.getLayoutParams();
+
+  final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
+    mPaddingLeft + mPaddingRight, lp.width);
+  final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
+    mPaddingTop + mPaddingBottom, lp.height);
+
+  child.measure(childWidthMeasureSpec, childHeightMeasureSpec);    
+}
+```
+　　很显然， `measureChild` 的思想是取出子元素的 `LayoutParams` ，然后再通过 `getChildMeasureSpec` 来创建子元素的 `MeasureSpec` ，接着将 `MeasureSpec` 直接传递给 View 的 `measure` 方法来进行测量。 `getChildMeasureSpec` 已经在上面进行了详细分析，通过表4-1 可以更清楚了解它的逻辑。
+
+　　我们知道， ViewGroup 并没有定义其测量的具体过程，这是因为 ViewGroup 是一个抽象类，其测量过程的 `onMesure` 方法需要各个子类去具体实现， 比如 `LinearLayout`、`RelativeLayout` 等，为什么 ViewGroup 不像 View 一样对其 `onMesure` 方法做统一的实现呢？　那是因为不同的 ViewGroup 有不同的布局特性，这导致他们的测量细节各不相同，比如 `LinearLayout` 和 `RelativeLayout` 这两者的布局特性显然不同，因此 ViewGroup 无法做统一实现。 下面就通过 `LinearLayout` 的 `onMesure` 方法来分析 ViewGroup 的 `mesure` 过程。
+
+　　首先来看 `LinearLayout` 的 `onMesure` 方法，如下所示：
+```
+protected void onMesure(int widthMeasureSpec, int heightMeasureSpec) {
+  if (mRientation == VERTICAL) {
+    measureVertical(widthMeasureSpec, heightMeasureSpec);
+  } else {
+    measureHorizontal(widthMeasureSpec, heightMeasureSpec);
+  }
+}
+```
