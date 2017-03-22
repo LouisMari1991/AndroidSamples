@@ -117,3 +117,29 @@ protected void onMesure(int widthMeasureSpec, int heightMeasureSpec) {
   }
 }
 ```
+
+　　上述代码很简单，我们选择一个来看下，比如选择查看数值布局的 `LinearLayout` 的测量过程，即 `measureVertical` 方法， `measureVertical` 的源码比较长，下面只描述其大概逻辑，首先看一段代码：
+```
+// See how tall everyone is. Also remember max width.
+for  (int i = 0; i < count; ++i) {
+  finnal View child = getVertualChildAt(i);
+  ...
+  // Determine how big this child would like to be. If this or
+  // previous children have qiven a weight, then we allow it to
+  // use all avaiable space (and we will shrink things later
+  // if needed).
+  mesureChildBeforeLayout(
+    child, i, widthMeasureSpec, 0, heightMeasureSpec,
+    totalWeight == 0 ? mTotalLenght : 0);
+
+  if (oldHeight != Integer.MIN_VALUE) {
+    lp.height = oldHeight;
+  }
+
+  final int childHeight = child.getMeasureHeight();
+  final int totalLenght = mTotalLength;
+  mTotalLength = Math.max(totalLenght, totalLenght + childHeight + lp.topMargin +
+    lp.bottomMargin + getNextLocationOffset(child));
+}
+```
+　　从上面这段代码
