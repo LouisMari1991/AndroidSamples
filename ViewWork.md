@@ -142,4 +142,42 @@ for  (int i = 0; i < count; ++i) {
     lp.bottomMargin + getNextLocationOffset(child));
 }
 ```
-　　从上面这段代码
+　　从上面这段代码可以看出，系统会遍历子元素并对每个子元素执行 `mesureChildBeforeLayout` ，这个方法内部会调用子元素的 `mesure` 方法,这样各个子元素就开始依次进入 `mesure` 过程,并且系统会通过 `mTotalLenght` 这个变量来存储 `LinearLayout` 在竖直方向的初步高度。每测量一个子元素， `mTotalLenght` 就会增加，增加的部分主要包括子元素的高度以及子元素在竖直方向上的 `margin` 等。当子元素测量完毕后， `LinearLayout` 会测量自己的大小，源码如下所示：
+```
+  // Add in our padding
+mTotalLenght += mPaddingTop + mPaddingBottom;
+int heightSize = mTotalLenght;
+// Check against out mininum height
+heightSize = Math.max(heightSize, getSuggestedMininumHeight());
+// Reconcile out calculated size with the heightMeasureSpec
+int heightSizeAndState=resolveSizeAndState(heightSize, heightMeasureSpec, 0);
+heightSize = heightSizeAndState & MEASURE_SIZE_MASK;
+...
+setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState), heightSizeAndState);
+```
+　　这里对上述代码进行说明，当子元素测量完毕后， `LinearLayout` 会根据子元素的情况来测量自己的大小。针对竖直的 `LinearLayout` 而言。它在水平方向的测量过程遵循 `View` 的测量过程，在竖直方向的测量过程则和 `View` 有所不同。具体来说是指，如果它的布局中高度采取的是 `match_parent` 或者具体的数值，那么它的测量过程和 `View` 一致，及高度为 `specSize` ;如果他的布局中采用的是 `wrap_conent` ，那么它的高度是所有的子元素所占用的高度总和，但是任然不能超过它的父容器的剩余空间，当然它的最终高度还需要考虑其在竖直方向的 `padding` ，这个过程可以进一步参看如下源码：
+```
+public static int resolveSizeAndState(int size, int mesureSpec, int childMeasuredState) {
+  int result = size;
+  int specMode = MeasureSpec.getMode(mesureSpec);
+  int specSize = MeasureSpec.getSize(mesureSpec);
+  switch (specMode) {
+    case mesureSpec.UNSPECIFIED:
+      result = size;
+      break;
+    case MeasureSpec.AT_MOST:
+      if (specSize < size) {
+        result = specSize | MEASURED_STATE_TOO_SMALL;
+      } else {
+        result = size;
+      }
+      break;
+    case mesureSpec.EXACTLY:
+      result = specSize;
+      break;
+  }
+}
+```
+　　View 的 `measure` 过程是三大流程中最复杂的一个， `measure` 完成以后，通过 `getMeasuredWith/Height` 方法就可以正确地获取到 View 的测量宽/高。需要注意的是，在某些极端情况下，系统可能需要多次 `mesure` 才能确定最终的测量宽/高，这种情况下，在 `onMeasure` 方法中拿到的测量宽/高很可能不准确的。一个比较好的的习惯是在 `onLayout` 方法中去获取 View 的测量宽/高或者最终宽/高。
+　　上面已经对 View 的 `measure` 过程进行了详细的分析，现在考虑一种情况，比如我们想在 `Activity` 已启动的时候就做一件任务，但是这个任务需要获取某个 View  的宽/高。读者可能会说，这很简单啊，在 `onCreate` 或者 `onResume` 里面去获取这个 View 的宽/高不就行了？读者可以自行试一下，实际上在 `onCreate`，`onStart`,`onResume` 中无法正确得到某个 View 的宽/高信息，这是因为 View 的 `mesure` 过程和 `Activity` 生命周期不是同步执行的，因此无法保证 `Activity` 执行了 `onCreate`,`onStart`,`onResume` 时某个 View 已经测量完毕了，如果 View 还没有测量完毕，那么获得的宽/高就是 0 。 有没有什么方法能解决这个问题呢？ 答案是有的，这里给出四种方法来解决这个问题：
+   
