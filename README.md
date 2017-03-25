@@ -19,7 +19,11 @@ Created by sync on 2016/08/13/17:40.
 
 [View测量](https://github.com/MariShunxiang/AndroidSamples/blob/master/MeasureSpec.md)
 
-[View工作流程(测量，布局，绘制)](https://github.com/MariShunxiang/AndroidSamples/blob/master/ViewWork.md)
+[View工作流程(测量)](https://github.com/MariShunxiang/AndroidSamples/blob/master/ViewWork_mesure.md)
+
+[View工作流程(布局)](https://github.com/MariShunxiang/AndroidSamples/blob/master/ViewWork_layout.md)
+
+[View工作流程(绘制)](https://github.com/MariShunxiang/AndroidSamples/blob/master/ViewWork_draw.md)
 
 [AndroidStudio快捷键](https://github.com/MariShunxiang/AndroidSamples/blob/master/AndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE.md)
 
