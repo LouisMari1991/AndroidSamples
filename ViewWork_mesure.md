@@ -180,4 +180,85 @@ public static int resolveSizeAndState(int size, int mesureSpec, int childMeasure
 ```
 　　View 的 `measure` 过程是三大流程中最复杂的一个， `measure` 完成以后，通过 `getMeasuredWith/Height` 方法就可以正确地获取到 View 的测量宽/高。需要注意的是，在某些极端情况下，系统可能需要多次 `mesure` 才能确定最终的测量宽/高，这种情况下，在 `onMeasure` 方法中拿到的测量宽/高很可能不准确的。一个比较好的的习惯是在 `onLayout` 方法中去获取 View 的测量宽/高或者最终宽/高。
 　　上面已经对 View 的 `measure` 过程进行了详细的分析，现在考虑一种情况，比如我们想在 `Activity` 已启动的时候就做一件任务，但是这个任务需要获取某个 View  的宽/高。读者可能会说，这很简单啊，在 `onCreate` 或者 `onResume` 里面去获取这个 View 的宽/高不就行了？读者可以自行试一下，实际上在 `onCreate`，`onStart`,`onResume` 中无法正确得到某个 View 的宽/高信息，这是因为 View 的 `mesure` 过程和 `Activity` 生命周期不是同步执行的，因此无法保证 `Activity` 执行了 `onCreate`,`onStart`,`onResume` 时某个 View 已经测量完毕了，如果 View 还没有测量完毕，那么获得的宽/高就是 0 。 有没有什么方法能解决这个问题呢？ 答案是有的，这里给出四种方法来解决这个问题：
-   
+
+    1. Activity/View#onWindowFocusChanged
+      `onWindowFocusChanged` 这个方法的含义是： View 已经初始化完毕了，宽/高已经准备好了，这个时候去获取宽/高是没有问题的。需要注意的是， `onWindowFocusChanged` 会被调用多次，当 `Activity` 矿口得到焦点和失去焦点时均会被调用一次。具体来说，当 `Activity` 继续执行和暂停执行时， `onWindowFocusChanged` 均会被调用，如果频繁进行 `onResume` 和 `onPause` ，那么 `onWindowFocusChanged` 也会被频繁的调用。典型代码如下：
+      ```
+      public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+          int width = view.getMeasuredWith();
+          int height = view.getMeasureHeight();
+        }
+      }
+      ```
+
+    2. view.post(runnable)
+     通过 `post` 可以将一个 `runnable` 投递到消息队列的尾部，然后等待 `Lopper` 调用此 `runnable` 的时候， View 也已经初始化好了。典型代码如下：
+     protected void onStart() {
+       super.start();
+       view.post(new Runnale() {
+          @Override
+          public void run() {
+            int width = view.getMeasuredWith();
+            int height = view.getMeasureHeight();
+          }
+        });
+     }
+
+    3. ViewTreeObserver
+      使用 `ViewTreeObserver` 的众多回调可以完成这个功能，比如使用 `onGlobalLayoutListener` ,当 View 数的状态发生改变时或者 View 树内部的 View 的可见性发现改变时， `onGlobalLayout` 方法将被回调，因此这是获取 View 的宽/高一个很好的时机。需要注意的是，伴随这 View 树的状态发生改变等， `onGlobalLayout` 会被调用多次，典型代码如下：
+      ```
+      protected void onStart() {
+        super.onStart();
+
+        ViewTreeObserver observer = view.getViewTreeObserver();
+        observera.addOnGlobalLayoutListener(new onGlobalLayoutListener() {
+
+          @Override  
+          public void onGlobalLayout(){
+            view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            int width = view.getMeasuredWith();
+            int height = view.getMeasureHeight();
+          }
+        });
+      }
+      ```
+
+
+    4. view.mesure(int widthMeasurespec, heightMeasureSpec)
+        通过手动对 View 进行 `mesure` 来得到 View 的宽/高。这种方法这叫复杂，这里要分情况进行处理，根据 View 的 `LayoutParams` 来分：
+
+        *match_parent*
+        直接放弃，无法 `mesure` 出具体的宽/高。原因很简单，根据 View 的 `mesure` 过程，如表4-1 所示，构造此种 `mesureSpec` 需要知道 `parentSize` ，即父容器的剩余空间，而这个时候我们无法知道 `parentSize` 的大小，所以理论上不可能测量出 View 的大小。
+
+        *具体的数值(dp/px)*
+        比如宽/高都是 `100px` ，如下 `mesure` :
+        ```
+        int widthMesureSpec = MeasureSpec.makeMeasureSpec(100, MeasureSpec.EXACTLY);
+        int heightMesureSpec = MeasureSpec.makeMeasureSpec(100, MeasureSpec.EXACTLY);
+        view.mesure(widthMesureSpec, heightMesureSpec);
+        ```
+
+        *wrap_conent*
+        如下 `mesure` :
+        ```
+        int widthMesureSpec = MeasureSpec.makeMeasureSpec((1 << 30) -1, MeasureSpec.AT_MOST);
+        int heightMeasureSpec = MeasureSpec.makeMeasureSpec((1 << 30) -1, MeasureSpec.AT_MOST);
+        view.measure(widthMesureSpec, heightMeasureSpec);
+        ```
+        注意到 `((1 << 30) -1)` ，通过分析 `MeasureSpec` 的实现可以知道， View 的尺寸使用30位二进制表示，也就是说最大是30个1(即 `2^30 -1`) ，也就是 `((1 << 30) -1)` ，在最大化模式下，我们用 View 理论上能支持的最大值去构造 `mesureSpec` 是合理的。
+
+
+ 　　关于 View 的 `mesure` ，网络上有两种错误的用法。为什么说是错误的，首先其违背了系统的内部实现规范(因为无法通过错误的 `MeasureSpec` 去得出合法的 `specMode` ，从而导致 `mesure` 过程出错)，其次不能保证一定能 `measure` 出正确的结果。
+
+　　第一种错误用法：
+```
+int widthMesureSpec = MeasureSpec.makeMeasureSpec(-1, MeasureSpec.UNSPECIFIED);
+int heightMeasureSpec = MeasureSpec.WRAP_CONTENT(-1, MeasureSpec.UNSPECIFIED);
+view.measure(widthMesureSpec, heightMeasureSpec);
+```
+　　第二种错误用法：
+```
+view.mesure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+```
