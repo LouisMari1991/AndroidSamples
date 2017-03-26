@@ -54,8 +54,6 @@ public class CircleView extends View {
       setMeasuredDimension(200, heightSpecSize);
     } else if (heightSpecMode == MeasureSpec.AT_MOST) {
       setMeasuredDimension(widthSpecSize, 200);
-    } else {
-      setMeasuredDimension(widthSpecSize, heightSpecSize);
     }
   }
 
