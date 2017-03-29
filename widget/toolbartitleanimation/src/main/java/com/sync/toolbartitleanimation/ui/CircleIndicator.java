@@ -20,17 +20,17 @@ import com.sync.toolbartitleanimation.R;
  */
 public class CircleIndicator extends LinearLayout implements ViewPager.OnPageChangeListener {
 
-  private final int DEFAULT_INDICATOR_WIDTH = 5;
+  private final static int DEFAULT_INDICATOR_WIDTH = 5;
 
   private ViewPager mViewpager;
-  private int mIndicatorMargin = -1;
-  private int mIndicatorWidth = -1;
-  private int mIndicatorHeight = -1;
-  private int mAnimatorResId = R.animator.scale_with_alpha;
-  private int mAnimatorReverseResId = 0;
-  private int mIndicatorBackgroundResId = R.drawable.white_radius;
+  private int mIndicatorMargin                    = -1;
+  private int mIndicatorWidth                     = -1;
+  private int mIndicatorHeight                    = -1;
+  private int mAnimatorResId                      = R.animator.scale_with_alpha;
+  private int mAnimatorReverseResId               = 0;
+  private int mIndicatorBackgroundResId           = R.drawable.white_radius;
   private int mIndicatorUnselectedBackgroundResId = R.drawable.white_radius;
-  private int mCurrentPosition = 0;
+  private int mCurrentPosition                    = 0;
   private Animator mAnimationOut;
   private Animator mAnimationIn;
 
@@ -47,11 +47,11 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
   private void init(Context context, AttributeSet attrs) {
     setOrientation(LinearLayout.HORIZONTAL);
     setGravity(Gravity.CENTER);
-    handleTypeArray(context, attrs);
+    handleTypedArray(context, attrs);
     checkIndicatorConfig(context);
   }
 
-  private void handleTypeArray(Context context, AttributeSet attrs) {
+  private void handleTypedArray(Context context, AttributeSet attrs) {
     if (attrs == null) {
       return;
     }
@@ -78,6 +78,7 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
   public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin,
       @AnimatorRes int animatorId, @AnimatorRes int animatorReverseId, @DrawableRes int indicatorBackgroundId,
       @DrawableRes int indicatorUnselectedBackgroundId) {
+
     mIndicatorWidth = indicatorWidth;
     mIndicatorHeight = indicatorHeight;
     mIndicatorMargin = indicatorMargin;
@@ -126,14 +127,17 @@ public class CircleIndicator extends LinearLayout implements ViewPager.OnPageCha
       return;
     }
 
+    if (mAnimationIn.isRunning()) mAnimationIn.end();
+    if (mAnimationOut.isRunning()) mAnimationOut.end();
+
     View currentIndicator = getChildAt(mCurrentPosition);
     currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId);
     mAnimationIn.setTarget(currentIndicator);
     mAnimationIn.start();
 
-    View selectorIndicator = getChildAt(position);
-    selectorIndicator.setBackgroundResource(mIndicatorBackgroundResId);
-    mAnimationOut.setTarget(selectorIndicator);
+    View selectedIndicator = getChildAt(position);
+    selectedIndicator.setBackgroundResource(mIndicatorBackgroundResId);
+    mAnimationOut.setTarget(selectedIndicator);
     mAnimationOut.start();
 
     mCurrentPosition = position;

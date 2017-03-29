@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -29,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
   // This represents the toolbars title
   private TextSwitcher mSwitcher;
 
-  private ViewPager mViewPager;
+  private ViewPager       mViewPager;
   private CircleIndicator defaultIndicator;
-  private Toolbar mToolbar;
+  private Toolbar         mToolbar;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         @Override public void onPageSelected(int position) {
           // Retrieve previous pager position to determine swipe direction
           int prevPosition = sharedPrefs.getInt("position", 0);
-
+          Log.i("test", " prevPosition : " + prevPosition);
           // Set TextSwitcher animation based on swipe direction
           if (position >= prevPosition) {
             mSwitcher.setInAnimation(IN_SWIPE_FORWARD);
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
   /**
    * Use this method to chande the background color
    */
-  public void setBackgroundColor(int i, int j) {
+  private void setBackgroundColor(int i, int j) {
 
     //Demo background colors
     ArrayList<Colors> COLORS = new ArrayList<>();
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Just change the background color
     mToolbar.setBackgroundColor(getResources().getColor(COLORS.get(i).getPrimaryLight()));
+    defaultIndicator.setBackgroundColor(getResources().getColor(COLORS.get(i).getPrimaryLight()));
 
     /**
      *Change StatusBarColor in Lollipop and above
@@ -154,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
 
   static class Adapter extends FragmentPagerAdapter {
 
-    private final List<Fragment> mFragments = new ArrayList<>();
-    private final List<String> mFragmentTitles = new ArrayList<>();
+    private final List<Fragment> mFragments      = new ArrayList<>();
+    private final List<String>   mFragmentTitles = new ArrayList<>();
 
     public Adapter(FragmentManager fm) {
       super(fm);

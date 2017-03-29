@@ -43,7 +43,7 @@ public class ToolbarColorizeHelper {
       if (v instanceof ActionMenuView) {
         for (int j = 0; j < ((ActionMenuView) v).getChildCount(); j++) {
           final View innerView = ((ActionMenuView) v).getChildAt(j);
-          if (innerView instanceof ActionMenuView) {
+          if (innerView instanceof ActionMenuItemView) {
             for (int k = 0; k < ((ActionMenuItemView) innerView).getCompoundDrawables().length; k++) {
               if (((ActionMenuItemView) innerView).getCompoundDrawables()[k] != null) {
                 final int finalK = k;
