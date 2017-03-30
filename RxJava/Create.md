@@ -27,10 +27,11 @@ RxJava中定义了三种回调方法：
 ## 基本实现
 
 
- 创建一个RxJava掉用实现需要三个步骤
-    >1. 创建观察者 Observer或者Subscriber
-    >2. 创建被观察者 Observable
-    >3. 订阅subscribe
+创建一个RxJava掉用实现需要三个步骤
+   1. 创建观察者 Observer或者Subscriber
+   2. 创建被观察者 Observable
+   3. 订阅subscribe
+
 
  HelloWorld:
 
