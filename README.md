@@ -1,4 +1,4 @@
-# AndroidSamples for sync
+## AndroidSamples for sync
 
 Android learning example.
 
@@ -8,12 +8,13 @@ Created by sync on 2016/08/13/17:40.
 
 ---
 
-*AndroidStudio代码格式化*:  https://github.com/MariShunxiang/AndroidSamples/blob/master/codestyle/SquareAndroid.xml
+*RxJava 和 lambda表达式*
 
+[RxJava-Create](https://github.com/MariShunxiang/AndroidSamples/blob/master/RxJava/Create.md)
 
 ---
 
-*Markdown*:
+*View基础知识*:
 
 [View事件分发流程和源码解析](https://github.com/MariShunxiang/AndroidSamples/blob/master/Event.md)
 
@@ -27,4 +28,13 @@ Created by sync on 2016/08/13/17:40.
 
 [AndroidStudio快捷键](https://github.com/MariShunxiang/AndroidSamples/blob/master/AndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE.md)
 
+
+---
+
+*MateriaDesign*
+
 [Google开源工程笔记.md](https://github.com/MariShunxiang/AndroidSamples/blob/master/googlesamples/NOTES.md)
+
+---
+
+*AndroidStudio代码格式化*: <br/> https://github.com/MariShunxiang/AndroidSamples/blob/master/codestyle/SquareAndroid.xml

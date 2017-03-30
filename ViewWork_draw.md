@@ -1,4 +1,4 @@
-### View 的工作流程
+## View 的工作流程
 　　View 的工作流程只要是指 `measure` `layout` `draw` 三大流程，即测量、布局和绘制。其中 `measure` 确定 View 的测量宽/高， `layout` 确定 View 的最终宽/高和四个顶点的位置，而 `draw` 则将 View 绘制到屏幕上。
 
 #### draw 过程
@@ -15,7 +15,8 @@
   4. 绘制装饰 `onDrawScrollBars`
 
 　　这一点通过 `draw` 方法的源码可以明显的看出来，如下所示：
-```
+
+```java
 public void draw(Canvas canvas) {
     final int privateFlags = mPrivateFlags;
     final boolean dirtyOpaque = (privateFlags & FLAG_DIRTY_MASK) ==
@@ -70,7 +71,7 @@ public void draw(Canvas canvas) {
 }
 ```
 　　`View` 绘制过程的传递是通过 `dispatchDraw` 来实现的， `dispatchDraw` 会遍历调用所有子元素的 `draw` 方法，如此 `draw` 事件就一层层地传递了下去。 `View` 有一个特殊的方法， `setWillNotDraw` ，先看一下它的源码，如下图所示：
-```
+```java
   /*
    * If this view does'n do any drawing on its own, set this flags to
    * allow further optimizations. By default, this flag is not set on

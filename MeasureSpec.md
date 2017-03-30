@@ -1,9 +1,9 @@
-#### ViewRoot和DecorView
+## ViewRoot和DecorView
 
 　　ViewRoot 对应于 ViewRootImpl 类，它是连接 `WindowManager` 和 `DecorView` 的纽带， `View` 的三大流程均是通过 ViewRoot来完成的。 在 `ActivityThread` 中来完成的。 在 `ActivityThread` 中， 当 `Activity` 对象被创建完毕后，会将 `DecorView` 添加到 `Window` 中，同时会创建 `ViewRootImpl` 对象，并将 `ViewRootImpl` 对象和 `DecorView` 建立关联，这个过程可参看如下源码。
 
 
-```
+```java
 root = new ViewRootImpl(view.getContext(), display);
 root.setView(view, wparams, panelParentView);
 ```
@@ -30,7 +30,7 @@ root.setView(view, wparams, panelParentView);
 
 　　`MeasureSpec` 代表一个32位的 int 值，高2位代表 `SpecMode`, 低30位代表 `SpecSize` , `SpecMode` 是指测量模式， 而 `SpecSize` 是指某种测量模式下的规格大小。 下面先看一下 `MeasureSpec` 内部的一些常量的定义，通过下面的代码，应该不难理解 `MeasureSpec` 的工作原理：
 
-```
+```java
 private static final int MODE_SHIFT = 30;
 private static final int MODE_MASK = 0x3 << MODE_SHIFT;
 public static final int UNSPECIFIED = 0 << MODE_SHIFT;
@@ -69,12 +69,12 @@ public static int getSize(int measureSpec) {
 　　上面提到，系统内部是通过 `MesureSpec` 来进行 `View` 的测量，但是正常情况下，我们使用 `View` 指定 `MesureSpec` ，尽管如此，但是我们可以给 `View` 设置 `LayoutParams` 。 在 `View` 测量的时候，系统会将 `LayoutParams` 在父容器的约束下转换成对应的 `MeasureSpec` , 然后再根据这个 `MeasureSpec` 来确定 `View` 测量后的宽/高。需要注意的是， `MeasureSpec` 不是唯一由 `LayoutParams` 决定的，`LayoutParams` 需要和父容器一起才能决定 `View` 的 `MeasureSpec` , 从而进一步决定 `View` 的宽/高。 另外，对于顶级 `View`(即 `DecorView`) 和普通 `View` 来说， `MeasureSpec` 的转换过程略有不同。对于 `DecorView` ， 其 `MeasureSpec` 由窗口尺寸和其自身的 `LayoutParams` 来共同确定；对于普通 `View` ，其 `MeasureSpec` 由父容器的 `MeasureSpec` 和自身的 `LayoutParams` 来共同决定， `MeasureSpec` 一旦确定后， `onMesure` 中就可以确定 `View` 的测量宽/高。
 
 　　对于 `DecorView` 来说，在 `ViewRootImpl` 中的 `measureHierarchy` 方法中有如下一段代码，它展示了 `DecorView` 的 `MeasureSpec` 的创建过程，其中 `desiredWindowWidth` 和 `desiredWindowHeight` 是屏幕的尺寸：
-```
+```java
 childWidthMeasureSpec = getRootMeasureSpec(desiredWindowWidtd, lp.width);
 childHeightMeasureSpec = getRootMeasureSpec(desiredWindowHeight, lp.height);
 ```
 接着再看下 `getRootMeasureSpec` 方法的实现：
-```
+```java
 private static int getRootMeasureSpec(int windowSize, int rootDimension){
   int measureSpec;
   switch (rootDimension) {
@@ -102,7 +102,7 @@ private static int getRootMeasureSpec(int windowSize, int rootDimension){
 
 　　对于普通 `View` 来说，这里是指定我们布局中的 `View` , `View` 的 `measure` 过程由 `ViewGroup` 传递而来，先看一下 `ViewGroup` 的 `mesureChildWidthMargins` 方法 :
 
-```
+```java
 protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUesd){
   final MarginLayoutParams = lp = (MarginLayoutParams) child.getLayoutParams();
 
@@ -112,7 +112,7 @@ protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, i
 }
 ```
 　　上述方法会对子元素进行 `measure` ，在调用子元素的 `mesure` 方法之前会先通过 `getChildMeasureSpec` 方法来得到子元素的 `MeasureSpec` 。从代码来看，很显然，子元素的 `MeasureSpec` 的创建与父容器的 `MeasureSpec` 和子元素本身的 `LayoutParams` 有关， 此外还和 `View` 的 `margin` 及 `padding` 有关，具体情况可以看一下 ViewGroup 的 `getChildMeasureSpec` 方法，如下所示：
-```
+```java
 public static int getChildMeasureSpec(int spec, int padding, int childDimension) {
   int specMode = MeasureSpec.getMode(spec);
   int specSize = MeasureSpec.getSize(spec);
@@ -178,7 +178,7 @@ public static int getChildMeasureSpec(int spec, int padding, int childDimension)
 }
 ```
 　　上述方法不难理解，它的主要作用是根据父容器的 `MeasureSpec` 同时结合 `View` 本身的 `LayoutParams` 来确定子元素的 `MeasureSpec` , 参数中的 `padding` 是指父容器中已占用的空间大小，因此子元素可用的大小为父容器的尺寸减去 `padding` , 具体代码如下所示：
-```
+```java
 int specSize = MeasureSpec.getSize(spec);
 int size = Math.max(0, specSize - padding);
 ```
