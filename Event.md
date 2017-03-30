@@ -1,4 +1,4 @@
-####View位置参数
+### View位置参数
  　　View的位置主要是由它的四个顶点来决定，分别对应于View的四个属性：top,left,right,bottom, 其中top是左上角纵坐标，left是左上角横坐标，right是右下角横坐标，bottom是右下角总坐标。需要注意的是，这些坐标都是相对于View的父容器来说的，因此它是一种相对坐标。在Android中x轴和y轴的正方向分别为右和下。
 
 在View的源码中view的四个坐标对应于四个成员变量:mLeft,mRight,mTop,mBottom,获取方式如下：
@@ -9,7 +9,7 @@ Right = getRight();
 Top = getTop();
 Bottom = getBottom();
 ```
- 　　
+　
 从Android3.0开始，View增加几个额外的参数：x,y,translationX,translationY, 其中x和y是View左上角的坐标，而translationX和translationY是View左上角相对于父容器的偏移量。这几个参数也是相对于父容器的坐标，并且translationX和translationY的默认值是0，和View的四个基本位置参数一样，View也为它们提供了get/set方法，这几个参数的换算关系如下所示：
 ```
 x = left + translationX
@@ -19,7 +19,7 @@ y = top + translationY
 　　需要注意的是，在View平移的过程中，`top`和`left`表示的是原始左上角的位置信息，其值并不会发生改变，此时发生改变的是`x`,`y`,`translationX`,`translationY`这四个参数
 
 ----------
-###View getWidth()和getMeasuredWidth()
+### View getWidth()和getMeasuredWidth()
 
 ![这里写图片描述](http://s12.sinaimg.cn/middle/6e519585gbdc2eebf9fab&690)
 
@@ -34,9 +34,9 @@ y = top + translationY
 >* 改变布局参数：操作稍复杂，适用于没有交互的View。
 
 ----------
-####View事件分发机制
+### View事件分发机制
 
-#####MotionEvent:
+##### MotionEvent:
 　　在手指接触屏幕后所产生的一系列事件中，典型的事件类型有如下几种：
 
    >* ACTION_DOWN : 手指刚接触屏幕
@@ -50,7 +50,7 @@ y = top + translationY
 
  　上述三种情况是典型的时间序列，同时通过 MotionEvent 对象我们可以得到点击事件发生的x和y坐标。为此，系统系统了两组方法：getX/getY和getRawX和getRawY。它们的区别其实很简单，getX/getY返回的是相对于当前View左上角的x和y坐标，而getRawX和getRawY返回的是相对于手机屏幕左上角的x和y坐标。
 
-#####点击事件传递规则：
+##### 点击事件传递规则：
 　　所谓的点击事件的事件分发，其实就是对MotionEvent事件的分发过程，即当一个MotionEvent产生了以后，系统需要把这个事件传递给一个具体的View，而这个传递的过程就是分发的过程。点击事件的分发过程由三个很重要的方法来共同完成：`dispatchTouchEvent`,`onInterceptTouchEvent`和`onTouchEvent`
 
 >* `public boolean dispatchTouchEvent(MotionEvent event)`; 用来进行事件的分发。如果事件能够传递给当前View，那么此方法一定会被调用，返回结果受当前View的`onTouchEvent`和下级View的`dispatchTouchEvent`方法影响，表示是否消耗当前事件。
@@ -88,9 +88,9 @@ View事件传递结论：
 11. 事件传递的过程是由外向内的，即事件总是先传递给父元素，然后由父元素分发给子View，通过`requestDisallowInterceptTouchEvent`方法可以在子元素中干预父元素的事件分发过程，但是`ACTION_DOWN`事件除外。
 
 ----------
-###事件分发源码解析
+### 事件分发源码解析
 
-#####Activity对点击事件分发过程
+##### Activity对点击事件分发过程
 　　点击事件用 `MotionEvent` 来表示，但一个点击操作发生时，事件最先传递给当前Activity，由Activity的 `dispatchTouchEvent` 来进行事件派发，具体的工作是由Activity内部的Window来完成的。Window会将事件传递给`decor view`，`decor view`一般就是当前界面的底层容器(即 `setContent()` 所设置的 View 的父容器),通过 `Activity.getWindow.getDecorView()` 可以获得。
 
 源码： Activity#dispatchTouchEvent
@@ -134,7 +134,7 @@ public final View getDecorView(){
 ```
 　　我们知道，通过 `((ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content)).getChilldAt(0)` 这种方式就可以获取 Activity 所设置的 View， 这个 `mDecor` 显然就是 `((ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content)).getChilldAt(0)` 返回的 View, 而我们通过 `setContentView` 设置的 View 就是它的一个子 View。 目前事件传递到了 DevorView 这里，由于 DecorView 继承自 FrameLayout 且是父 View， 所以最终事件会传递给 View。 从这里开始，事件已经传递到顶级 View le，即在 Activity 中通过 `setContentView` 所设置的 View，另外顶级 `View` 也叫根 View，顶级 View 一般来说都是 ViewGroup。
 
-#####顶层View对点击事件分发过程
+##### 顶层View对点击事件分发过程
 　　点击事件达到顶层 View (一般是一个 ViewGroup)以后，会调用 ViewGroup 的 `dispatchTouchEvent` 方法，如果等级 ViewGroup 拦截事件即 `onInterceptTouchEvent` 返回 true,则事件由 ViewGroup 处理，这时如果 ViewGroup 的 `mOnTouchListenter` 被设置，则 `onTouch` 会被调用，否则 `onTcouchEvent` 会被调用。也就是说，如果都提供的话，`onTouch` 会屏蔽掉`onTouchEvent`。 在 `onTouchEvent` 中，如果设置了 `mOnCLickListener`，则 `onClick` 会被调用。 如果顶级 ViewGroup 不拦截事件，则事件会传递到它所在的点击事件链上的子 View，这时子 View 的 `dispatchTouchEvent` 会被调用。到此为止，事件已经从顶层 View 传递给了下一层 View， 接下来的传递过程和顶级 View 是一致的，如此循环，完成整个事件的分发。
  　　首先看 ViewGroup 对点击事件的分发过程。其主要实现在 ViewGroup 的 `dispatchTouchEvent` 方法中，这个方法比较长，这里分段说明。先看下面一段，很显然，它描述的是当前 View 是否拦截点击事件的逻辑。<br/>
 ```
@@ -168,7 +168,7 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 	cancelAndClearTouchTargets(ev);
 	restTouchState();
 }
-``` 
+```
 　　从上面的源码分析，我们可以得出结论:当 ViewGroup 决定拦截事件后，那么后续的点击事件将会默认交给它处理并且不会调用它的 `onInterceptTouchEvent` 方法，这证实了 View 事件传递第三条结论。
 
 　　总结起来有两点:<br/>
@@ -213,7 +213,7 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 		mLastTouchDownY = ev.getY();
 		newTouchTarget = addTouchTarget(child, idBitsToAssign);
 		alreadyDispatchedToNewTouchTarget = true;
-		break;	
+		break;
 	}
 }
 ```
@@ -248,7 +248,7 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 ```
 
 　　如果子便利所有的子元素后事件没有被合适地处理，这里包含两种情况：第一种是 ViewGroup 没有子元素；第二种是子元素处理了点击事件，但是在 `dispatchTouchEvent` 中返回了 `false`, 这一般是因为子元素在 `onTouchEvent` 中返回了 `false` 。 在这两种情况下， ViewGroup 会自己处理点击事件， 这里就证实了 View 事件传递第四条结论。　代码如下所示：
-		
+
 ```
 	// Dispatch to touch targets.
 	if (mFirstTouchTarget == null) {
@@ -259,14 +259,14 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 　　注意上面这段代码，这里的第三个参数 child 为 `null`, 从前面的分析可以知道，它会调用 `super.dispatchTouchEvent(event)` ， 很显然，这里就转到了 `View` 的 `dispatchTouchEvent` 方法，即点击事件开始交由 `View` 来处理。
 
-#####View对点击事件处理过程
- 
+##### View对点击事件处理过程
+
 　　View对点击事件的出处理过程稍微简单一些，注意这里的 View 不包含 ViewGroup 。 先看它的 `dispatchTouchEvent` 方法， 如下所示。
 
-```
+```java
 	public boolean dispatchTouchEvent(MotionEvent event) {
 		boolean result = false;
-		···
+		...
 
 		if (onFilterTouchEventForSecurity(event)) {
 			// noinspection SimplifiableIfStatement
@@ -274,37 +274,44 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 			if (li != null && li.mOnTouchListener != null
 				&& (mViewFlags & ENABLED_MASK) == ENABLED
 				&& li.mOnTouchListener.onTouch(this, event)) {
-				result = true;	
+				result = true;
 			}
-		
+
 			if (!result && onTouchEvent(event)) {
 				result = true;
 			}
 		}
-		···
+		...
 
 		return result;
 	}
 ```
 
-　　View 对点击事件的处理过程就比较简单了，因为 View 是一个单独的元素，它没有子元素因此无法向下传递事件，所以它只能自己处理事件。从上面源码可以看出 View 对点击事件的处理过程， 首先会判断有没有设置 `OnTouchListener` , 如果 `OnTouchEvent` 中的 `onTouch` 方法返回 `true` ， 那么 `onTouchEvent` 就不会被调用，可见 `OntouchListener` 的优先级高于 `onTouchEvent` ， 这样做的好处是方便外界处理点击事件。
+　　View 对点击事件的处理过程就比较简单了，因为 View 是一个单独的元素，它没有子元素因此
+无法向下传递事件，所以它只能自己处理事件。从上面源码可以看出 View 对点击事件的处理过程，
+首先会判断有没有设置 `OnTouchListener` , 如果 `OnTouchEvent` 中的 `onTouch` 方法返回
+ `true` ， 那么 `onTouchEvent` 就不会被调用，可见 `OntouchListener` 的优先级高于
+  `onTouchEvent` ， 这样做的好处是方便外界处理点击事件。
 
-　　接着再分析 `onTouchEvent` 的实现。先看当 View 处于不可用状态下点击事件的处理过程。如下所示。很显然，不可用状态下的 View 照样会消耗点击事件，尽管它看起来不可用。
+　　接着再分析 `onTouchEvent` 的实现。先看当 View 处于不可用状态下点击事件的处理过程。
+如下所示。很显然，不可用状态下的 View 照样会消耗点击事件，尽管它看起来不可用。
 
-```	
+```java
 	if((viewFlags & ENABLED_MASK) == DISABLED) {
 		if (event.getAction() == MotionEvent.ACTION_UP && (mPrivateFlags & PFLAG_PRESSED) != 0) {
 			setPressed(flags);
 		}
 	}
-	// A disabled view that is clickable still consumes the touch 
+	// A disabled view that is clickable still consumes the touch
 	// events, it just doesn't respond to them.
-	return (((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) == LONG_CLICKABLE));
-```	　　
+	return (((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) ==
+   LONG_CLICKABLE));
+```　　
 
-　　接着，如果 View 设置有代理，那么还会执行 `TouchDelegate` 的 `onTouchEvet` 方法， 这个 `onTouchEvent` 的工作机制看起来和 `OnTouchListener` 类似，这里不深入研究了。
+接着，如果 View 设置有代理，那么还会执行 `TouchDelegate` 的 `onTouchEvet` 方法， 这个
+`onTouchEvent` 的工作机制看起来和 `OnTouchListener` 类似，这里不深入研究了。
 
-```
+```java
 	if (mTouchDelegate != null) {
 		if (mTouchDelegate.onTouchEvent(event)){
 			return true;
@@ -312,11 +319,9 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 	}
 ```
 
+下面再看一下 `onTouchEvent` 中对点击事件的具体处理，如下所示：
 
-　　下面再看一下 `onTouchEvent` 中对点击事件的具体处理，如下所示：
-
-
-```
+```java
 	if ((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) == LONG_CHICKABLE)) {
 		swich (event.getAction()) {
 			case MotionEvent.ACTION_UP:
@@ -324,9 +329,9 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 				...
 				if (!mHasPerFormedLongPress) {
 					// This is a tap, so remove the longpress check removeLongPressCallback();
-					// Only perform take click actions if we were in the pressed state 
+					// Only perform take click actions if we were in the pressed state
 					if (!focusTaken) {
-						// Use a Runnable and post this tather than calling 
+						// Use a Runnable and post this tather than calling
 						// performClick directly. This lets other visual state
 						// of the view upfate before click actions start.
 						if (mPerformclick == null) {
@@ -341,12 +346,16 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 				break;
 		}
 		...
-		return true;	
+		return true;
 	}
 ```
 
 
-　　从上面的代码来看，只要 View 的 `CLICKABLE` 和 `LONG_CLICKABLE` 有一个为 `true` ，那么它就会消耗这个事件, 即 `onTouchEvent` 返回 `true`, 不管它是不是 `DISABLE` 状态。这证实了 View 事件传递第八条和第九条结论。 然后就是当 `ACTION_UP` 事件发生时，会触发 `performClick` 方法， 如果 View 设置了 `OnClickListener`, 那么方法内部会调用它的 `onClick` 方法，如下所示。
+　　从上面的代码来看，只要 View 的 `CLICKABLE` 和 `LONG_CLICKABLE` 有一个为 `true` ，
+那么它就会消耗这个事件, 即 `onTouchEvent` 返回 `true`, 不管它是不是 `DISABLE` 状态。
+这证实了 View 事件传递第八条和第九条结论。 然后就是当 `ACTION_UP` 事件发生时，会触发
+`performClick` 方法， 如果 View 设置了 `OnClickListener`, 那么方法内部会调用它的
+ `onClick` 方法，如下所示。
 
 
 ```
@@ -390,10 +399,10 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 
 
 
-###View的滑动冲突
+### View的滑动冲突
 解决滑动冲突的两种方式
 
-#####外部拦截法
+##### 外部拦截法
 　　所谓外部拦截法就是指点击事件都先经过父容器拦截处理，如果父容器需要此事件就拦截，如果不需要此事件就不拦截，这样就可以解决滑动冲突的问题，这种方法比较符合点击事件的分发机制。外部拦截需要重写父容器的 `onInterceptTouchEvent` 方法，在内部做相应的拦截即可,这种方法的伪代码如下所示。
 
 
@@ -422,7 +431,7 @@ if (actionMasked == MotionEvent.ACTION_DOWN) {
 		mLastXIntercept = x;
 		mLastYintercepy = y;
 		return intercepted;
-	}	
+	}
 ```
 
 

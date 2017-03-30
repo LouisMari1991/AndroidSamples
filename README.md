@@ -10,6 +10,8 @@ Created by sync on 2016/08/13/17:40.
 
 *RxJava 和 lambda表达式*
 
+[Android开发者一定会喜欢的 RxJava (pdf文件)](https://github.com/MariShunxiang/AndroidSamples/blob/master/RxJava/Android%E5%BC%80%E5%8F%91%E8%80%85%E4%BB%AC%E4%B8%80%E5%AE%9A%E4%BC%9A%E5%96%9C%E6%AC%A2%E7%9A%84%20RxJava.pdf)
+
 [RxJava-Create](https://github.com/MariShunxiang/AndroidSamples/blob/master/RxJava/Create.md)
 
 ---
@@ -37,4 +39,4 @@ Created by sync on 2016/08/13/17:40.
 
 ---
 
-*AndroidStudio代码格式化*: <br/> https://github.com/MariShunxiang/AndroidSamples/blob/master/codestyle/SquareAndroid.xml
+*AndroidStudio代码格式化 (xml文件)*: <br/> https://github.com/MariShunxiang/AndroidSamples/blob/master/codestyle/SquareAndroid.xml
