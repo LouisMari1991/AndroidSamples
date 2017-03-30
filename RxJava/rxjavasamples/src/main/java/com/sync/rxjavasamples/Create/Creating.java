@@ -11,6 +11,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func0;
 import rx.functions.Func1;
 
 /**
@@ -162,4 +163,14 @@ public class Creating extends RecyclerActivity {
     //3:订阅:
     observable.subscribe(subscriber);
   }
+
+  public void defer() {
+    Observable.defer(new Func0<Observable<String>>() {
+      @Override public Observable<String> call() {
+        return Observable.just(String.valueOf(System.currentTimeMillis()));
+      }
+    }).subscribe(createStringObserver());
+  }
+
+
 }
