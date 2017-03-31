@@ -50,6 +50,7 @@ public class Transforming extends RecyclerActivity {
   ////////////////////////////////////////////
 
   public void studentNameMap() {
+
     ArrayList<Student> students = DataFactory.getData();
 
     Observable.from(students).map(new Func1<Student, String>() {
@@ -74,12 +75,17 @@ public class Transforming extends RecyclerActivity {
       @Override public void call(Student student) {
         List<Course> courses = student.courses;
         for (Course course : courses) {
-          logger(courses.toString());
+          logger(course.toString());
         }
       }
     });
   }
 
+  /**
+   * <p>
+   * Student -->Observable<Course> -->Course
+   * <p>
+   */
   public void flatMap() {
 
     ArrayList<Student> students = DataFactory.getData();
@@ -192,12 +198,11 @@ public class Transforming extends RecyclerActivity {
   }
 
   public void scan() {
-    Observable.just(1, 2, 3, 4, 5)
-        .scan(new Func2<Integer, Integer, Integer>() {
-          @Override public Integer call(Integer sum, Integer item) {
-            return sum + item;
-          }
-        }).subscribe(new Subscriber<Integer>() {
+    Observable.just(1, 2, 3, 4, 5).scan(new Func2<Integer, Integer, Integer>() {
+      @Override public Integer call(Integer sum, Integer item) {
+        return sum + item;
+      }
+    }).subscribe(new Subscriber<Integer>() {
       @Override public void onCompleted() {
         System.out.println("Sequence complete.");
       }
