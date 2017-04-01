@@ -81,10 +81,112 @@ OnSubscribe 会被存储在返回的 Observable 对象中，它的作用相当�
   // Creating Observable
   public void create() {
     // 1.观察者
-    Observer<String> subscriber = createStringObserver();
+    Observer<String> subscriber = createObserver();
     // 2.被观察者
-    Observable<String> observable = createStringObservable();
+    Observable<String> observable = createObservable();
     // 3.订阅
     observable.subscribe(subscriber);
   }
 ```
+
+>上面代码将会依次调用：
+           onNext("Hello");
+           onNext("Hi");
+           onNext("Aloha");
+           onCompleted();或者程序出现异常掉用onError
+
+
+>流式 API 设计使得这里看起来像是：被观察者 订阅了 观察者
+
+>其中Subscriber是Observable的抽象类，在使用过程中，Observable 也总是先被转换成一个 Subscriber 再使用。
+onStart(): Subscriber类中新增方法，在subscribe所在线程执行，用于一些准备工作，如果需要指定线程可以使用doOnSubscribe()方法
+unsubscribe()：Subscriber类中新增方法，是Subscription接口中的方法，Subscriber实现它，用于取消订阅，可以防止内存泄漏
+isUnsubscribed()：Subscription接口中的方法，用于判断订阅状态，一般在使用unsubscribe()时先判断一下
+
+## Just、From
+
+ just 和 from 操作符用来快捷创建事件队列。
+ `just(T...)` :将传入的参数依次发送出来(一次将整个的数组发射出去)。
+ `from(T[])/from(Iterable<? extends T>)` :将传入的数组或 Iterable 拆分成对象后，依次发送出来(发射T.length次)。
+
+ - from 操作符可以转换 Future、Iterable和数组，对于Iterable和数组，产生的 Observable 会发射 Iterable 或数组的每一项数据.
+ 对于 Future,它会发射 Future.get() 方法返回的单个数据
+
+ - 如果你传递 null 给 Just,它会返回一个发射 null 值的 Observable,如果需要空 Observable 你应该使用 Empty 操作符.
+
+ // 1.观察者
+ ```java
+ Observable<String> subscriber = createObserver();
+ ```
+
+ // 2.被观察者
+ ```java
+ // just
+ Observable observable = Observable.just("just", "test", "just");
+ ```
+
+
+ ```java
+ //from
+ String[] words = {"from", "test", "from"};
+ Observable observable = Observable.from(words);
+ ```
+
+ // 3. 订阅
+ ```java
+ observable.subscribe(subscriber);
+ ```
+
+## Range
+Range 操作符发射一个范围内的有序整数序列，你可以指定范围的起始和长度。它接受两个参数，
+一个是范围的起始值，一个是范围数据的数目。
+如果你将第二个参数设为0，将导致 Observable 不发射任何数据（如果设置为负数，会抛异常）。
+
+```java
+@NonNull private Observer<Integer> createIntegerObserver() {
+  return new Subscriber<Integer>() {
+    @Override public void onCompleted() {
+      logger("Completed!");
+    }
+
+    @Override public void onError(Throwable e) {
+      logger("Error!");
+    }
+
+    @Override public void onNext(Integer integer) {
+      logger("Item: " + integer);
+    }
+  };
+}
+```
+
+```java
+public void range() {
+  //1.观察者
+  Observer<Integer> subscriber = createIntegerObserver();
+  //2.被观察者
+  Observable observable = Observable.range(10, 5);
+  //3:订阅:
+  observable.subscribe(subscriber);
+}
+```
+
+>上述代码将会打印：10，11，12，13，14，Completed!
+
+## Defer
+Defer 操作符只有当有 Subscriber 来订阅的时候才会创建一个新的 Observable 对象，
+每次订阅都会得到一个刚创建的最新的 Observable 对象，确保 Observable 对象里面的数据是最新的.
+Defer 操作符会一致等待有观察者订阅它，然后它使用 Observable 工厂方法生成一个 Observable.
+如下代码就会打印当前实时时间：
+
+```java
+public void defer() {
+   Observable.defer(new Func0<Observable<String>>() {
+     @Override public Observable<String> call() {
+       return Observable.just(String.valueOf(System.currentTimeMillis()));
+     }
+   }).subscribe(createStringObserver());
+ }
+```
+
+> 和 just不同的是，just可以将数字、字符串、数组、Iterate对象转为Observable对象发射出去，但值是创建的时候就不变了的。
