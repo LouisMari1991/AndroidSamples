@@ -35,24 +35,56 @@ RxJava中定义了三种回调方法：
 
  HelloWorld:
 
- ```java
-  @NonNull private Observer<String> createObserver() {
+```java
+@NonNull private Observer<String> createObserver() {
     return new Subscriber<String>() {
-      @Override
-      public void onNext(String s) {
-
+      @Override public void onCompleted() {
+        logger(" onCompleted! ");
       }
 
-      @Override
-      public void onCompleted() {
-
+      @Override public void onError(Throwable e) {
+        logger("Error! , e : " + e.getMessage());
       }
 
-      @Override
-      public void onError(Throwavle e) {
-
+      @Override public void onNext(String s) {
+        logger(" Item : " + s);
       }
-    }
+    };
   }
+```
 
- ```
+```java
+@NonNull private Observable<String> createObservable() {
+    return Observable.create(new Observable.OnSubscribe<String>() {
+      @Override public void call(Subscriber<? super String> subscriber) {
+        subscriber.onNext("Hello");
+        subscriber.onNext("Hi");
+        subscriber.onNext("Aloha");
+        subscriber.onCompleted();
+        subscriber.onError(new Throwable());
+      }
+    });
+  }
+```
+
+>这里传入了一个 OnSubscribe 对象作为参数.
+OnSubscribe 会被存储在返回的 Observable 对象中，它的作用相当于一个计划表，
+当 Observable 被订阅的时候，OnSubscribe 的 call() 方法会被自动调用，
+事件序列就会依照设定依次触发
+
+>上面的定义就是：
+观察者 Subscriber 将会被调用三次 onNext() 和一次 onCompleted()，其中 onError 和 onCompleted 互斥。
+被观察者调用了观察者的回调方法，就实现了由被观察者向观察者的事件传递，即观察者模式。
+
+
+```java
+  // Creating Observable
+  public void create() {
+    // 1.观察者
+    Observer<String> subscriber = createStringObserver();
+    // 2.被观察者
+    Observable<String> observable = createStringObservable();
+    // 3.订阅
+    observable.subscribe(subscriber);
+  }
+```

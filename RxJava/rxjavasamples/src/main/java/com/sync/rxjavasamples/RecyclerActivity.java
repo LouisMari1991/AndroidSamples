@@ -53,6 +53,14 @@ public class RecyclerActivity extends BaseActivity {
     setUpRecyclerView();
   }
 
+  public void progressVisible() {
+    if (null != progressBar) progressBar.setVisibility(View.VISIBLE);
+  }
+
+  public void progressGone() {
+    if (null != progressBar) progressBar.setVisibility(View.GONE);
+  }
+
   void setUpRecyclerView() {
     List<Method> methods = getMethods();
     CommonAdapter commonAdapter = new CommonAdapter<Method>(this, R.layout.recycler_view_tv_item, methods) {
