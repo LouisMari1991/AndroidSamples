@@ -3,6 +3,7 @@ package com.sync.rxjavasamples.Create;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import com.orhanobut.logger.Logger;
 import com.sync.rxjavasamples.R;
 import com.sync.rxjavasamples.RecyclerActivity;
 import java.io.File;
@@ -257,15 +258,15 @@ public class Creating extends RecyclerActivity {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Observer<Long>() {
           @Override public void onCompleted() {
-            logger("onCompleted");
+            Logger.i("onCompleted");
           }
 
           @Override public void onError(Throwable e) {
-            logger("onError" + e.getMessage());
+            Logger.i("onError" + e.getMessage());
           }
 
           @Override public void onNext(Long aLong) {
-            logger("interval:" + aLong);
+            Logger.i("interval:" + aLong);
           }
         });
     addSubscription(subscription);
@@ -318,32 +319,3 @@ public class Creating extends RecyclerActivity {
     addSubscription(subscription);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
