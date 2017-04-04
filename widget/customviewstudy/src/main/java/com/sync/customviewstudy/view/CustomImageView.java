@@ -2,6 +2,8 @@ package com.sync.customviewstudy.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 import com.sync.customviewstudy.R;
@@ -12,6 +14,14 @@ import com.sync.customviewstudy.R;
  * Contact：289168296@qq.com
  */
 public class CustomImageView extends View {
+
+  private Bitmap mBitmap; // 图片
+  private int    mImageScaleType;
+  private String mTitleText;
+  private int    mTitleTextSieze;
+  private int    mTitleTextColor;
+  private Rect mRect;
+  private Rect mTextBound;
 
   public CustomImageView(Context context) {
     this(context, null);
@@ -25,6 +35,5 @@ public class CustomImageView extends View {
     super(context, attrs, defStyleAttr);
 
     TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomImageView, defStyleAttr, 0);
-
   }
 }

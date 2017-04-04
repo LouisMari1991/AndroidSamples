@@ -8,9 +8,9 @@
   </declare-styleable>
 
   <declare-styleable name="CustomImageView">
-    <attr format="string" name="titleText"/>
-    <attr format="dimension" name="titleTextSize"/>
-    <attr format="color" name="titleTextColor"/>
+    <attr format="string" name="imgTitleText"/>
+    <attr format="dimension" name="imgTitleTextSize"/>
+    <attr format="color" name="imgTitleTextColor"/>
     <attr format="reference" name="image"/>
     <attr name="imageScaleType">
       <enum name="fillXY" value="0"/>
