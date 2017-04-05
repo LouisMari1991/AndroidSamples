@@ -29,23 +29,22 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
     return fragment;
   }
 
-  private SwipeRefreshLayout mSwipeRefreshLayout;
-  private RecyclerView mRecyclerView;
+  private SwipeRefreshLayout         mSwipeRefreshLayout;
+  private RecyclerView               mRecyclerView;
   private RecyclerView.LayoutManager mLayoutManager;
-  private MyRecyclerViewAdapter mRecyclerViewAdapter;
-  private MyStaggeredViewAdapter mStaggeredAdapter;
+  private MyRecyclerViewAdapter      mRecyclerViewAdapter;
+  private MyStaggeredViewAdapter     mStaggeredAdapter;
 
-  private static final int VERTICAL_LIST = 0;
+  private static final int VERTICAL_LIST   = 0;
   private static final int HORIZONTAL_LIST = 1;
-  private static final int VERTICAL_GRID = 2;
+  private static final int VERTICAL_GRID   = 2;
   private static final int HORIZONTAL_GRID = 3;
-  private static final int STAGGERED_GRID = 4;
+  private static final int STAGGERED_GRID  = 4;
 
   private static final int SPAN_COUNT = 2;
-  private int flag = 0;
+  private              int flag       = 0;
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+  @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     return LayoutInflater.from(getContext()).inflate(R.layout.fragment_main, container, false);
   }
@@ -65,28 +64,22 @@ public class MyFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
   private void configRecyclerView() {
     switch (flag) {
       case VERTICAL_LIST:
-        mLayoutManager =
-            new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         break;
       case HORIZONTAL_LIST:
-        mLayoutManager =
-            new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         break;
       case VERTICAL_GRID:
-        mLayoutManager =
-            new GridLayoutManager(getActivity(), SPAN_COUNT, GridLayoutManager.VERTICAL, false);
+        mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT, GridLayoutManager.VERTICAL, false);
         break;
       case HORIZONTAL_GRID:
-        mLayoutManager =
-            new GridLayoutManager(getActivity(), SPAN_COUNT, GridLayoutManager.HORIZONTAL, false);
+        mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT, GridLayoutManager.HORIZONTAL, false);
         break;
       case STAGGERED_GRID:
-        mLayoutManager =
-            new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
         break;
       default:
-        mLayoutManager =
-            new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         break;
     }
 
