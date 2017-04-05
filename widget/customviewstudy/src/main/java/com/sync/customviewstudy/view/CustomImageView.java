@@ -99,8 +99,8 @@ public class CustomImageView extends View {
   }
 
   @Override protected void onDraw(Canvas canvas) {
-    super.onDraw(canvas);
-
+    mPaint.setStrokeWidth(4);
+    mPaint.setStyle(Paint.Style.STROKE);
   }
 }
 
