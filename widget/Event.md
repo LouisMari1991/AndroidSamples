@@ -27,7 +27,7 @@ y = top + translationY
 
 
 ----------
-###View滑动的三种常用方式
+### View滑动的三种常用方式
 
 >* scrollTo/scrollBy:操作简单，适合对View内容的滑动；
 >* 动画：操作简单，主要适用于没有交互的View和实现复杂的动画效果；
