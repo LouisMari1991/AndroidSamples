@@ -1,10 +1,12 @@
 package com.sync.customviewstudy;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import com.sync.customviewstudy.activity.CustomImageViewActivity;
+import com.sync.customviewstudy.activity.CustomProgressBarActivity;
 import com.sync.customviewstudy.activity.CustomTitleViewActivity;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
@@ -28,8 +30,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         startActivity(new Intent(view.getContext(), CustomTitleViewActivity.class));
         break;
       case R.id.bt_custom_view_02:
+        startActivity(new Intent(view.getContext(), CustomImageViewActivity.class));
         break;
       case R.id.bt_custom_view_03:
+        startActivity(new Intent(view.getContext(), CustomProgressBarActivity.class));
         break;
       case R.id.bt_custom_view_04:
         break;

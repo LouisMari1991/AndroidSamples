@@ -22,5 +22,9 @@ android {
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
-  compile 'com.android.support:appcompat-v7:25.3.0'
+
+  compile project(':common:logger')
+
+  compile rootProject.ext.libSupportAppcompat
+  androidTestCompile 'org.testng:testng:6.9.6'
 }

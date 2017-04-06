@@ -12,10 +12,26 @@
     <attr format="dimension" name="imgTitleTextSize"/>
     <attr format="color" name="imgTitleTextColor"/>
     <attr format="reference" name="image"/>
-    <attr name="imageScaleType">
+    <attr name="imgScaleType">
       <enum name="fillXY" value="0"/>
       <enum name="center" value="1"/>
     </attr>
+  </declare-styleable>
+
+  <declare-styleable name="CustomProgressBar">
+    <attr format="color" name="firstColor"/>
+    <attr format="color" name="secondColor"/>
+    <attr format="dimension" name="circleWidth"/>
+    <attr format="integer" name="speed"/>
+  </declare-styleable>
+
+  <declare-styleable name="CustomVolumeControlBar">
+    <attr format="color" name="vFirstColor"/>
+    <attr format="color" name="vSecondColor"/>
+    <attr format="dimension" name="vCircleWidth"/>
+    <attr format="integer" name="dotCount"/>
+    <attr format="integer" name="splitSize"/>
+    <attr format="reference" name="bg"/>
   </declare-styleable>
 
 </resources>

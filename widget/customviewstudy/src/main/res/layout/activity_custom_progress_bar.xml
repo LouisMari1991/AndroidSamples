@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progressBar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    >
+
+  <com.sync.customviewstudy.view.CustomProgressBar
+      android:id="@+id/custom_progress_bar_01"
+      android:layout_width="500dp"
+      android:layout_height="100dp"
+      progressBar:circleWidth="20dp"
+      progressBar:firstColor="@color/colorPrimary"
+      progressBar:secondColor="@color/colorAccent"
+      progressBar:speed="10"
+      />
+
+  <com.sync.customviewstudy.view.CustomProgressBar
+      android:id="@+id/custom_progress_bar_02"
+      android:layout_width="150dp"
+      android:layout_height="150dp"
+      android:layout_margin="20dp"
+      progressBar:circleWidth="30dp"
+      progressBar:firstColor="@android:color/black"
+      progressBar:secondColor="@android:color/white"
+      progressBar:speed="12"
+      />
+
+  <!--测试不是 EXACTLY的情况-->
+  <com.sync.customviewstudy.view.CustomProgressBar
+      android:id="@+id/custom_progress_bar_03"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      progressBar:circleWidth="40dp"
+      progressBar:firstColor="@android:color/holo_red_light"
+      progressBar:secondColor="@android:color/holo_blue_light"
+      progressBar:speed="15"
+      />
+
+
+</LinearLayout>

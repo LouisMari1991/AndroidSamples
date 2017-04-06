@@ -332,7 +332,7 @@ Observable.defer(() -> Observable.just(System.currentTimeMillis() + "")).subscri
   ```
 
   ## Interval
-  Interval 所创建的 Observable 对象会从0开始，每隔固定的事件发射一个整数。需要主意的是这个对象是运行在
+  Interval 所创建的 Observable 对象会从0开始，每隔固定的时间发射一个整数。需要主意的是这个对象是运行在
   computation Scheduler, 如果涉及到UI操作，需要切换到主线程执行
   它按固定的时间间隔发射一个无限递增的整数序列
 

@@ -16,7 +16,13 @@
       </intent-filter>
     </activity>
     <activity
-        android:name="com.sync.customviewstudy.activity.CustomTitleViewActivity"
+        android:name=".activity.CustomTitleViewActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.CustomImageViewActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.CustomProgressBarActivity"
         android:screenOrientation="portrait"/>
   </application>
 
