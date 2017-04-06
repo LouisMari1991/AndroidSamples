@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import com.sync.customviewstudy.activity.CustomImageViewActivity;
 import com.sync.customviewstudy.activity.CustomProgressBarActivity;
 import com.sync.customviewstudy.activity.CustomTitleViewActivity;
+import com.sync.customviewstudy.activity.CustomVolumeControlBarActivity;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         startActivity(new Intent(view.getContext(), CustomProgressBarActivity.class));
         break;
       case R.id.bt_custom_view_04:
+        startActivity(new Intent(view.getContext(), CustomVolumeControlBarActivity.class));
         break;
       case R.id.bt_custom_view_05:
         break;

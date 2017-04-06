@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import com.sync.customviewstudy.R;
 
@@ -93,11 +94,30 @@ public class CustomVolumeControlBar extends View {
      */
     int relRadius = radius - mCircleWidth / 2; // 获取内圆的半径,即正方形四个顶点所在的圆
 
+    // 获得正方形四个顶点所在的圆，计算出正方形的四个顶点
     /**
-     * 获得正方形四个顶点所在的圆，计算出正方形的四个顶点
+     * 内切正方形距离左边的距离(或顶部):
+     * (内圆半径 -  (更2 / 2) * 内圆半径) + 圆弧的宽度
      */
-    mRect.left = (int) (mRect.left + Math.sqrt(2) * relRadius) + mCircleWidth;
+    mRect.left = (int) (relRadius - Math.sqrt(2) / 2 * relRadius) + mCircleWidth;
+    mRect.top = (int) (relRadius - Math.sqrt(2) / 2 * relRadius) + mCircleWidth;
 
+    /**
+     * 内切正方形距离左边的距离 + 正方形的边长(Math.sqrt(2) * relRadius)
+     */
+    mRect.right = (int) (mRect.left + Math.sqrt(2) * relRadius);
+    mRect.bottom = (int) (mRect.left + Math.sqrt(2) * relRadius);
+
+    /**
+     * 如果图片比较小,那么根据图片的尺寸放置到正中心
+     */
+    if (mBitmap.getWidth() < Math.sqrt(2) * relRadius) {
+      mRect.left = mCircleWidth + (relRadius - mBitmap.getWidth() / 2);
+      mRect.top = mCircleWidth + (relRadius - mBitmap.getWidth() / 2);
+      mRect.right = mCircleWidth + (relRadius + mBitmap.getWidth() / 2);
+      mRect.bottom = mCircleWidth + (relRadius + mBitmap.getWidth() / 2);
+    }
+    canvas.drawBitmap(mBitmap, null, mRect, mPaint);
   }
 
   /**
@@ -123,5 +143,15 @@ public class CustomVolumeControlBar extends View {
     for (int i = 0; i < mCurrentCount; i++) {
       canvas.drawArc(oval, i * (itemSize + mSplitSize), itemSize, false, mPaint);
     }
+  }
+
+  @Override public boolean onTouchEvent(MotionEvent event) {
+    switch (event.getAction()) {
+      case MotionEvent.ACTION_DOWN:
+        break;
+      case MotionEvent.ACTION_UP:
+        break;
+    }
+    return true;
   }
 }

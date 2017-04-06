@@ -24,6 +24,9 @@
     <activity
         android:name=".activity.CustomProgressBarActivity"
         android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.CustomVolumeControlBarActivity"
+        android:screenOrientation="portrait"/>
   </application>
 
 
