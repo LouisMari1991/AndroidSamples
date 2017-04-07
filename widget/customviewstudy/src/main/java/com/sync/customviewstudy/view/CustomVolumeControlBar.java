@@ -35,6 +35,9 @@ public class CustomVolumeControlBar extends View {
   private Paint mPaint;
   private Rect  mRect;
 
+  private int xDown;
+  private int xUp;
+
   public CustomVolumeControlBar(Context context) {
     this(context, null);
   }
@@ -148,10 +151,31 @@ public class CustomVolumeControlBar extends View {
   @Override public boolean onTouchEvent(MotionEvent event) {
     switch (event.getAction()) {
       case MotionEvent.ACTION_DOWN:
+        xDown = (int) event.getY();
         break;
       case MotionEvent.ACTION_UP:
+        xUp = (int) event.getY();
+        if (xDown < xUp) {
+          down();
+        } else {
+          up();
+        }
         break;
     }
     return true;
+  }
+
+  public void up() {
+    if (mCurrentCount < mCount) {
+      mCurrentCount++;
+    }
+    postInvalidate();
+  }
+
+  public void down() {
+    if (mCurrentCount > 0) {
+      mCurrentCount--;
+    }
+    postInvalidate();
   }
 }

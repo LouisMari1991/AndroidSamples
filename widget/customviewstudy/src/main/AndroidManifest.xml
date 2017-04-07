@@ -27,6 +27,9 @@
     <activity
         android:name=".activity.CustomVolumeControlBarActivity"
         android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.CustomImgContainerActivity"
+        android:screenOrientation="portrait"/>
   </application>
 
 

@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:vol="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     >
 
 
-  <com.sync.customviewstudy.view.TestView
-      android:layout_width="200dp"
-      android:layout_height="200dp"
-      android:id="@+id/test_view"
-      android:layout_margin="20dp"
+  <com.sync.customviewstudy.view.CustomVolumeControlBar
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      vol:bg="@drawable/vol_02"
+      vol:vCircleWidth="8dp"
+      vol:dotCount="10"
+      vol:vFirstColor="@android:color/black"
+      vol:vSecondColor="@color/colorAccent"
+      vol:splitSize="20"
       />
+
+  <com.sync.customviewstudy.view.CustomVolumeControlBar
+      android:layout_width="150dp"
+      android:layout_height="150dp"
+      android:layout_margin="15dp"
+      vol:bg="@drawable/vol_03"
+      vol:vCircleWidth="12dp"
+      vol:dotCount="10"
+      vol:vFirstColor="@android:color/black"
+      vol:vSecondColor="@color/colorPrimary"
+      vol:splitSize="15"
+      />
+
+  <com.sync.customviewstudy.view.CustomVolumeControlBar
+      android:id="@+id/customVolumControlBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      vol:bg="@drawable/vol_01"
+      vol:vCircleWidth="15dp"
+      vol:dotCount="11"
+      vol:vFirstColor="@android:color/black"
+      vol:vSecondColor="@android:color/white"
+      vol:splitSize="15"
+      />
+
 
 </LinearLayout>
