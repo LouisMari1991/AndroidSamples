@@ -1,7 +1,6 @@
 package com.googlesamples.unsplash.ui.grid;
 
 import android.content.Context;
-import android.media.UnsupportedSchemeException;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;

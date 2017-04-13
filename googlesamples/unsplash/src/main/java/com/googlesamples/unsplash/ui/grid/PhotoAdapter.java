@@ -15,42 +15,38 @@ import java.util.ArrayList;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
 
-    private final ArrayList<Photo> photos;
-    private final int requestedPhotoWidth;
-    private final LayoutInflater layoutInflater;
+  private final ArrayList<Photo> photos;
+  private final int              requestedPhotoWidth;
+  private final LayoutInflater   layoutInflater;
 
-    public PhotoAdapter(@NonNull Context context, @NonNull ArrayList<Photo> photos) {
-        this.photos = photos;
-        requestedPhotoWidth = context.getResources().getDisplayMetrics().widthPixels;
-        layoutInflater = LayoutInflater.from(context);
-    }
+  public PhotoAdapter(@NonNull Context context, @NonNull ArrayList<Photo> photos) {
+    this.photos = photos;
+    requestedPhotoWidth = context.getResources().getDisplayMetrics().widthPixels;
+    layoutInflater = LayoutInflater.from(context);
+  }
 
-    @Override
-    public PhotoViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        return new PhotoViewHolder((PhotoItemBinding) DataBindingUtil.inflate(layoutInflater,
-                R.layout.photo_item, parent, false));
-    }
+  @Override public PhotoViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+    return new PhotoViewHolder(
+        (PhotoItemBinding) DataBindingUtil.inflate(layoutInflater, R.layout.photo_item, parent, false));
+  }
 
-    @Override
-    public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
-        PhotoItemBinding binding = holder.getBinding();
-        Photo data = photos.get(position);
-        binding.setData(data);
-        binding.executePendingBindings();
-        Glide.with(layoutInflater.getContext())
-                .load(holder.getBinding().getData().getPhotoUrl(requestedPhotoWidth))
-                .placeholder(R.color.placeholder)
-                .override(ImageSize.NORMAL[0], ImageSize.NORMAL[1])
-                .into(holder.getBinding().photo);
-    }
+  @Override public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
+    PhotoItemBinding binding = holder.getBinding();
+    Photo data = photos.get(position);
+    binding.setData(data);
+    binding.executePendingBindings();
+    Glide.with(layoutInflater.getContext())
+        .load(holder.getBinding().getData().getPhotoUrl(requestedPhotoWidth))
+        .placeholder(R.color.placeholder)
+        .override(ImageSize.NORMAL[0], ImageSize.NORMAL[1])
+        .into(holder.getBinding().photo);
+  }
 
-    @Override
-    public int getItemCount() {
-        return photos.size();
-    }
+  @Override public int getItemCount() {
+    return photos.size();
+  }
 
-    @Override
-    public long getItemId(int position) {
-        return photos.get(position).id;
-    }
+  @Override public long getItemId(int position) {
+    return photos.get(position).id;
+  }
 }

@@ -8,8 +8,7 @@ import android.view.View;
  * Author：Administrator on 2016/9/1 0001 21:11
  * Contact：289168296@qq.com
  */
-public class GridMarginDecoration extends RecyclerView.ItemDecoration{
-
+public class GridMarginDecoration extends RecyclerView.ItemDecoration {
 
   private int space;
 
@@ -17,9 +16,7 @@ public class GridMarginDecoration extends RecyclerView.ItemDecoration{
     this.space = space;
   }
 
-  @Override public void getItemOffsets(Rect outRect, View view,
-      RecyclerView parent,
-      RecyclerView.State state) {
+  @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
     outRect.left = space;
     outRect.top = space;
     outRect.right = space;

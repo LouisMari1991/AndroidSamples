@@ -257,7 +257,7 @@ public class SignInFragment extends Fragment {
   }
 
   /**
-   * Calculate spans for avatar dynamiccally.
+   * Calculate spans for avatar dynamically.
    * 2016/8/20 0020 14:35
    *
    * @return The recommended amount of columns.
