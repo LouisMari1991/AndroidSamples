@@ -8,11 +8,10 @@ import java.util.List;
  * Created by YH on 2017-01-16.
  */
 
-public abstract class BaseRecyclerViewAdapter<T>
-    extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
+public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
 
   protected List<T> datas = new ArrayList<>();
-  protected OnItemClickListener<T> onItemClickListener;
+  protected OnItemClickListener<T>     onItemClickListener;
   protected OnItemLongClickListener<T> onItemLongClickListener;
 
   @Override public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
@@ -43,11 +42,11 @@ public abstract class BaseRecyclerViewAdapter<T>
     this.datas.clear();
   }
 
-  public void setOnItemClickListener(OnItemClickListener listener) {
+  public void setOnItemClickListener(OnItemClickListener<T> listener) {
     this.onItemClickListener = listener;
   }
 
-  public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+  public void setOnItemLongClickListener(OnItemLongClickListener<T> listener) {
     this.onItemLongClickListener = listener;
   }
 }
