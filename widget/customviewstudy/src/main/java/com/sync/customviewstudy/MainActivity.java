@@ -10,6 +10,7 @@ import com.sync.customviewstudy.activity.CustomImgContainerActivity;
 import com.sync.customviewstudy.activity.CustomProgressBarActivity;
 import com.sync.customviewstudy.activity.CustomTitleViewActivity;
 import com.sync.customviewstudy.activity.CustomVolumeControlBarActivity;
+import com.sync.customviewstudy.activity.DeepUnderstandAttrActivity;
 import com.sync.customviewstudy.activity.VDHDeepLayoutActivity;
 import com.sync.customviewstudy.activity.VDHLayoutActivity;
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         startActivity(new Intent(view.getContext(), CustomImgContainerActivity.class));
         break;
       case R.id.bt_custom_view_06:
-
+        startActivity(new Intent(view.getContext(), DeepUnderstandAttrActivity.class));
         break;
       case R.id.bt_custom_view_07:
         startActivity(new Intent(view.getContext(), VDHLayoutActivity.class));
