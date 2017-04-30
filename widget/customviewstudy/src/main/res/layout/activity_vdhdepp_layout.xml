@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sync.customviewstudy.viewgroup.VDHDeepLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.VDHDeepLayoutActivity"
+    >
+  <!--自由拖动-->
+  <TextView
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_gravity="center"
+      android:layout_margin="10dp"
+      android:background="#44ff0000"
+      android:clickable="true"
+      android:gravity="center"
+      android:text="I can be dragged !"
+      />
+
+  <!--自动返回-->
+  <TextView
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_gravity="center"
+      android:layout_margin="10dp"
+      android:background="@android:color/holo_blue_light"
+      android:clickable="true"
+      android:gravity="center"
+      android:text="I will back to origin pos !"
+      />
+
+  <!--边界拖动-->
+  <TextView
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_gravity="center"
+      android:layout_margin="10dp"
+      android:background="@color/colorPrimary"
+      android:clickable="true"
+      android:gravity="center"
+      android:text="Use edge tracker to operate me !"
+      />
+</com.sync.customviewstudy.viewgroup.VDHDeepLayout>

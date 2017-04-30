@@ -63,7 +63,14 @@
         android:id="@+id/bt_custom_view_07"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ViewDragHelper完全解析"
+        android:text="ViewDragHelper完全解析(一)"
+        />
+
+    <Button
+        android:id="@+id/bt_custom_view_08"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ViewDragHelper完全解析(二)"
         />
 
   </LinearLayout>

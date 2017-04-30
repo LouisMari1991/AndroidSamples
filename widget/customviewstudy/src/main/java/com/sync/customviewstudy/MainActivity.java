@@ -10,6 +10,8 @@ import com.sync.customviewstudy.activity.CustomImgContainerActivity;
 import com.sync.customviewstudy.activity.CustomProgressBarActivity;
 import com.sync.customviewstudy.activity.CustomTitleViewActivity;
 import com.sync.customviewstudy.activity.CustomVolumeControlBarActivity;
+import com.sync.customviewstudy.activity.VDHDeepLayoutActivity;
+import com.sync.customviewstudy.activity.VDHLayoutActivity;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     findViewById(R.id.bt_custom_view_05).setOnClickListener(this);
     findViewById(R.id.bt_custom_view_06).setOnClickListener(this);
     findViewById(R.id.bt_custom_view_07).setOnClickListener(this);
+    findViewById(R.id.bt_custom_view_08).setOnClickListener(this);
   }
 
   @Override public void onClick(View view) {
@@ -44,8 +47,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         startActivity(new Intent(view.getContext(), CustomImgContainerActivity.class));
         break;
       case R.id.bt_custom_view_06:
+
         break;
       case R.id.bt_custom_view_07:
+        startActivity(new Intent(view.getContext(), VDHLayoutActivity.class));
+        break;
+      case R.id.bt_custom_view_08:
+        startActivity(new Intent(view.getContext(), VDHDeepLayoutActivity.class));
         break;
     }
   }
