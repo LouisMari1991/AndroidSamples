@@ -1,9 +1,8 @@
-package com.example.jingbin.customview.app;
+package com.sync.customviewstudy.app;
 
 import android.app.Activity;
 import android.app.Application;
 import android.os.Handler;
-
 import java.util.ArrayList;
 
 /**
@@ -12,9 +11,9 @@ import java.util.ArrayList;
 
 public class ViewApplication extends Application {
 
-    private static ViewApplication viewApplication;
+    private static ViewApplication     viewApplication;
     // 存放Activity的list
-    private ArrayList<Activity> activities;
+    private        ArrayList<Activity> activities;
 
     public static ViewApplication getInstance() {
         if (viewApplication == null) {
@@ -27,7 +26,7 @@ public class ViewApplication extends Application {
         return viewApplication;
     }
 
-    private static int applicationThreadId;
+    private static int     applicationThreadId;
     private static Handler uiHnadler;
 
     @SuppressWarnings({"unused"})
