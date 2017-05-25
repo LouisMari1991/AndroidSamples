@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    applicationId "com.sync.architecture.blueprints.todoapp"
+    minSdkVersion 10
+    targetSdkVersion 25
+    versionCode 1
+    versionName "1.0"
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  // App's dependencies, including test
+  compile rootProject.ext.libSupportAppcompat
+  compile rootProject.ext.libSupportCardView
+  compile rootProject.ext.libSupportDesign
+  compile rootProject.ext.libSupportRecyclerview
+  compile rootProject.ext.libSupportV4
+  compile "com.android.support.test.espresso:espresso-idling-resource:2.2.2"
+  compile "com.google.guava:guava:18.0"
+
+  // Dagger dependencies
+  apt "com.google.dagger:dagger-compiler:2.7"
+  provided 'org.glassfish:javax.annotation:10.0-b28'
+  compile "com.google.dagger:dagger:2.7"
+
+  // Dependencies for local unit tests
+  testCompile "junit:junit:4.12"
+  testCompile "org.mockito:mockito-all:1.10.19"
+  testCompile "org.hamcrest:hamcrest-all:1.3"
+
+  // Android Testing Support Library's runner and rules
+  androidTestCompile "com.android.support.test:runner:0.5"
+  androidTestCompile "com.android.support.test:rules:0.5"
+
+  // Dependencies for Android unit tests
+  androidTestCompile "junit:junit:4.12"
+  androidTestCompile "org.mockito:mockito-core:1.10.19"
+  androidTestCompile "com.google.dexmaker:dexmaker:1.2"
+  androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
+
+  // Espresso UI Testing
+  androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
+  androidTestCompile "com.android.support.test.espresso:espresso-contrib:2.2.2"
+  androidTestCompile "com.android.support.test.espresso:espresso-intents:2.2.2"
+
+  // Resolve conflicts between main and test APK:
+  androidTestCompile rootProject.ext.libSupportAnnotations
+  androidTestCompile rootProject.ext.libSupportAppcompat
+  androidTestCompile rootProject.ext.libSupportCardView
+  androidTestCompile rootProject.ext.libSupportDesign
+  androidTestCompile rootProject.ext.libSupportRecyclerview
+  androidTestCompile rootProject.ext.libSupportV4
+}
+
+// Define versions in a single place
+ext {
+  // Sdk and tools
+  minSdkVersion = 10
+  targetSdkVersion = 24
+  compileSdkVersion = 24
+  buildToolsVersion = '24.0.2'
+
+  // App dependencies
+  supportLibraryVersion = '24.2.0'
+  guavaVersion = '18.0'
+  junitVersion = '4.12'
+  mockitoVersion = '1.10.19'
+  powerMockito = '1.6.2'
+  hamcrestVersion = '1.3'
+  runnerVersion = '0.5'
+  rulesVersion = '0.5'
+  espressoVersion = '2.2.2'
+  daggerVersion = '2.7'
+  dexmakerVersion = '1.2'
+}
