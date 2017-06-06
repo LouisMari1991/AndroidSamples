@@ -1,6 +1,7 @@
 package com.sync.architecture.blueprints.todoapp;
 
 import android.content.Context;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -14,7 +15,7 @@ import dagger.Provides;
   private final Context mContext;
 
   ApplicationModule(Context context) {
-    this.mContext = context;
+    mContext = context;
   }
 
   @Provides Context provideContext() {

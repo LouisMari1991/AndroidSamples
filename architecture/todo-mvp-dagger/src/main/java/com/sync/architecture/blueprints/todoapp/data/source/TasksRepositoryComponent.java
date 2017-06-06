@@ -5,10 +5,14 @@ import dagger.Component;
 import javax.inject.Singleton;
 
 /**
- * Description:
- * Author：SYNC on 2017/6/5 0005 22:35
- * Contact：289168296@qq.com
+ * This is a Dagger component. Refer to {@link ToDoApplication} for the list of Dagger components
+ * used in this application.
+ * <P>
+ * Even though Dagger allows annotating a {@link Component @Component} as a singleton, the code
+ * itself must ensure only one instance of the class is created. This is done in {@link
+ * ToDoApplication}.
  */
 @Singleton @Component(modules = { ApplicationModule.class }) public interface TasksRepositoryComponent {
+
   TasksRepository getTasksRepository();
 }

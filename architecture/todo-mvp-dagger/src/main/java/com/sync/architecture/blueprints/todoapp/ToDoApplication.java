@@ -1,6 +1,7 @@
 package com.sync.architecture.blueprints.todoapp;
 
 import android.app.Application;
+import com.sync.architecture.blueprints.todoapp.data.source.TasksRepositoryComponent;
 
 /**
  * Description:
@@ -9,9 +10,16 @@ import android.app.Application;
  */
 public class ToDoApplication extends Application {
 
+  private TasksRepositoryComponent mRepositoryComponent;
+
   @Override public void onCreate() {
     super.onCreate();
+    //mRepositoryComponent = DaggerTasksRepositoryComponent.builder()
+    //    .applicationModule(new ApplicationModule((getApplicationContext())))
+    //    .build();
+  }
 
-
+  public TasksRepositoryComponent getTasksRepositoryComponent() {
+    return mRepositoryComponent;
   }
 }
