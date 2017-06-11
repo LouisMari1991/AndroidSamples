@@ -14,5 +14,5 @@ import javax.inject.Singleton;
  */
 @Singleton @Component(modules = { ApplicationModule.class }) public interface TasksRepositoryComponent {
 
-  TasksRepository getTasksRepository();
+  //TasksRepository getTasksRepository();
 }

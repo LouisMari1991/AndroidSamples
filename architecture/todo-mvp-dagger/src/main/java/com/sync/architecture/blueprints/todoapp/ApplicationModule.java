@@ -1,14 +1,20 @@
 package com.sync.architecture.blueprints.todoapp;
 
 import android.content.Context;
-
+import com.sync.architecture.blueprints.todoapp.data.source.Local;
+import com.sync.architecture.blueprints.todoapp.data.source.Remote;
+import com.sync.architecture.blueprints.todoapp.data.source.TasksDataSource;
+import com.sync.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource;
+import com.sync.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource;
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 
 /**
- * Description:
- * Author：SYNC on 2017/6/1 0001 22:40
- * Contact：289168296@qq.com
+ * This is a Dagger module. We use this to pass in the Context dependency to the
+ * {@link
+ * com.example.android.architecture.blueprints.todoapp.data.source.TasksRepositoryComponent}.
  */
 @Module public final class ApplicationModule {
 
