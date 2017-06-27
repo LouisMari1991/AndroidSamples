@@ -1,7 +1,5 @@
-package com.sync.rxjavasamples.Create;
+package com.sync.rxjavasamples.Transform;
 
-import com.sync.rxjavasamples.Transform.Course;
-import com.sync.rxjavasamples.Transform.Student;
 import java.util.ArrayList;
 
 /**
@@ -10,6 +8,31 @@ import java.util.ArrayList;
  */
 public class DataFactory {
 
+
+  /**
+   * 获取学生集合
+   *
+   * [
+   *      1:{
+   *          id:1
+   *          name:学生1
+   *          course:[学生1的课程1,学生1的课程2,学生1的课程3]
+   *        }
+   *
+   *      2:{
+   *          id:2
+   *          name:学生2
+   *          course:[学生2的课程1,学生2的课程2,学生2的课程3]
+   *        }
+   *
+   *      3:{
+   *          id:3
+   *          name:学生3
+   *          course:[学生3的课程1,学生3的课程2,学生3的课程3]
+   *        }
+   * ]
+   * @return
+   */
   public static ArrayList<Student> getData() {
 
     ArrayList<Student> students = new ArrayList<>();

@@ -1,6 +1,5 @@
 package com.sync.rxjavasamples.Transform;
 
-import com.sync.rxjavasamples.Create.DataFactory;
 import com.sync.rxjavasamples.RecyclerActivity;
 import java.util.ArrayList;
 import java.util.List;

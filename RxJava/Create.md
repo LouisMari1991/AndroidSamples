@@ -461,6 +461,6 @@ Observable.defer(() -> Observable.just(System.currentTimeMillis() + "")).subscri
 
   示例代码：[Creating.java](https://github.com/MariShunxiang/AndroidSamples/blob/master/RxJava/rxjavasamples/src/main/java/com/sync/rxjavasamples/Create)
   参考：
-  [ReactiveX文档中文翻译](https://www.gitbook.com/book/mcxiaoke/rxdocs/details)
-  [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
-  [RxJava操作符（一）Creating Observables](http://mushuichuan.com/2015/12/11/rxjava-operator-1/)
+  - [ReactiveX文档中文翻译](https://www.gitbook.com/book/mcxiaoke/rxdocs/details)
+  - [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
+  - [RxJava操作符（一）Creating Observables](http://mushuichuan.com/2015/12/11/rxjava-operator-1/)
