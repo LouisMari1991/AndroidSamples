@@ -29,7 +29,7 @@ public interface JsonAttributes {
   interface QuizType {
     String ALPHA_PICKER = "alpha_picker"; //α选择器
     String FILL_BLANK = "fill-blank"; // 填满空白
-    String FILL_TWO_BLANK = "fill-two-blank";//填满两个空白
+    String FILL_TWO_BLANKS = "fill-two-blank";//填满两个空白
     String MULTI_SELECT = "multi-select"; // 多选
     String FOUR_QUARTER = "four-quarter"; // 四个季度
     String PICKER = "picker";

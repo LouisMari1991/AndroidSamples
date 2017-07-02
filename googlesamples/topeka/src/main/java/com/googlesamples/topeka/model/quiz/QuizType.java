@@ -1,8 +1,13 @@
 package com.googlesamples.topeka.model.quiz;
 
+import com.googlesamples.topeka.model.JsonAttributes;
+
 public enum QuizType {
 
-  A("abc",Quiz.class);
+  ALPHA_PICKER(JsonAttributes.QuizType.ALPHA_PICKER, AlphaPickerQuiz.class),
+  FILL_BLANK(JsonAttributes.QuizType.FILL_BLANK, FillBlankQuiz.class),
+  FILL_TWO_BLANKS(JsonAttributes.QuizType.FILL_TWO_BLANKS, FillTwoBlanksQuiz.class);
+
 
   private final String mJsonName;
   private final Class<? extends Quiz> mType;
@@ -20,5 +25,4 @@ public enum QuizType {
     return mType;
   }
 
-
-}
+  }

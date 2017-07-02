@@ -20,8 +20,8 @@ public abstract class Quiz<A> implements Parcelable {
   public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
 
     @SuppressWarnings("TryWithIdenticalCatches") @Override public Quiz createFromParcel(Parcel in) {
-      int oridinal = in.readInt();
-      QuizType type = QuizType.values()[oridinal];
+      int ordinal = in.readInt();
+      QuizType type = QuizType.values()[ordinal];
       try {
         Constructor<? extends Quiz> constructor = type.getType().getConstructor(Parcel.class);
         return constructor.newInstance(in);
@@ -46,15 +46,15 @@ public abstract class Quiz<A> implements Parcelable {
     Log.e(TAG, "cteateFormParcel ", e);
   }
 
-  private final String mQuestion;
-  private final String mQuizType;
-  private A mAnswer;
+  private final String  mQuestion;
+  private final String  mQuizType;
+  private       A       mAnswer;
   /**
    * 标识已经回答过，不保证正确。
    * Flag indicating whether this quiz has already been solved.
    * It does not give information whether the solution was correct or not.
    */
-  private boolean mSolved;
+  private       boolean mSolved;
 
   protected Quiz(String question, A answer, boolean solved) {
     mQuestion = question;
@@ -83,7 +83,7 @@ public abstract class Quiz<A> implements Parcelable {
     return mQuestion;
   }
 
-  public A getAnsWer() {
+  public A getAnswer() {
     return mAnswer;
   }
 

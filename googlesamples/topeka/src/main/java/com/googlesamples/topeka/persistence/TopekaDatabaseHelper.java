@@ -32,13 +32,13 @@ import org.json.JSONObject;
  */
 public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
-  private static final String TAG = "TopekaDatabaseHelper";
-  private static final String DB_NAME = "topeka";
-  private static final String DB_SUFFIX = ".db";
-  private static final int DB_VERSION = 1;
-  private static List<Category> mCategories;
+  private static final String TAG        = "TopekaDatabaseHelper";
+  private static final String DB_NAME    = "topeka";
+  private static final String DB_SUFFIX  = ".db";
+  private static final int    DB_VERSION = 1;
+  private static List<Category>       mCategories;
   private static TopekaDatabaseHelper mInstance;
-  private final Resources mResources;
+  private final  Resources            mResources;
 
   private TopekaDatabaseHelper(Context context) {
     //prevents external instance creation
@@ -81,13 +81,12 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
   private static Cursor getCategoryCursor(Context context) {
     SQLiteDatabase readableDatabase = getReadableDatabase(context);
-    Cursor data = readableDatabase
-            .query(CategoryTable.NAME, CategoryTable.PROJECTION, null, null, null, null, null);
+    Cursor data = readableDatabase.query(CategoryTable.NAME, CategoryTable.PROJECTION, null, null, null, null, null);
     data.moveToFirst();
     return data;
   }
 
-  private static Category getCategory(Cursor cursor,SQLiteDatabase readableDatabase){
+  private static Category getCategory(Cursor cursor, SQLiteDatabase readableDatabase) {
     // "magic number" based on CategoryTable#PROJECTION
     final String id = cursor.getString(0);
     final String name = cursor.getString(1);
@@ -101,11 +100,18 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     return new Category(name, id, theme, quizzes, scores, solved);
   }
 
-  private static List<Quiz> getQuizzes(String id, SQLiteDatabase readableDatabase) {
+  private static List<Quiz> getQuizzes(final String categoryId, SQLiteDatabase database) {
+    final List<Quiz> quizzes = new ArrayList<>();
+    final Cursor cursor = database.query(QuizTable.NAME, QuizTable.PROJECTION, QuizTable.FK_CATEGORY + " LIKE ?",
+        new String[] { categoryId }, null, null, null);
+    cursor.moveToFirst();
+    do {
+      //quizzes.add();
+    } while (cursor.moveToNext());
     return null;
   }
 
-  private static boolean getBooleanFromDatabase(String isSolved){
+  private static boolean getBooleanFromDatabase(String isSolved) {
     // json stores booleans as true/false string, whereas SQLite stores theme as 0/1 values.
     return null != isSolved && isSolved.length() == 1 && Integer.valueOf(isSolved) == 1;
   }
@@ -117,12 +123,11 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
    * @param categoryId Id of the category to look for.
    * @return The found categoty.
    */
-  public static Category getCategoryWith(Context context, String categoryId){
+  public static Category getCategoryWith(Context context, String categoryId) {
     SQLiteDatabase readableDatabase = getReadableDatabase(context);
-    String[] selectionArgs = {categoryId};
-    Cursor data = readableDatabase
-            .query(CategoryTable.NAME, CategoryTable.PROJECTION, CategoryTable.COLUMN_ID + "=?"
-                    , selectionArgs, null, null, null);
+    String[] selectionArgs = { categoryId };
+    Cursor data = readableDatabase.query(CategoryTable.NAME, CategoryTable.PROJECTION, CategoryTable.COLUMN_ID + "=?",
+        selectionArgs, null, null, null);
     data.moveToFirst();
     return getCategory(data, readableDatabase);
   }
@@ -133,10 +138,10 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
    * @param context The context this is running in.
    * @return The socre over all Categories
    */
-  public static int getScore(Context context){
+  public static int getScore(Context context) {
     final List<Category> categories = getCategories(context, false);
     int score = 0;
-    for (Category cat : categories){
+    for (Category cat : categories) {
       score += cat.getScore();
     }
     return score;
@@ -148,16 +153,16 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
    * @param context The context this is running in.
    * @param category The category to update.
    */
-  public static void updateCategory(Context context, Category category){
-    if (mCategories != null && mCategories.contains(category)){
+  public static void updateCategory(Context context, Category category) {
+    if (mCategories != null && mCategories.contains(category)) {
       final int location = mCategories.indexOf(category);
       mCategories.remove(location);
       mCategories.add(location, category);
     }
     SQLiteDatabase writableDatabase = getWritableDatabase(context);
     ContentValues categoryValues = createContentValuesFor(category);
-    writableDatabase.update(CategoryTable.NAME, categoryValues,CategoryTable.COLUMN_ID + "=?",
-            new String[]{category.getId()});
+    writableDatabase.update(CategoryTable.NAME, categoryValues, CategoryTable.COLUMN_ID + "=?",
+        new String[] { category.getId() });
     final List<Quiz> quizzes = category.getQuizzes();
     updateQuizzes(writableDatabase, quizzes);
   }
@@ -172,21 +177,19 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
    * @param writableDatabase The datable to write the quizzes to.
    * @param quizzes The quizzes to write.
    */
-  private static void updateQuizzes(SQLiteDatabase writableDatabase, List<Quiz> quizzes){
+  private static void updateQuizzes(SQLiteDatabase writableDatabase, List<Quiz> quizzes) {
     Quiz quiz;
     ContentValues quizValues = new ContentValues();
     String[] quizArgs = new String[1];
-    for (int i = 0; i < quizzes.size(); i++){
+    for (int i = 0; i < quizzes.size(); i++) {
       quiz = quizzes.get(i);
       quizValues.clear();
       quizValues.put(QuizTable.COLUMN_SOLVED, quiz.isSolved());
 
       quizArgs[0] = quiz.getQuestion();
-      writableDatabase.update(QuizTable.NAME, quizValues, QuizTable.COLUMN_QUESTION + "=?",
-              quizArgs);
+      writableDatabase.update(QuizTable.NAME, quizValues, QuizTable.COLUMN_QUESTION + "=?", quizArgs);
     }
   }
-
 
   @Override public void onCreate(SQLiteDatabase sqLiteDatabase) {
     sqLiteDatabase.execSQL(CategoryTable.CREATE);
@@ -255,8 +258,8 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     return categoriesJson.toString();
   }
 
-  private void fillCategory(SQLiteDatabase db, ContentValues values, JSONObject category,
-      String categoryid) throws JSONException {
+  private void fillCategory(SQLiteDatabase db, ContentValues values, JSONObject category, String categoryid)
+      throws JSONException {
     values.clear();
   }
 }

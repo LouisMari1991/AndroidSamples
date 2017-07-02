@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-  public static final String DEAWABLE = "drawable";
+  public static final String DRAWABLE = "drawable";
   private static final String ICON_CATEGORY = "icon_category_";
   private final Resources mResources;
   private final String mPackageName;
@@ -115,7 +115,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
   private void setCategoryIcon(Category category, ImageView icon) {
     final int categoryImageResource = mResources.getIdentifier(
-        ICON_CATEGORY + category.getId(), DEAWABLE, mPackageName);
+        ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
     final boolean solved = category.isSolved();
     if (solved) {
       Drawable solvedIcon = loadSolvedIcon(category, categoryImageResource);

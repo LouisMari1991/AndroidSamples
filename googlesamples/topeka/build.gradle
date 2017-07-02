@@ -64,6 +64,7 @@ android {
 
 ext{
   junitVersion = "4.12"
+  espressoVersion = "2.2.2"
 }
 
 dependencies {
@@ -75,6 +76,8 @@ dependencies {
   compile rootProject.ext.libSupportV4
   compile rootProject.ext.libSupportDesign
   compile rootProject.ext.libSupportCardView
+
+  compile "com.android.support.test.espresso:espresso-idling-resource:${espressoVersion}"
 
 
   debugCompile rootProject.ext.debugDependencies.leakCanary
