@@ -12,9 +12,9 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
 
   private T[] mOptions;
 
-  protected OptionsQuiz(String question, int[] answer, T[] opstions, boolean solved) {
+  protected OptionsQuiz(String question, int[] answer, T[] options, boolean solved) {
     super(question, answer, solved);
-    mOptions = opstions;
+    mOptions = options;
   }
 
   protected OptionsQuiz(Parcel in) {
@@ -23,7 +23,7 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
     setAnswer(answer);
   }
 
-  public T[] getOption() {
+  public T[] getOptions() {
     return mOptions;
   }
 
@@ -57,6 +57,11 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
     if (!Arrays.equals(getAnswer(), ((int[]) that.getAnswer()))) {
       return false;
     }
+
+    if (!Arrays.equals(mOptions, that.mOptions)) {
+      return false;
+    }
+
     return true;
   }
 
