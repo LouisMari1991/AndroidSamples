@@ -22,7 +22,7 @@ public class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
   }
 
   @Override public QuizType getType() {
-    return null;
+    return QuizType.TOGGLE_TRANSLATE;
   }
 
   @Override public String getStringAnswer() {
