@@ -36,8 +36,5 @@
         android:padding="@dimen/spacing_double"
         tools:targetApi="lollipop"
         />
-
-
-
   </FrameLayout>
 </layout>

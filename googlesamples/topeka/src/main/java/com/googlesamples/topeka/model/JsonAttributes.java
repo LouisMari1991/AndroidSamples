@@ -27,11 +27,11 @@ public interface JsonAttributes {
    * 2016/8/21 0021 18:42
    */
   interface QuizType {
-    String ALPHA_PICKER = "alpha_picker"; //α选择器
+    String ALPHA_PICKER = "alpha-picker"; //α选择器
     String FILL_BLANK = "fill-blank"; // 填满空白
-    String FILL_TWO_BLANKS = "fill-two-blank";//填满两个空白
-    String MULTI_SELECT = "multi-select"; // 多选
+    String FILL_TWO_BLANKS = "fill-two-blanks";//填满两个空白
     String FOUR_QUARTER = "four-quarter"; // 四个季度
+    String MULTI_SELECT = "multi-select"; // 多选
     String PICKER = "picker";
     String SINGLE_SELECT = "single-select";
     String SINGLE_SELECT_ITEM = "single-select-item";

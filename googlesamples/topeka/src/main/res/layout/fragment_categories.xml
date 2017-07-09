@@ -11,10 +11,9 @@
     android:scrollbarStyle="outsideOverlay"
     android:scrollbars="vertical"
     android:transitionGroup="false"
-    app:layoutManager="android.support.v7.widget.GridlayoutManager"
+    app:layoutManager="android.support.v7.widget.GridLayoutManager"
     app:spanCount="2"
     tools:ignore="UnusedAttribute"
-    >
+    />
 
 
-</android.support.v7.widget.RecyclerView>

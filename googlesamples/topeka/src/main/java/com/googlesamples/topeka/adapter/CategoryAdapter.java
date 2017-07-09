@@ -20,6 +20,7 @@ import com.googlesamples.topeka.databinding.ItemCategoryBinding;
 import com.googlesamples.topeka.helper.ApiLevelHelper;
 import com.googlesamples.topeka.model.Category;
 import com.googlesamples.topeka.persistence.TopekaDatabaseHelper;
+import com.sync.logger.Logger;
 import java.util.List;
 
 /**
@@ -116,6 +117,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
   private void setCategoryIcon(Category category, ImageView icon) {
     final int categoryImageResource = mResources.getIdentifier(
         ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
+    Logger.i(" categoryImageResource : " + category.getId());
     final boolean solved = category.isSolved();
     if (solved) {
       Drawable solvedIcon = loadSolvedIcon(category, categoryImageResource);
@@ -207,14 +209,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     private ItemCategoryBinding mBinding;
 
-    //final ImageView icon;
-    //final TextView title;
-
     public ViewHolder(ItemCategoryBinding binding) {
       super(binding.getRoot());
       this.mBinding = binding;
-      //icon = (ImageView) container.findViewById(R.id.category_icon);
-      //title = (TextView) container.findViewById(R.id.category_title);
     }
 
     public ItemCategoryBinding getBinding() {

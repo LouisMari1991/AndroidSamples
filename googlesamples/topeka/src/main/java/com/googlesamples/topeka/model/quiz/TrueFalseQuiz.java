@@ -9,17 +9,17 @@ import com.googlesamples.topeka.helper.ParcelableHelper;
  * Contact：289168296@qq.com
  */
 public class TrueFalseQuiz extends Quiz<Boolean> {
-  protected TrueFalseQuiz(String question, Boolean answer, boolean solved) {
+  public TrueFalseQuiz(String question, Boolean answer, boolean solved) {
     super(question, answer, solved);
   }
 
-  protected TrueFalseQuiz(Parcel in) {
+  public TrueFalseQuiz(Parcel in) {
     super(in);
     setAnswer(ParcelableHelper.readBoolean(in));
   }
 
   @Override public QuizType getType() {
-    return null;
+    return QuizType.TRUE_FALSE;
   }
 
   @Override public String getStringAnswer() {

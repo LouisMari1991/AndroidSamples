@@ -10,18 +10,18 @@ import com.googlesamples.topeka.helper.AnswerHelper;
  */
 public class MultiSelectQuiz extends OptionsQuiz<String> {
 
-  protected MultiSelectQuiz(String question, int[] answer, String[] options, boolean solved) {
+  public MultiSelectQuiz(String question, int[] answer, String[] options, boolean solved) {
     super(question, answer, options, solved);
   }
 
-  protected MultiSelectQuiz(Parcel in) {
+  public MultiSelectQuiz(Parcel in) {
     super(in);
     String[] options = in.createStringArray();
     setOptions(options);
   }
 
   @Override public QuizType getType() {
-    return null;
+    return QuizType.MULTI_SELECT;
   }
 
   @Override public String getStringAnswer() {

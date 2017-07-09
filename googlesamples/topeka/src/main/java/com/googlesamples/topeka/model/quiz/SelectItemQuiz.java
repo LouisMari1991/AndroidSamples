@@ -9,18 +9,18 @@ import com.googlesamples.topeka.helper.AnswerHelper;
  * Contact：289168296@qq.com
  */
 public class SelectItemQuiz extends OptionsQuiz<String> {
-  protected SelectItemQuiz(String question, int[] answer, String[] options, boolean solved) {
+  public SelectItemQuiz(String question, int[] answer, String[] options, boolean solved) {
     super(question, answer, options, solved);
   }
 
-  protected SelectItemQuiz(Parcel in) {
+  public SelectItemQuiz(Parcel in) {
     super(in);
     String[] options = in.createStringArray();
     setOptions(options);
   }
 
   @Override public QuizType getType() {
-    return null;
+    return QuizType.SINGLE_SELECT;
   }
 
   @Override public String getStringAnswer() {

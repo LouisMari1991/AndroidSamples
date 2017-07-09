@@ -12,13 +12,13 @@ public class FillBlankQuiz extends Quiz<String> {
   private final String mStart;
   private final String mEnd;
 
-  protected FillBlankQuiz(String question, String answer, String start, String end, boolean solved) {
+  public FillBlankQuiz(String question, String answer, String start, String end, boolean solved) {
     super(question, answer, solved);
     mStart = start;
     mEnd = end;
   }
 
-  protected FillBlankQuiz(Parcel in) {
+  public FillBlankQuiz(Parcel in) {
     super(in);
     setAnswer(in.readString());
     mStart = in.readString();

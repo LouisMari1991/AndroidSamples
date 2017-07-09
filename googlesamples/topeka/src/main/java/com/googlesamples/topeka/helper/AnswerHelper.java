@@ -4,6 +4,9 @@ import android.util.SparseBooleanArray;
 import com.sync.logger.Logger;
 
 /**
+ *
+ * Collection of methods to convert answers to human readable forms.
+ *
  * Author：Administrator on 2016/8/20 0020 09:01
  * Contact：289168296@qq.com
  */
@@ -53,6 +56,7 @@ public class AnswerHelper {
 
   /**
    * Checks whether a provided answer is correct.
+   * 检查答案是否正确
    *
    * @param checkedItems The items that were selected.
    * @param answerIds The actual correct answer ids.

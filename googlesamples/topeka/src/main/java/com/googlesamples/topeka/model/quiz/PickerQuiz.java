@@ -13,14 +13,14 @@ public class PickerQuiz extends Quiz<Integer> {
   private final int mMax;
   private final int mStep;
 
-  protected PickerQuiz(String question, Integer answer, int min, int max, int step, boolean solved) {
+  public PickerQuiz(String question, Integer answer, int min, int max, int step, boolean solved) {
     super(question, answer, solved);
     mMin = min;
     mMax = max;
     mStep = step;
   }
 
-  protected PickerQuiz(Parcel in) {
+  public PickerQuiz(Parcel in) {
     super(in);
     setAnswer(in.readInt());
     mMin = in.readInt();
@@ -41,7 +41,7 @@ public class PickerQuiz extends Quiz<Integer> {
   }
 
   @Override public QuizType getType() {
-    return null;
+    return QuizType.PICKER;
   }
 
   @Override public String getStringAnswer() {

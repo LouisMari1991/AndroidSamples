@@ -12,12 +12,12 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
 
   private T[] mOptions;
 
-  protected OptionsQuiz(String question, int[] answer, T[] options, boolean solved) {
+  public OptionsQuiz(String question, int[] answer, T[] options, boolean solved) {
     super(question, answer, solved);
     mOptions = options;
   }
 
-  protected OptionsQuiz(Parcel in) {
+  public OptionsQuiz(Parcel in) {
     super(in);
     final int[] answer = in.createIntArray();
     setAnswer(answer);

@@ -6,12 +6,22 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import com.googlesamples.topeka.R;
 import com.googlesamples.topeka.helper.JsonHelper;
 import com.googlesamples.topeka.model.Category;
 import com.googlesamples.topeka.model.JsonAttributes;
 import com.googlesamples.topeka.model.Theme;
+import com.googlesamples.topeka.model.quiz.AlphaPickerQuiz;
+import com.googlesamples.topeka.model.quiz.FillBlankQuiz;
+import com.googlesamples.topeka.model.quiz.FillTwoBlanksQuiz;
+import com.googlesamples.topeka.model.quiz.FourQuarterQuiz;
+import com.googlesamples.topeka.model.quiz.MultiSelectQuiz;
+import com.googlesamples.topeka.model.quiz.PickerQuiz;
 import com.googlesamples.topeka.model.quiz.Quiz;
+import com.googlesamples.topeka.model.quiz.SelectItemQuiz;
+import com.googlesamples.topeka.model.quiz.ToggleTranslateQuiz;
+import com.googlesamples.topeka.model.quiz.TrueFalseQuiz;
 import com.sync.logger.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -70,7 +80,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
   private static List<Category> loadCategories(Context context) {
     Cursor data = TopekaDatabaseHelper.getCategoryCursor(context);
-    List<Category> tempCategories = new ArrayList<Category>(data.getCount());
+    List<Category> tempCategories = new ArrayList<>(data.getCount());
     final SQLiteDatabase readableDatabase = TopekaDatabaseHelper.getReadableDatabase(context);
     do {
       final Category category = getCategory(data, readableDatabase);
@@ -86,6 +96,13 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     return data;
   }
 
+  /**
+   * Gets a category form the given position of the cursor provided.
+   *
+   * @param cursor The Cursor containing the data.
+   * @param readableDatabase The database that contains the quizzes.
+   * @return The found category.
+   */
   private static Category getCategory(Cursor cursor, SQLiteDatabase readableDatabase) {
     // "magic number" based on CategoryTable#PROJECTION
     final String id = cursor.getString(0);
@@ -98,17 +115,6 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
     final List<Quiz> quizzes = getQuizzes(id, readableDatabase);
     return new Category(name, id, theme, quizzes, scores, solved);
-  }
-
-  private static List<Quiz> getQuizzes(final String categoryId, SQLiteDatabase database) {
-    final List<Quiz> quizzes = new ArrayList<>();
-    final Cursor cursor = database.query(QuizTable.NAME, QuizTable.PROJECTION, QuizTable.FK_CATEGORY + " LIKE ?",
-        new String[] { categoryId }, null, null, null);
-    cursor.moveToFirst();
-    do {
-      //quizzes.add();
-    } while (cursor.moveToNext());
-    return null;
   }
 
   private static boolean getBooleanFromDatabase(String isSolved) {
@@ -133,7 +139,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * Score!
+   * Scooooooooooore!
    *
    * @param context The context this is running in.
    * @return The socre over all Categories
@@ -208,6 +214,127 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     getInstance(context).preFillDatabase(writableDatabase);
   }
 
+  private static List<Quiz> getQuizzes(final String categoryId, SQLiteDatabase database) {
+    final List<Quiz> quizzes = new ArrayList<>();
+    final Cursor cursor = database.query(QuizTable.NAME, QuizTable.PROJECTION, QuizTable.FK_CATEGORY + " LIKE ?",
+        new String[] { categoryId }, null, null, null);
+    cursor.moveToFirst();
+    do {
+      quizzes.add(createQuizDueToType(cursor));
+    } while (cursor.moveToNext());
+    cursor.close();
+    return quizzes;
+  }
+
+  /**
+   * Creates a quiz corresponding to the projection provided from a cursor row.
+   * Currently only {@link QuizTable#PROJECTION} is supported.
+   *
+   * @param cursor The Cursor containing the data.
+   * @return The created quiz.
+   *
+   * 2017/7/9 0009 13:14
+   */
+  private static Quiz createQuizDueToType(Cursor cursor) {
+    // "magic numbers" based on QuizTable#PROJECTCTION
+    final String type = cursor.getString(2);
+    final String question = cursor.getString(3);
+    final String answer = cursor.getString(4);
+    final String option = cursor.getString(5);
+    final int min = cursor.getInt(6);
+    final int max = cursor.getInt(7);
+    final int step = cursor.getInt(8);
+    final boolean solved = getBooleanFromDatabase(cursor.getString(11));
+
+    switch (type) {
+      case JsonAttributes.QuizType.ALPHA_PICKER: {
+        return new AlphaPickerQuiz(question, answer, solved);
+      }
+      case JsonAttributes.QuizType.FILL_BLANK: {
+        return createFillBlankQuiz(cursor, question, answer, solved);
+      }
+      case JsonAttributes.QuizType.FILL_TWO_BLANKS: {
+        return createFillBlankTwoBlankQuiz(question, answer, option, solved);
+      }
+      case JsonAttributes.QuizType.FOUR_QUARTER: {
+        return createFourQuarterQuiz(question, answer, option, solved);
+      }
+      case JsonAttributes.QuizType.MULTI_SELECT: {
+        return createMultiSelectQuiz(question, answer, option, solved);
+      }
+      case JsonAttributes.QuizType.PICKER: {
+        return new PickerQuiz(question, Integer.valueOf(answer), min, max, step, solved);
+      }
+      case JsonAttributes.QuizType.SINGLE_SELECT:
+        // fall-through intended
+      case JsonAttributes.QuizType.SINGLE_SELECT_ITEM: {
+        return createSelectItemQuiz(question, answer, option, solved);
+      }
+      case JsonAttributes.QuizType.TOGGLE_TRANSLATE: {
+        return createToggleTranslateQuiz(question, answer, option, solved);
+      }
+      case JsonAttributes.QuizType.TRUE_FALSE: {
+        return createTrueFalseQuiz(question, answer, solved);
+      }
+      default: {
+        throw new IllegalArgumentException("Quiz type " + type + " is not supported");
+      }
+    }
+  }
+
+  private static Quiz createFillBlankQuiz(Cursor cursor, String question, String answer, boolean solved) {
+    final String start = cursor.getString(9);
+    final String end = cursor.getString(10);
+    return new FillBlankQuiz(question, answer, start, end, solved);
+  }
+
+  private static Quiz createFillBlankTwoBlankQuiz(String question, String answer, String options, boolean solved) {
+    final String[] answerArray = JsonHelper.jsonArrayToStringArray(answer);
+    return new FillTwoBlanksQuiz(question, answerArray, solved);
+  }
+
+  private static Quiz createFourQuarterQuiz(String question, String answer, String options, boolean solved) {
+    final int[] answerArray = JsonHelper.jsonArrayToIntArray(answer);
+    final String[] optionsArray = JsonHelper.jsonArrayToStringArray(options);
+    return new FourQuarterQuiz(question, answerArray, optionsArray, solved);
+  }
+
+  private static Quiz createMultiSelectQuiz(String question, String answer, String options, boolean solved) {
+    final int[] answerArray = JsonHelper.jsonArrayToIntArray(answer);
+    final String[] optionsArray = JsonHelper.jsonArrayToStringArray(options);
+    return new MultiSelectQuiz(question, answerArray, optionsArray, solved);
+  }
+
+  private static Quiz createSelectItemQuiz(String question, String answer, String options, boolean solved) {
+    final int[] answerArray = JsonHelper.jsonArrayToIntArray(answer);
+    final String[] optionsArray = JsonHelper.jsonArrayToStringArray(options);
+    return new SelectItemQuiz(question, answerArray, optionsArray, solved);
+  }
+
+  private static Quiz createToggleTranslateQuiz(String question, String answer, String options, boolean solved) {
+    final int[] answerArray = JsonHelper.jsonArrayToIntArray(answer);
+    final String[][] optionsArray = extractOptionsArrays(options);
+    return new ToggleTranslateQuiz(question, answerArray, optionsArray, solved);
+  }
+
+  private static Quiz createTrueFalseQuiz(String question, String answer, boolean solved) {
+     /*
+     * parsing json with the potential values "true" and "false"
+     * see res/raw/categories.json for reference
+     */
+    final boolean answerValue = "true".equals(answer);
+    return new TrueFalseQuiz(question, answerValue, solved);
+  }
+
+  private static String[][] extractOptionsArrays(String options) {
+    final String[] optionsLvOne = JsonHelper.jsonArrayToStringArray(options);
+    final String[][] optionsArray = new String[optionsLvOne.length][];
+    for (int i = 0; i < optionsLvOne.length; i++) {
+      optionsArray[i] = JsonHelper.jsonArrayToStringArray(optionsLvOne[i]);
+    }
+    return optionsArray;
+  }
+
   private static SQLiteDatabase getReadableDatabase(Context context) {
     return getInstance(context).getReadableDatabase();
   }
@@ -237,6 +364,9 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     for (int i = 0; i < jsonArray.length(); i++) {
       category = jsonArray.getJSONObject(i);
       final String categoryid = category.getString(JsonAttributes.ID);
+      fillCategory(db, values, category, categoryid);
+      final JSONArray quizzes = category.getJSONArray(JsonAttributes.QUIZZES);
+      fillQuizzesForCategory(db, values, quizzes, categoryid);
     }
   }
 
@@ -261,6 +391,48 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
   private void fillCategory(SQLiteDatabase db, ContentValues values, JSONObject category, String categoryid)
       throws JSONException {
     values.clear();
+    values.put(CategoryTable.COLUMN_ID, categoryid);
+    values.put(CategoryTable.COLUMN_NAME, category.getString(JsonAttributes.NAME));
+    values.put(CategoryTable.COLUMN_THEME, category.getString(JsonAttributes.THEME));
+    values.put(CategoryTable.COLUMN_SCORES, category.getString(JsonAttributes.SOLVED));
+    values.put(CategoryTable.COLUMN_SOLVED, category.getString(JsonAttributes.SCORES));
+    db.insert(CategoryTable.NAME, null, values);
+  }
+
+  private void fillQuizzesForCategory(SQLiteDatabase db, ContentValues values, JSONArray quizzes, String categoryId)
+      throws JSONException {
+    JSONObject quiz;
+    for (int i = 0; i < quizzes.length(); i++) {
+      quiz = quizzes.getJSONObject(i);
+      values.clear();
+      values.put(QuizTable.FK_CATEGORY, categoryId);
+      values.put(QuizTable.COLUMN_TYPE, quiz.getString(JsonAttributes.TYPE));
+      values.put(QuizTable.COLUMN_QUESTION, quiz.getString(JsonAttributes.QUESTION));
+      values.put(QuizTable.COLUMN_ANSWER, quiz.getString(JsonAttributes.ANSWER));
+      Logger.i(" answer : " + quiz.getString(JsonAttributes.ANSWER));
+      putNonEmptyString(values, quiz, JsonAttributes.OPTIONS, QuizTable.COLUMN_OPTIONS);
+      putNonEmptyString(values, quiz, JsonAttributes.MIN, QuizTable.COLUMN_MIN);
+      putNonEmptyString(values, quiz, JsonAttributes.MAX, QuizTable.COLUMN_MAX);
+      putNonEmptyString(values, quiz, JsonAttributes.START, QuizTable.COLUMN_START);
+      putNonEmptyString(values, quiz, JsonAttributes.END, QuizTable.COLUMN_END);
+      putNonEmptyString(values, quiz, JsonAttributes.STEP, QuizTable.COLUMN_STEP);
+      db.insert(QuizTable.NAME, null, values);
+    }
+  }
+
+  /**
+   * Put a non-empty string ContentVales provided.
+   *
+   * @param values The place where the data should be put.
+   * @param quiz The quiz potentially containing the data.
+   * @param jsonKey The key to look for.
+   * @param contentKey The key use for placing the data in the database.
+   */
+  private void putNonEmptyString(ContentValues values, JSONObject quiz, String jsonKey, String contentKey) {
+    final String stringToPut = quiz.optString(jsonKey, null);
+    if (!TextUtils.isEmpty(stringToPut)) {
+      values.put(contentKey, stringToPut);
+    }
   }
 }
 

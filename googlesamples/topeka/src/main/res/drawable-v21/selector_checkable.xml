@@ -15,13 +15,13 @@
   -->
 
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-        android:color="?android:attr/colorAccent">
+        android:color="?android:attr/colorControlHighlight">
     <item>
         <selector>
-            <item android:state_pressed="true">
-                <color android:color="?android:attr/windowBackground" />
+            <item android:state_checked="false">
+                <color android:color="?android:attr/colorButtonNormal" />
             </item>
-            <item>
+            <item android:state_checked="true">
                 <color android:color="?android:attr/colorPrimary" />
             </item>
         </selector>

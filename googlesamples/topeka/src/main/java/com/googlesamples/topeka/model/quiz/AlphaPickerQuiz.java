@@ -9,7 +9,7 @@ import android.os.Parcel;
  */
 public class AlphaPickerQuiz extends Quiz<String> {
 
-  protected AlphaPickerQuiz(String question, String answer, boolean solved) {
+  public AlphaPickerQuiz(String question, String answer, boolean solved) {
     super(question, answer, solved);
   }
 

@@ -11,11 +11,11 @@ import java.util.Arrays;
  */
 public class FillTwoBlanksQuiz extends Quiz<String[]> {
 
-  protected FillTwoBlanksQuiz(String question, String[] answer, boolean solved) {
+  public FillTwoBlanksQuiz(String question, String[] answer, boolean solved) {
     super(question, answer, solved);
   }
 
-  protected FillTwoBlanksQuiz(Parcel in) {
+  public FillTwoBlanksQuiz(Parcel in) {
     super(in);
     String[] answer = in.createStringArray();
     setAnswer(answer);

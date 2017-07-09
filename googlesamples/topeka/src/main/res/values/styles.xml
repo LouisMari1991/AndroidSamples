@@ -99,6 +99,11 @@
     <item name="android:button">@null</item>
   </style>
 
+  <style name="Topeka.CompoundButton.Radio" parent="Topeka.CompoundButton">
+    <item name="android:background">@drawable/selector_checkable</item>
+  </style>
+
+
   <style name="Topeka.TextAppearance.Title.Inverse" parent="TextAppearance.AppCompat.Title">
     <item name="android:textColor">@android:color/white</item>
   </style>

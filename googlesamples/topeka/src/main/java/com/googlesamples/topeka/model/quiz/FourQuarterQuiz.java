@@ -27,7 +27,7 @@ public class FourQuarterQuiz extends OptionsQuiz<String> {
     super(question, answer, options, solved);
   }
 
-  protected FourQuarterQuiz(Parcel in) {
+  public FourQuarterQuiz(Parcel in) {
     super(in);
     String options[] = in.createStringArray();
     setOptions(options);
