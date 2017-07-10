@@ -5,9 +5,9 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.idling.CountingIdlingResource;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -21,7 +21,7 @@ import com.googlesamples.topeka.model.Category;
 public class QuizActivity extends AppCompatActivity {
 
   private static final String TAG              = "QuizActivity";
-  private static final String IMAGE_CATEGORY   = "image_category";
+  private static final String IMAGE_CATEGORY   = "image_category_";
   private static final String STATE_IS_PLAYING = "isPlaying";
   private static final String FRAGMENT_TAG     = "Quiz";
 
@@ -50,7 +50,13 @@ public class QuizActivity extends AppCompatActivity {
     return starter;
   }
 
-  @Override public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-    super.onCreate(savedInstanceState, persistentState);
+  @Override public void onCreate(Bundle savedInstanceState) {
+    mCountingIdlingResource = new CountingIdlingResource("Quiz");
+    String categoryId = getIntent().getStringExtra(Category.TAG);
+    mInterpolator = new FastOutSlowInInterpolator();
+    if (null != savedInstanceState) {
+      mSavedStateIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING);
+    }
+    super.onCreate(savedInstanceState);
   }
 }
