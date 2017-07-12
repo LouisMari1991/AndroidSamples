@@ -49,8 +49,54 @@
           />
     </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        >
+
+      <!-- Alpha and scales are being used during entry animation -->
+      <ImageView
+          android:id="@+id/icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_margin="@dimen/spacing_double"
+          android:alpha="0"
+          android:contentDescription="@null"
+          android:padding="@dimen/spacing_double"
+          android:scaleType="centerInside"
+          android:scaleX="0.7"
+          android:scaleY="0.7"
+          tools:ignore="PrivateResource"
+          />
+
+      <FrameLayout
+          android:id="@+id/quiz_fragment_container"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:visibility="invisible"
+          />
+
+    </FrameLayout>
+
 
   </LinearLayout>
+
+  <!-- Scale is being used during entry animation -->
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/fab_quiz"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_marginBottom="@dimen/spacing_double"
+      android:layout_marginEnd="@dimen/spacing_double"
+      android:layout_marginRight="@dimen/spacing_double"
+      android:transitionName="@string/transition_avatar"
+      app:fabSize="normal"
+      tools:ignore="UnusedAttribute"
+      />
 
 
 </merge>
