@@ -12,10 +12,19 @@ import com.googlesamples.topeka.model.Category;
 public class QuizFragment extends Fragment {
 
   private static final String KEY_USER_INPUT = "USER_INPUT";
-  private TextView mProgressText;
-  private int mQuizSize;
+  private TextView    mProgressText;
+  private int         mQuizSize;
   private ProgressBar mProgressBar;
-  private Category mCategory;
+  private Category    mCategory;
 
 
+  /**
+   * Interface definition for a callback to be invoked when the quiz is started.
+   */
+  public interface SolvedStateListener {
+    /**
+     * This method will be invoked when the category has been solved.
+     */
+    void onCategorySolved();
+  }
 }

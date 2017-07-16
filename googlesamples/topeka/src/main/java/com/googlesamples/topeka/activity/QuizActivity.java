@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.ActivityCompat;
@@ -16,6 +17,7 @@ import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -182,11 +184,23 @@ public class QuizActivity extends AppCompatActivity {
       finish();
     }
     mCategory = TopekaDatabaseHelper.getCategoryWith(this, categoryId);
+    setTheme(mCategory.getTheme().getStyleId());
+    if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+      Window window = getWindow();
+      window.setStatusBarColor(ContextCompat.getColor(this,
+          mCategory.getTheme().getPrimaryDarkColor()));
+    }
+    initLayout(mCategory.getId());
+    initToolbar(mCategory);
+  }
+
+  private void initLayout(String categoryId) {
+    setContentView(R.layout.activity_quiz);
     //noinspection PrivateResource
     mIcon = (ImageView) findViewById(R.id.icon);
-    int redId =
+    int resId =
         getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE, getApplicationContext().getPackageName());
-    mIcon.setImageResource(redId);
+    mIcon.setImageResource(resId);
     ViewCompat.animate(mIcon)
         .scaleX(1)
         .scaleY(1)
@@ -211,7 +225,15 @@ public class QuizActivity extends AppCompatActivity {
     titleView.setText(category.getName());
     titleView.setTextColor(ContextCompat.getColor(this, category.getTheme().getTextPrimaryColor()));
     if (mSavedStateIsPlaying) {
+      // the toolbar should not have more elevation than the content while playing
 
     }
   }
+
+  @SuppressWarnings("unused")
+  @VisibleForTesting
+  public CountingIdlingResource getCountingIdlingResource() {
+    return mCountingIdlingResource;
+  }
+
 }
