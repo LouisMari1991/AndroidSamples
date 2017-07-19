@@ -13,6 +13,9 @@ import com.googlesamples.topeka.model.quiz.Quiz;
 
 public class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
+  private static final int ANSWER_HIDE_DELAY = 500;
+
+
 
 
   public AbsQuizView(Context context) {
