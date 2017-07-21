@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.widget.Checkable;
+import com.googlesamples.topeka.R;
 
 /**
  * Created by YH on 2017-02-23.
@@ -23,7 +24,7 @@ public class CheckableFab extends FloatingActionButton implements Checkable {
 
   public CheckableFab(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    //setImageResource(R.drawable.answer_quiz_fab);
+    setImageResource(R.drawable.answer_quiz_fab);
   }
 
   @Override public void setChecked(boolean checked) {

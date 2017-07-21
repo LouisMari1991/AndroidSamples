@@ -2,6 +2,7 @@ package com.googlesamples.topeka.widget.quiz;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.LayoutInflater;
 import android.view.animation.Interpolator;
@@ -48,6 +49,42 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     mInputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 
     setId(quiz.getId());
-
+    setUpQuestionView();
   }
+
+  /**
+   * Set the behaviour for all question views.
+   */
+  private void setUpQuestionView() {
+    mQuretionView = (TextView) mLayoutInflater.inflate(R.layout.question, this,false);
+    mQuretionView.setBackgroundColor(ContextCompat.getColor(getContext(),
+        mCategory.getTheme().getPrimaryColor()));
+    mQuretionView.setText(getQuiz().getQuestion());
+  }
+
+  public Q getQuiz() {
+    return mQuiz;
+  }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
