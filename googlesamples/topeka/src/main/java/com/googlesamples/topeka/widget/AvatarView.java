@@ -30,11 +30,11 @@ public class AvatarView extends ImageView implements Checkable{
   private static final int NOT_FOUND = 0;
 
   public AvatarView(Context context) {
-    super(context);
+    this(context,null);
   }
 
   public AvatarView(Context context, AttributeSet attrs) {
-    super(context, attrs, 0);
+    this(context, attrs, 0);
   }
 
   public AvatarView(Context context, AttributeSet attrs, int defStyleAttr) {
