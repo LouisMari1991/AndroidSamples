@@ -24,13 +24,13 @@ import com.googlesamples.topeka.widget.outlineprovider.RoundOutlineProvider;
  * A simple view that wraps an avatar.
  * Created by Administrator on 2016/8/18 0018.
  */
-public class AvatarView extends ImageView implements Checkable{
+public class AvatarView extends ImageView implements Checkable {
 
   private boolean mChecked;
   private static final int NOT_FOUND = 0;
 
   public AvatarView(Context context) {
-    this(context,null);
+    this(context, null);
   }
 
   public AvatarView(Context context, AttributeSet attrs) {
@@ -64,8 +64,7 @@ public class AvatarView extends ImageView implements Checkable{
     setChecked(!mChecked);
   }
 
-  @SuppressLint("NewApi")
-  public void setAvatar(@DrawableRes int resId) {
+  @SuppressLint("NewApi") public void setAvatar(@DrawableRes int resId) {
     if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
       setClipToOutline(true);  //为了裁剪一个可绘制的视图形状，需要先设置一个outline然后调用View.setClipToOutline方法
       setImageResource(resId);
@@ -77,9 +76,8 @@ public class AvatarView extends ImageView implements Checkable{
   private void setAvatarPreLollipop(@DrawableRes int redId) {
     Drawable drawable = ResourcesCompat.getDrawable(getResources(), redId, getContext().getTheme());
     BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-    @SuppressLint("ConstantConditions")
-    RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),
-        bitmapDrawable.getBitmap());
+    @SuppressLint("ConstantConditions") RoundedBitmapDrawable roundedBitmapDrawable =
+        RoundedBitmapDrawableFactory.create(getResources(), bitmapDrawable.getBitmap());
     roundedBitmapDrawable.setCircular(true);
     setImageDrawable(roundedBitmapDrawable);
   }
@@ -89,18 +87,13 @@ public class AvatarView extends ImageView implements Checkable{
     // 画选中的圆弧
     if (mChecked) {
       Drawable border = ContextCompat.getDrawable(getContext(), R.drawable.selector_avatar);
-      border.setBounds(0,0,getWidth(),getHeight());
+      border.setBounds(0, 0, getWidth(), getHeight());
       border.draw(canvas);
     }
   }
 
   /**
    * onLayout() 之后调用，在5.0以上系统会设置圆角Icon.
-   *
-   * @param w
-   * @param h
-   * @param oldw
-   * @param oldh
    */
   @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
     super.onSizeChanged(w, h, oldw, oldh);

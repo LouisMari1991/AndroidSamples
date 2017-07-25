@@ -14,7 +14,7 @@ public enum Avatar {
       R.drawable.avator_12), THIRTEEN(R.drawable.avator_13), FOURTEEN(R.drawable.avator_14), FIFTEEN(
       R.drawable.avator_15), SIXTEEN(R.drawable.avator_16);
 
-  private static final String TAG = "Avator";
+  private static final String TAG = "Avatar";
 
   private final int mResId;
 
