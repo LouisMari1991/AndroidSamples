@@ -48,6 +48,9 @@
     <activity
         android:name=".activity.DeepUnderstandAttrActivity"
         android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.RoundImageActivity"
+        android:screenOrientation="portrait"/>
   </application>
 
 
