@@ -79,6 +79,12 @@
         android:layout_height="wrap_content"
         android:text="圆形ImageView"
         />
+    <Button
+        android:id="@+id/bt_tai_ji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="太极图"
+        />
 
   </LinearLayout>
 </ScrollView>
