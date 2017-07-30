@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+  <com.sync.customviewstudy.viewgroup.FlowLayout
+      android:id="@+id/flow_layout"
+      android:layout_width="match_parent"
+      android:padding="30dp"
+      android:layout_height="wrap_content"
+      android:background="#ccc"
+      >
+
+    <!-- <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="5dp"
+         android:text="Hello"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="5dp"
+         android:text="Android"
+
+         />
+     <Button
+         android:layout_width="wrap_content"
+
+         android:layout_height="wrap_content"
+         android:layout_margin="5dp"
+         android:text="ISO"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+
+         android:layout_margin="5dp"
+         android:text="NODE"
+         />
+     <Button
+         android:layout_width="wrap_content"
+
+         android:layout_height="wrap_content"
+         android:layout_margin="5dp"
+         android:text="JS"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Web"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Ruby"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+
+         android:layout_margin="5dp"
+         android:text="Python"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+
+         android:layout_margin="5dp"
+         android:text="C++"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Hellow"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Hellow"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+
+         android:layout_margin="5dp"
+         android:text="Hellow"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Hellow"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+
+         android:layout_margin="5dp"
+         android:text="Hellow"
+         />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="5dp"
+
+         android:text="Hellow"
+         />-->
+
+
+  </com.sync.customviewstudy.viewgroup.FlowLayout>
+
+
+</RelativeLayout>

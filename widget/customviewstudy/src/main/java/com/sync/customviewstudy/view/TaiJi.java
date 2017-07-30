@@ -11,7 +11,7 @@ import android.view.View;
 import com.sync.logger.Logger;
 
 /**
- * Description:
+ * Description: 太极旋转图,核心是canvas移动到中央,来自:http://www.gcssloop.com/customview/taiji
  * Author：Mari on 2017-07-27 23:06
  * Contact：289168296@qq.com
  */

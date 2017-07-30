@@ -54,6 +54,9 @@
     <activity
         android:name=".activity.TaiJiActivity"
         android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.FlowLayoutActivity"
+        android:screenOrientation="portrait"/>
   </application>
 
 

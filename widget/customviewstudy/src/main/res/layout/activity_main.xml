@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -86,5 +86,12 @@
         android:text="太极图"
         />
 
+    <Button
+        android:id="@+id/bt_flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="流式布局"
+        />
+
   </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>
