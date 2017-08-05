@@ -14,6 +14,10 @@ public class CommonUtils {
     return MApp.get().getResources();
   }
 
+  public static String[] getStringArray(int resid) {
+    return getResoure().getStringArray(resid);
+  }
+
   public static String getString(int resid) {
     return getResoure().getString(resid);
   }
@@ -21,5 +25,4 @@ public class CommonUtils {
   public static float getDimens(int resId) {
     return getResoure().getDimension(resId);
   }
-
 }

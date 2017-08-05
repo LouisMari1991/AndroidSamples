@@ -1,49 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.sync.scrollshapeui.MainActivity"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <RelativeLayout
+  <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+      android:id="@+id/activity_main"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="250dp"
-      android:background="@color/colorPageBg"
-      android:gravity="center_vertical"
-      android:paddingRight="10dp">
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      tools:context="com.example.jingbin.scrollshapeui.MainActivity">
 
     <TextView
-        android:id="@+id/tv_txt_show"
+        android:id="@+id/tv_song_list"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_toLeftOf="@+id/iv_song_list"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center"
-        android:text="一般文本显示" />
+        android:text="仿网易云音乐歌单详情页"
+        android:textColor="#333"
+        android:textSize="17sp"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_recyclerview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/tv_txt_show"
-        android:layout_toLeftOf="@+id/iv_song_list"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:text="RecyclerView列表显示" />
-
-    <ImageView
-        android:id="@+id/iv_song_list"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
         android:background="@color/colorPageBg"
-        android:scaleType="fitXY" />
+        android:gravity="center_vertical"
+        android:paddingRight="10dp">
 
-  </RelativeLayout>
+      <TextView
+          android:id="@+id/tv_txt_show"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:layout_toLeftOf="@+id/iv_song_list"
+          android:background="?attr/selectableItemBackground"
+          android:gravity="center"
+          android:text="一般文本显示" />
 
+      <TextView
+          android:id="@+id/tv_recyclerview"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:layout_below="@+id/tv_txt_show"
+          android:layout_toLeftOf="@+id/iv_song_list"
+          android:background="?attr/selectableItemBackground"
+          android:gravity="center"
+          android:text="RecyclerView列表显示" />
+
+      <ImageView
+          android:id="@+id/iv_song_list"
+          android:layout_width="120dp"
+          android:layout_height="120dp"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentTop="true"
+          android:background="@color/colorPageBg"
+          android:scaleType="fitXY" />
+
+    </RelativeLayout>
+
+  </LinearLayout>
 </layout>
