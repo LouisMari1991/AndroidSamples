@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sync.scrollshapeui">
 
+  <uses-permission android:name="android.permission.INTERNET"/>
+
   <application
       android:name=".app.MApp"
       android:allowBackup="true"
@@ -17,6 +19,15 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+    <activity
+        android:name=".ui.NeteasePlaylistActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/MyScrollPage"/>
+    <activity
+        android:name=".ui.NeteasePlaylistActivity2"
+        android:screenOrientation="portrait"
+        android:theme="@style/MyScrollPage"/>
+
   </application>
 
 </manifest>
