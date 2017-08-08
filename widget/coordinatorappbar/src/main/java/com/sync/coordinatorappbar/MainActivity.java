@@ -15,4 +15,12 @@ public class MainActivity extends AppCompatActivity {
   public void btnClick1(View v) {
     startActivity(new Intent(this, CoordinatorActivity.class));
   }
+
+  public void btnClick2(View v) {
+    startActivity(new Intent(this, CoordinatorAppbarActivity.class));
+  }
+
+  public void btnClick3(View v) {
+    startActivity(new Intent(this, CoordinatorActivity.class));
+  }
 }
