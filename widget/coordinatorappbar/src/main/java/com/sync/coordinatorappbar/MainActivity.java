@@ -21,6 +21,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public void btnClick3(View v) {
-    startActivity(new Intent(this, CoordinatorActivity.class));
+    startActivity(new Intent(this, CoordinatorToolbarActivity.class));
   }
 }

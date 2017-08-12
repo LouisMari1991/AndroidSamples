@@ -22,6 +22,7 @@ public class CoordinatorToolbarActivity extends AppCompatActivity{
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_coordinator_tool_bar);
 
   }
 }
