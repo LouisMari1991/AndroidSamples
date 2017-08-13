@@ -28,10 +28,10 @@ public class CoordinatorAppbarActivity extends AppCompatActivity {
     setContentView(R.layout.activity_coordinator_app_bar);
 
     mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
-    mToolbar = (Toolbar) findViewById(R.id.toolbar);
-    mToolbar.setLogo(getResources().getDrawable(R.mipmap.ic_launcher));
-    mToolbar.setTitle("这是标题");
-    mToolbar.inflateMenu(R.menu.menu);
+    //mToolbar = (Toolbar) findViewById(R.id.toolbar);
+    //mToolbar.setLogo(getResources().getDrawable(R.mipmap.ic_launcher));
+    //mToolbar.setTitle("这是标题");
+    //mToolbar.inflateMenu(R.menu.menu);
 
     mStringList = new ArrayList<>();
 

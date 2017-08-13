@@ -21,6 +21,17 @@
         android:background="?colorPrimary"
         >
 
+      <ImageButton
+          android:id="@+id/back"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="start|center_vertical"
+          android:background="@drawable/selector_subtle"
+          android:contentDescription="@string/back"
+          android:padding="@dimen/spacing_double"
+          android:src="@drawable/ic_arrow_back"
+          android:tint="?android:textColorPrimary"
+          />
       <TextView
           android:id="@+id/category_title"
           android:layout_width="match_parent"
@@ -34,18 +45,6 @@
           android:textAppearance="@style/Topeka.TextAppearance.Title"
           android:transitionName="@string/transition_toolbar"
           tools:ignore="UnusedAttribute,NewApi,RtlSymmetry,PrivateResource"
-          />
-
-      <ImageButton
-          android:id="@+id/back"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="start|center_vertical"
-          android:background="@drawable/selector_subtle"
-          android:contentDescription="@string/back"
-          android:padding="@dimen/spacing_double"
-          android:src="@drawable/ic_arrow_back"
-          android:tint="?android:textColorPrimary"
           />
     </FrameLayout>
 

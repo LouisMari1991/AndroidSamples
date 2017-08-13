@@ -10,13 +10,13 @@
       android:id="@+id/toolbar_choose_avatar"
       android:layout_width="match_parent"
       android:layout_height="?android:attr/actionBarSize"
-      style="@style/Topeka.TextAppearance.Title"
-      android:gravity="center_vertical"
-      android:text="@string/choose_avatar"
-      android:paddingStart="@dimen/spacing_double"
-      android:paddingEnd="@dimen/spacing_double"
       android:clipToPadding="false"
+      android:gravity="center_vertical"
+      android:paddingEnd="@dimen/spacing_double"
+      android:paddingStart="@dimen/spacing_double"
+      android:text="@string/choose_avatar"
       tools:ignore="NewApi"
+      style="@style/Topeka.TextAppearance.Title"
       />
 
   <GridView
