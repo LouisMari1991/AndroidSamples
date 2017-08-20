@@ -92,6 +92,12 @@
         android:layout_height="wrap_content"
         android:text="流式布局"
         />
+    <Button
+        android:id="@+id/bt_smile_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="仿(最美有物)点赞效果"
+        />
 
   </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

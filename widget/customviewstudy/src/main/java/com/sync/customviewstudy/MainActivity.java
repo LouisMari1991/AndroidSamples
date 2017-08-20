@@ -13,6 +13,7 @@ import com.sync.customviewstudy.activity.CustomVolumeControlBarActivity;
 import com.sync.customviewstudy.activity.DeepUnderstandAttrActivity;
 import com.sync.customviewstudy.activity.FlowLayoutActivity;
 import com.sync.customviewstudy.activity.RoundImageActivity;
+import com.sync.customviewstudy.activity.SmileActivity;
 import com.sync.customviewstudy.activity.TaiJiActivity;
 import com.sync.customviewstudy.activity.VDHDeepLayoutActivity;
 import com.sync.customviewstudy.activity.VDHLayoutActivity;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     findViewById(R.id.bt_round_img).setOnClickListener(this);
     findViewById(R.id.bt_tai_ji).setOnClickListener(this);
     findViewById(R.id.bt_flow_layout).setOnClickListener(this);
+    findViewById(R.id.bt_smile_view).setOnClickListener(this);
   }
 
   @Override public void onClick(View view) {
@@ -67,9 +69,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         break;
       case R.id.bt_tai_ji:
         startActivity(new Intent(view.getContext(), TaiJiActivity.class));
-        break;case
-          R.id.bt_flow_layout:
+        break;
+      case R.id.bt_flow_layout:
         startActivity(new Intent(view.getContext(), FlowLayoutActivity.class));
+        break;
+      case R.id.bt_smile_view:
+        startActivity(new Intent(view.getContext(), SmileActivity.class));
         break;
     }
   }

@@ -57,6 +57,9 @@
     <activity
         android:name=".activity.FlowLayoutActivity"
         android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.SmileActivity"
+        android:screenOrientation="portrait"/>
   </application>
 
 
