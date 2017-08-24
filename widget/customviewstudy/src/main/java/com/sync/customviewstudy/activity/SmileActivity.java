@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import com.sync.customviewstudy.R;
+import com.sync.customviewstudy.viewgroup.SmileView;
 
 /**
  * Description:
@@ -17,6 +18,7 @@ public class SmileActivity extends AppCompatActivity {
 
   SeekBar mSeekBar;
   ImageView mSmileForce;
+  SmileView mSmileView;
 
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class SmileActivity extends AppCompatActivity {
 
       }
     });
-
+    mSmileView = (SmileView) findViewById(R.id.smile_view);
+    mSmileView.setNum(40,30);
   }
 }
