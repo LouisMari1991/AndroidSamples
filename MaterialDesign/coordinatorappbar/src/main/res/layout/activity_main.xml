@@ -35,5 +35,13 @@
       android:textAllCaps="false"
       />
 
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:onClick="btnClick4"
+      android:text="这效果没法描述"
+      android:textAllCaps="false"
+      />
+
 
 </LinearLayout>

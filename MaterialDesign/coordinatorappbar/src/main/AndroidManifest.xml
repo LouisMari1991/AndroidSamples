@@ -28,6 +28,10 @@
         android:name=".CoordinatorToolbarActivity"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme.NoActionBar"/>
+    <activity
+        android:name=".CoordinatorLayoutTestActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.NoActionBar"/>
   </application>
 
 </manifest>
