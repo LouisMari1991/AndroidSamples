@@ -17,13 +17,14 @@
       android:theme="@style/AppTheme.AppBarOverlay"
       >
 
+    <!--snap: Child View滚动比例的一个吸附效果。也就是说，Child View不会存在局部显示的情况，滚动Child View的部分高度，当我们松开手指时，Child View要么向上全部滚出屏幕，要么向下全部滚进屏幕，有点类似ViewPager的左右滑动。-->
     <android.support.design.widget.CollapsingToolbarLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/app_header"
         android:fitsSystemWindows="true"
         app:contentScrim="?attr/colorPrimary"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
         app:title="@string/app_name"
         >
 

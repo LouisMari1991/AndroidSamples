@@ -108,7 +108,7 @@ public boolean dispatchTouchEvent(MotionEvent event){
 ```
 　　首先事件开始交给Activity所附属的 Window 进行分发，如果返回 true ，整个事件循环就结束了，返回 false 意味者事件没人处理，所有 View 的 `onTouchEvent` 都返回了 false, 那么Activity 的 `onTouchEvent` 就会被调用。
 
-　　Window 是如何将事件传递给 ViewGroup 的： Window 是一个抽象类，window的 `superDispatchTouchEvent` 方法也是一个抽奖方法。 Winow 的唯一实现是 `PhoneWinw`，所以我们看 `PhoneWindow` 是如何处理点击事件的：
+　　Window 是如何将事件传递给 ViewGroup 的： Window 是一个抽象类，window的 `superDispatchTouchEvent` 方法也是一个抽象方法。 Winow 的唯一实现是 `PhoneWinw`，所以我们看 `PhoneWindow` 是如何处理点击事件的：
 
 源码：PhoneWindow#superDispatchTouchEvent<br>
 ```
