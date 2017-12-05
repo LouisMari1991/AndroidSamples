@@ -111,10 +111,10 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
     // 为头部是View的界面设置状态栏透明
     StatusBarUtil.setTranslucentImageHeader(this, 0, mBinding.titleToolBar);
 
-    ViewGroup.LayoutParams imgItemBgPatams = mBinding.include.imgItemBg.getLayoutParams();
+    ViewGroup.LayoutParams imgItemBgParams = mBinding.include.imgItemBg.getLayoutParams();
 
     // 获取高斯背景图的高度
-    imageBgHeight = imgItemBgPatams.height;
+    imageBgHeight = imgItemBgParams.height;
 
     Logger.i(" 获取高斯背景图的高度 , imageBgHeight ： " + imageBgHeight);
 

@@ -51,7 +51,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     mSubmitAnswer = getSubmitButton();
     mLinearOutSlowInInterpolator = new LinearOutSlowInInterpolator();
     mHandler = new Handler();
-    mInputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    mInputMethodManager =
+        (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 
     setId(quiz.getId());
     setUpQuestionView();
@@ -59,10 +60,10 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     View quizContentView = getInitializedContentView();
     addContentView(container, quizContentView);
     addOnLayoutChangeListener(new OnLayoutChangeListener() {
-      @Override public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop,
-          int oldRight, int oldBottom) {
+      @Override
+      public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
+          int oldTop, int oldRight, int oldBottom) {
         removeOnLayoutChangeListener(this);
-
       }
     });
   }
@@ -72,7 +73,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
    */
   private void setUpQuestionView() {
     mQuretionView = (TextView) mLayoutInflater.inflate(R.layout.question, this, false);
-    mQuretionView.setBackgroundColor(ContextCompat.getColor(getContext(), mCategory.getTheme().getPrimaryColor()));
+    mQuretionView.setBackgroundColor(
+        ContextCompat.getColor(getContext(), mCategory.getTheme().getPrimaryColor()));
     mQuretionView.setText(getQuiz().getQuestion());
   }
 
@@ -102,7 +104,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
    * @param quizContentView 问题的内容, 子类实现
    */
   private void addContentView(LinearLayout container, View quizContentView) {
-    LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+    LayoutParams layoutParams =
+        new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     container.addView(mQuretionView, layoutParams);
     container.addView(quizContentView, layoutParams);
     addView(container, layoutParams);
@@ -110,12 +113,12 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
   private void addFloatingActionButton() {
     final int fabSize = getResources().getDimensionPixelSize(R.dimen.size_fab);
-
   }
 
   private CheckableFab getSubmitButton() {
     if (null == mSubmitAnswer) {
-      mSubmitAnswer = (CheckableFab) getLayoutInflater().inflate(R.layout.answer_submit, this, false);
+      mSubmitAnswer =
+          (CheckableFab) getLayoutInflater().inflate(R.layout.answer_submit, this, false);
       mSubmitAnswer.hide();
       mSubmitAnswer.setOnClickListener(new OnClickListener() {
         @Override public void onClick(View v) {

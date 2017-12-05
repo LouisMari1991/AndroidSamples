@@ -52,6 +52,7 @@ android {
     // Lint gives this warning but SDK 20 would be Android L Beta.
     disable 'OldTargetApi'
   }
+  buildToolsVersion '26.0.2'
 }
 
 dependencies {
