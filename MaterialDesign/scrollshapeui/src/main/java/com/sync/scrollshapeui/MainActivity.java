@@ -29,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
     binding.tvRecyclerview.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, true);
+        NeteasePlaylistActivity2.start(MainActivity.this, binding.ivSongList, true);
       }
     });
 
     binding.tvTxtShow.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, false);
+        NeteasePlaylistActivity2.start(MainActivity.this, binding.ivSongList, false);
       }
     });
   }

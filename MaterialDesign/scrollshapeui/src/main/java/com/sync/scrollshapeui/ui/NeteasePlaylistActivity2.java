@@ -45,9 +45,9 @@ import static com.sync.scrollshapeui.utils.StatusBarUtil.getStatusBarHeight;
 
 public class NeteasePlaylistActivity2 extends AppCompatActivity {
 
-  public final static String IMAGE_URL_LARGE  = "https://img5.doubanio.com/lpic/s4477716.jpg";
-  public final static String IMAGE_URL_SMALL  = "https://img5.doubanio.com/spic/s4477716.jpg";
-  public final static String IMAGE_URL_MEDIUM = "https://img5.doubanio.com/mpic/s4477716.jpg";
+  public final static String IMAGE_URL_LARGE  = "https://img1.doubanio.com/lpic/s4477716.jpg";
+  public final static String IMAGE_URL_SMALL  = "https://img1.doubanio.com/spic/s4477716.jpg";
+  public final static String IMAGE_URL_MEDIUM = "https://img1.doubanio.com/mpic/s4477716.jpg";
   public final static String PARAM            = "isRecyclerView";
   private ActivityDetailBinding binding;
   // 这个是高斯图背景的高度
@@ -110,13 +110,13 @@ public class NeteasePlaylistActivity2 extends AppCompatActivity {
         .into(binding.include.ivOnePhoto);
 
     // "14":模糊度；"3":图片缩放3倍后再进行模糊
-    Glide.with(this)
-        .load(IMAGE_URL_MEDIUM)
-        .error(R.drawable.stackblur_default)
-        .placeholder(R.drawable.stackblur_default)
-        .crossFade(500)
-        .bitmapTransform(new BlurTransformation(this, 14, 3))
-        .into(binding.include.imgItemBg);
+    //Glide.with(this)
+    //    .load(IMAGE_URL_MEDIUM)
+    //    .error(R.drawable.stackblur_default)
+    //    .placeholder(R.drawable.stackblur_default)
+    //    .crossFade(500)
+    //    .bitmapTransform(new BlurTransformation(this, 14, 3))
+    //    .into(binding.include.imgItemBg);
   }
 
   /**

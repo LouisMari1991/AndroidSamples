@@ -30,7 +30,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:background="#000"
+                :background="#000"
                 android:orientation="horizontal">
 
                 <ImageView
