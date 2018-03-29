@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
 
   dataBinding {
     enabled = true
@@ -11,7 +10,7 @@ android {
 
   defaultConfig {
     applicationId "com.googlesamples.unsplash"
-    minSdkVersion 21
+    minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
@@ -60,9 +59,6 @@ android {
 
 }
 
-ext {
-  minSdkVersion = 21;
-}
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])

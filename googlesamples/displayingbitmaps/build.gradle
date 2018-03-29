@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
 
   defaultConfig {
     applicationId "com.googlesamples.displayingbitmaps"
@@ -52,7 +51,6 @@ android {
     // Lint gives this warning but SDK 20 would be Android L Beta.
     disable 'OldTargetApi'
   }
-  buildToolsVersion '26.0.2'
 }
 
 dependencies {
@@ -60,9 +58,9 @@ dependencies {
   testCompile 'junit:junit:4.12'
 
   // android support
-  compile rootProject.ext.libSupportAppcompat
-  compile rootProject.ext.libSupportV4
-  compile rootProject.ext.libSupportDesign
+  implementation rootProject.ext.libSupportAppcompat
+  implementation rootProject.ext.libSupportV4
+  implementation rootProject.ext.libSupportDesign
 
   debugCompile rootProject.ext.debugDependencies.leakCanary
   releaseCompile rootProject.ext.releaseDependencies.leakCanary

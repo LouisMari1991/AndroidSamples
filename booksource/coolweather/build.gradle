@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
 
   dataBinding {
     enabled = true
@@ -11,7 +10,7 @@ android {
   defaultConfig {
     applicationId "com.sync.coolweather"
     minSdkVersion rootProject.ext.minSdkVersion
-    targetSdkVersion 25
+    targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
 

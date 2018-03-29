@@ -13,7 +13,8 @@ public class WatchingAccessibilityService extends AccessibilityService {
 
   @Override public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
     if (SPHelper.isShowWindow(this)) {
-      TasksWindow.show(this, accessibilityEvent.getPackageName() + "\n" + accessibilityEvent.getClassName());
+      TasksWindow.show(this,
+          accessibilityEvent.getPackageName() + "\n" + accessibilityEvent.getClassName());
     }
   }
 
