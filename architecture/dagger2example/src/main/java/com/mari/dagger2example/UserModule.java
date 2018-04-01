@@ -3,6 +3,7 @@ package com.mari.dagger2example;
 import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Named;
 
 @Module
 public class UserModule {
@@ -16,6 +17,11 @@ public class UserModule {
   @Provides
   public ApiService providerApiService() {
     return new ApiService(context);
+  }
+
+  @Provides
+  public Context providerContext() {
+    return context;
   }
 
   @Provides
