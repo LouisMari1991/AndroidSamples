@@ -51,15 +51,26 @@ project.ext {
   libProgressbar = "me.zhanghai.android.materialprogressbar:library:1.3.0"
   libPhotoView = "com.github.chrisbanes:PhotoView:1.3.1"
 
+  daggers = [dagger        : "com.google.dagger:dagger:2.15",
+             daggercompiler: "com.google.dagger:dagger-compiler:2.15",
+             provided      : "org.glassfish:javax.annotation:10.0-b28"]
+
+  butterknifes = [
+          butterknife        : "com.jakewharton:butterknife:8.8.1",
+          butterknifecompiler: "com.jakewharton:butterknife-annotations:8.8.1"
+  ]
+
 
   /**
    * leakCanary:A memory leak detection library for Android and Java.
    * leakCanary:https://github.com/square/leakcanary
    * blockcanary:AndroidPerformanceMonitor
    * blockcanary: https://github.com/markzhai/AndroidPerformanceMonitor*/
-  debugDependencies = [leakCanary : "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
-                       blockcanary: "com.github.moduth:blockcanary-ui:${blockCanaryVersion}",]
+  debugDependencies =
+          [leakCanary : "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+           blockcanary: "com.github.moduth:blockcanary-ui:${blockCanaryVersion}",]
 
-  releaseDependencies = [leakCanary : "com.squareup.leakcanary:leakcanary-android-no-op:${leakCanaryVersion}",
-                         blockcanary: "com.github.moduth:blockcanary-no-op:${blockCanaryVersion}",]
+  releaseDependencies =
+          [leakCanary : "com.squareup.leakcanary:leakcanary-android-no-op:${leakCanaryVersion}",
+           blockcanary: "com.github.moduth:blockcanary-no-op:${blockCanaryVersion}",]
 }

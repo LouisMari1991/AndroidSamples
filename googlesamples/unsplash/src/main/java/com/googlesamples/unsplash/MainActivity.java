@@ -57,8 +57,8 @@ public class MainActivity extends Activity {
     // 监听 复位 分享 元素 推出 平移 回调
     getWindow().getSharedElementExitTransition().addListener(sharedExitListener);
 
-    grid = (RecyclerView) findViewById(R.id.image_grid);
-    empty = (ProgressBar) findViewById(android.R.id.empty);
+    grid = findViewById(R.id.image_grid);
+    empty = findViewById(android.R.id.empty);
 
     setupRecyclerView();
 
@@ -99,7 +99,8 @@ public class MainActivity extends Activity {
           return;
         }
         PhotoItemBinding binding = ((PhotoViewHolder) holder).getBinding();
-        final Intent intent = getDetailActivityStartIntent(MainActivity.this, relevantPhotos, position, binding);
+        final Intent intent =
+            getDetailActivityStartIntent(MainActivity.this, relevantPhotos, position, binding);
         final ActivityOptions activityOptions = getActivityOptions(binding);
         MainActivity.this.startActivityForResult(intent, IntentUtil.REQUEST_CODE,
             activityOptions.toBundle());
@@ -117,6 +118,7 @@ public class MainActivity extends Activity {
    * 当返回到activityA的时候，要去获取activityB返回的信息，
    * 可以在onActivityReenter(int requestCode, Intent data)方法里面获取，
    * 比如这里获取到返回的position信息
+   *
    * @author YH
    * @time 2016-11-29 11:47
    */
@@ -158,7 +160,7 @@ public class MainActivity extends Activity {
     GridLayoutManager gridLayoutManager = (GridLayoutManager) grid.getLayoutManager();
     gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
       @Override public int getSpanSize(int position) {
-       /* emulating https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0B6Okdz75tqQsck9lUkgxNVZza1U/style_imagery_integration_scale1.png */
+        /* emulating https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0B6Okdz75tqQsck9lUkgxNVZza1U/style_imagery_integration_scale1.png */
         switch (position % 6) {
           case 5:
             return 3;

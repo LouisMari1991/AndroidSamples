@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
 
   private final ArrayList<Photo> photos;
-  private final int              requestedPhotoWidth;
-  private final LayoutInflater   layoutInflater;
+  private final int requestedPhotoWidth;
+  private final LayoutInflater layoutInflater;
 
   public PhotoAdapter(@NonNull Context context, @NonNull ArrayList<Photo> photos) {
     this.photos = photos;
@@ -27,7 +27,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
 
   @Override public PhotoViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
     return new PhotoViewHolder(
-        (PhotoItemBinding) DataBindingUtil.inflate(layoutInflater, R.layout.photo_item, parent, false));
+        (PhotoItemBinding) DataBindingUtil.inflate(layoutInflater, R.layout.photo_item, parent,
+            false));
   }
 
   @Override public void onBindViewHolder(final PhotoViewHolder holder, final int position) {

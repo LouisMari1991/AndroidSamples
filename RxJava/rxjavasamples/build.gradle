@@ -9,18 +9,12 @@ android {
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
-
   }
   buildTypes {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-  }
-
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
   }
 
   //支持lint warning 检查机制
@@ -60,7 +54,8 @@ dependencies {
   compile 'com.squareup.retrofit2:converter-gson:2.0.2'
   compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
   compile 'com.google.code.gson:gson:2.6.2'
-  compile 'com.jakewharton:butterknife:7.0.1'
+  compile rootProject.ext.butterknifes.butterknife
+  annotationProcessor rootProject.ext.butterknifes.butterknifecompiler
   compile 'jp.wasabeef:recyclerview-animators:2.2.1'
   compile 'com.github.bumptech.glide:glide:3.7.0'
   compile 'jp.wasabeef:glide-transformations:2.0.1'

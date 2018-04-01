@@ -16,7 +16,8 @@ public class GridMarginDecoration extends RecyclerView.ItemDecoration {
     this.space = space;
   }
 
-  @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+  @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+      RecyclerView.State state) {
     outRect.left = space;
     outRect.top = space;
     outRect.right = space;

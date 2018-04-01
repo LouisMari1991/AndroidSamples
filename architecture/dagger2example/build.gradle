@@ -31,4 +31,11 @@ dependencies {
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.1'
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+  compile project(':common:logger')
+
+  annotationProcessor rootProject.ext.daggers.daggercompiler
+  compile rootProject.ext.daggers.dagger
+  provided rootProject.ext.daggers.provided
+
 }
