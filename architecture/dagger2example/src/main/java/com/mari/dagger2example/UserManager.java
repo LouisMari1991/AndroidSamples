@@ -1,13 +1,18 @@
 package com.mari.dagger2example;
 
+import javax.inject.Inject;
+
 public class UserManager {
 
+  @Inject
   UserStore userStore;
+
+  @Release
+  @Inject
   ApiService apiService;
 
-  public UserManager(UserStore userStore, ApiService apiService) {
-    this.userStore = userStore;
-    this.apiService = apiService;
+  @Inject
+  public UserManager() {
   }
 
   public void register() {

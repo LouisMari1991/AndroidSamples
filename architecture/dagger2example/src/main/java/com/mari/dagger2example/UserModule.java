@@ -1,9 +1,9 @@
 package com.mari.dagger2example;
 
 import android.content.Context;
+import com.sync.logger.Logger;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Named;
 
 @Module
 public class UserModule {
@@ -15,8 +15,19 @@ public class UserModule {
   }
 
   @Provides
-  public ApiService providerApiService() {
-    return new ApiService(context);
+  @Dev
+  public ApiService providerApiServiceDev(String url) {
+    ApiService apiService = new ApiService(url);
+    Logger.i("providerApiServiceDev , ApiService : " + apiService);
+    return apiService;
+  }
+
+  @Provides
+  @Release
+  public ApiService providerApiServiceRelease(Context context) {
+    ApiService apiService = new ApiService(context);
+    Logger.i("providerApiServiceRelease , ApiService : " + apiService);
+    return apiService;
   }
 
   @Provides
@@ -30,7 +41,7 @@ public class UserModule {
   }
 
   @Provides
-  public UserManager providerUserManager(ApiService apiService, UserStore userStore) {
-    return new UserManager(userStore, apiService);
+  public UserManager providerUserManager() {
+    return new UserManager();
   }
 }
